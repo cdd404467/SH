@@ -8,4 +8,5 @@ target 'SH' do
 	pod 'CYLTabBarController', '~> 1.28.3'
 	pod 'IQKeyboardManager', '~> 6.4.0'
 	pod 'YYText', '~> 1.0.7'
+#	pod 'JXPageControl'
 end

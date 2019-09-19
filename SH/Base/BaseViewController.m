@@ -27,11 +27,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-    if (@available(iOS 11.0, *)) {
-
-    } else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if (@available(iOS 11.0, *)) {
+//
+//    } else {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
+    self.automaticallyAdjustsScrollViewInsets = NO;
     _backBtn = self.mainNavController.backBtn;
     [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleTransition];
 }

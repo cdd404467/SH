@@ -23,6 +23,9 @@
 		FC8053C8233283610021B2E8 /* LoaderPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053C7233283610021B2E8 /* LoaderPlaceholder.m */; };
 		FC8053CB233286B60021B2E8 /* GoodsDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053CA233286B60021B2E8 /* GoodsDetailsHeaderView.m */; };
 		FC8053CE2332892D0021B2E8 /* BannerImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053CD2332892D0021B2E8 /* BannerImageCell.m */; };
+		FC8053D1233353960021B2E8 /* GoodsDetailsSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D0233353960021B2E8 /* GoodsDetailsSectionHeader.m */; };
+		FC8053D423335B630021B2E8 /* EvaluationTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D323335B630021B2E8 /* EvaluationTBCell.m */; };
+		FC8053D823336B190021B2E8 /* ShopTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D723336B190021B2E8 /* ShopTBCell.m */; };
 		FC8D484D231E69F900BF6635 /* MinePageHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D484C231E69F900BF6635 /* MinePageHeader.m */; };
 		FC8D4850231F521100BF6635 /* HelperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D484F231F521100BF6635 /* HelperTool.m */; };
 		FC8D4853231F641200BF6635 /* UIButton+FastSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D4852231F641200BF6635 /* UIButton+FastSetting.m */; };
@@ -130,6 +133,13 @@
 		FC8053CA233286B60021B2E8 /* GoodsDetailsHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailsHeaderView.m; sourceTree = "<group>"; };
 		FC8053CC2332892D0021B2E8 /* BannerImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BannerImageCell.h; sourceTree = "<group>"; };
 		FC8053CD2332892D0021B2E8 /* BannerImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BannerImageCell.m; sourceTree = "<group>"; };
+		FC8053CF233353960021B2E8 /* GoodsDetailsSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoodsDetailsSectionHeader.h; sourceTree = "<group>"; };
+		FC8053D0233353960021B2E8 /* GoodsDetailsSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailsSectionHeader.m; sourceTree = "<group>"; };
+		FC8053D223335B630021B2E8 /* EvaluationTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaluationTBCell.h; sourceTree = "<group>"; };
+		FC8053D323335B630021B2E8 /* EvaluationTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaluationTBCell.m; sourceTree = "<group>"; };
+		FC8053D623336B190021B2E8 /* ShopTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShopTBCell.h; sourceTree = "<group>"; };
+		FC8053D723336B190021B2E8 /* ShopTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopTBCell.m; sourceTree = "<group>"; };
+		FC8053D92333D02E0021B2E8 /* SH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FC8D484B231E69F900BF6635 /* MinePageHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinePageHeader.h; sourceTree = "<group>"; };
 		FC8D484C231E69F900BF6635 /* MinePageHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinePageHeader.m; sourceTree = "<group>"; };
 		FC8D484E231F521100BF6635 /* HelperTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperTool.h; sourceTree = "<group>"; };
@@ -295,6 +305,10 @@
 				FC8053A5232F56940021B2E8 /* SecondClassifyCVCell.m */,
 				FC8053C9233286B60021B2E8 /* GoodsDetailsHeaderView.h */,
 				FC8053CA233286B60021B2E8 /* GoodsDetailsHeaderView.m */,
+				FC8053CF233353960021B2E8 /* GoodsDetailsSectionHeader.h */,
+				FC8053D0233353960021B2E8 /* GoodsDetailsSectionHeader.m */,
+				FC8053D223335B630021B2E8 /* EvaluationTBCell.h */,
+				FC8053D323335B630021B2E8 /* EvaluationTBCell.m */,
 			);
 			path = "分类商品";
 			sourceTree = "<group>";
@@ -334,6 +348,15 @@
 				FC8053C7233283610021B2E8 /* LoaderPlaceholder.m */,
 			);
 			path = "加载灰色占位";
+			sourceTree = "<group>";
+		};
+		FC8053D523336B000021B2E8 /* 店铺 */ = {
+			isa = PBXGroup;
+			children = (
+				FC8053D623336B190021B2E8 /* ShopTBCell.h */,
+				FC8053D723336B190021B2E8 /* ShopTBCell.m */,
+			);
+			path = "店铺";
 			sourceTree = "<group>";
 		};
 		FC8D484A231E69CF00BF6635 /* Mine */ = {
@@ -528,6 +551,7 @@
 				FCA198D82317BD8900F08C43 /* LaunchScreen.storyboard */,
 				FCA198DB2317BD8900F08C43 /* Info.plist */,
 				FCA198DC2317BD8900F08C43 /* main.m */,
+				FC8053D92333D02E0021B2E8 /* SH-Bridging-Header.h */,
 				FCA1992C231E48F500F08C43 /* SHHeader.pch */,
 			);
 			name = "System&Resource";
@@ -566,6 +590,7 @@
 		FCA19907231D0E5000F08C43 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FC8053D523336B000021B2E8 /* 店铺 */,
 				FC8053A0232F367E0021B2E8 /* 分类商品 */,
 				FC8D48882325FB7D00BF6635 /* 复用View */,
 				FC8D48872325EE6D00BF6635 /* 首页 */,
@@ -760,6 +785,7 @@
 				TargetAttributes = {
 					FCA198C92317BD8700F08C43 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					FCA198E12317BD8900F08C43 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -885,6 +911,7 @@
 				FCA19918231E0FC800F08C43 /* AppDelegate+Init.m in Sources */,
 				FCA1992A231E461200F08C43 /* UIColor+Hex.m in Sources */,
 				FC8D486E231FB36700BF6635 /* UIViewController+BarButton.m in Sources */,
+				FC8053D1233353960021B2E8 /* GoodsDetailsSectionHeader.m in Sources */,
 				FC8053A6232F56940021B2E8 /* SecondClassifyCVCell.m in Sources */,
 				FC8D48BF23278DC200BF6635 /* DesignerModel.m in Sources */,
 				FC8D48B9232787FB00BF6635 /* GoodsListVC.m in Sources */,
@@ -893,6 +920,7 @@
 				FC8D4853231F641200BF6635 /* UIButton+FastSetting.m in Sources */,
 				FCA198D22317BD8700F08C43 /* ViewController.m in Sources */,
 				FC8D48B523276C7800BF6635 /* ColorfulFlowLayout.m in Sources */,
+				FC8053D823336B190021B2E8 /* ShopTBCell.m in Sources */,
 				FC8D485D231FA87000BF6635 /* WebViewVC.m in Sources */,
 				FC8D4850231F521100BF6635 /* HelperTool.m in Sources */,
 				FC8D48712320A4BD00BF6635 /* UITextField+Limit.m in Sources */,
@@ -930,6 +958,7 @@
 				FC8D48AF23276BCC00BF6635 /* ColorfulReusableView.m in Sources */,
 				FC8D48912326311700BF6635 /* HomeSceneCVCell.m in Sources */,
 				FC8D48BC23278D9400BF6635 /* SceneModel.m in Sources */,
+				FC8053D423335B630021B2E8 /* EvaluationTBCell.m in Sources */,
 				FC8D4861231FAA3800BF6635 /* LoginVC.m in Sources */,
 				FC8053C323327A580021B2E8 /* ZKCycleScrollViewFlowLayout.m in Sources */,
 				FCA1992B231E461200F08C43 /* UIImage+Color.m in Sources */,
@@ -1105,6 +1134,7 @@
 			baseConfigurationReference = 9D5780CD6A242BD715E14EFD /* Pods-SH.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D2P37LH92Q;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1117,6 +1147,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SH/Controller/首页/SH-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1126,6 +1159,7 @@
 			baseConfigurationReference = 45556A5D0A9FDEC0FCDE1944 /* Pods-SH.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D2P37LH92Q;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1138,6 +1172,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SH/Controller/首页/SH-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

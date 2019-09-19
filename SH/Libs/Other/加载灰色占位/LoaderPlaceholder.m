@@ -15,7 +15,7 @@
 
 static UInt8   cutoutHandle          = 0;
 static UInt8   gradientHandle        = 0;
-static CGFloat loaderDuration        = 0.85;
+static CGFloat loaderDuration        = 1.5;
 static CGFloat gradientWidth         = 0.17;
 static CGFloat gradientFirstStop     = 0.1;
 

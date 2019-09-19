@@ -27,7 +27,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _imageView.frame = self.contentView.bounds;
+    [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {

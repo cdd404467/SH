@@ -18,6 +18,7 @@
 #import "SearchAllKindsVC.h"
 #import "GoodsDetailsVC.h"
 
+
 static NSString *section_One = @"sceneCell";
 static NSString *section_Two = @"HomeDesignerListCVCell";
 static NSString *section_Four = @"HotGoodsCVCell";
@@ -225,7 +226,6 @@ static NSString *section_Header = @"section_Header";
         } else {
             
         }
-    
         return header;
     }
     return nil;
