@@ -10,24 +10,67 @@
 #import "SearchView.h"
 #import "NetTool.h"
 #import "HomeSceneCVCell.h"
+#import "MaterialCVCell.h"
+#import "ShopCVCell.h"
+#import "GoodsCVCell.h"
+#import "DesignerCVCell.h"
 #import "HomePageModel.h"
+#import "MaterialModel.h"
+#import "ShopModel.h"
+#import "SelectLabView.h"
+
+#import "GoodsDetailsVC.h"
+#import "MaterialDetailsVC.h"
+#import "DesignerMainPageVC.h"
+#import "SceneDetailsVC.h"
 
 static NSString *sceneCVID = @"sceneCell";
-
+static NSString *materialCVID = @"MaterialCVCell";
+static NSString *shopCVID = @"ShopCVCell";
+static NSString *goodsCVID = @"GoodsCVCell";
+static NSString *designerCVID = @"designerCVCell";
 @interface SearchResultVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) SearchView *searchView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *classifyDataSource;
+@property (nonatomic, copy) NSString *labsID;
 @end
 
 @implementation SearchResultVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"场景列表";
+    self.labsID = @"";
+    if (_type == 1) {
+        self.navBar.title = @"商品列表";
+    } else if (_type == 2) {
+        self.navBar.title = @"场景列表";
+    } else if (_type == 3) {
+        self.navBar.title = @"店铺列表";
+    } else if (_type == 4) {
+        [self requestClassify];
+        self.navBar.title = @"设计师列表";
+        [self.navBar.rightBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateNormal];
+        [self.navBar.rightBtn addTarget:self action:@selector(selectLabs) forControlEvents:UIControlEventTouchUpInside];
+    } else if (_type == 5) {
+        self.navBar.title = @"素材列表";
+    }
+    
     [self setupUI];
     [self.view addSubview:self.collectionView];
     [self requestData];
+}
+
+- (void)selectLabs {
+    SelectLabView *view = [[SelectLabView alloc] init];
+    view.dataSource = self.classifyDataSource;
+    DDWeakSelf;
+    view.completeBlock = ^(NSString * _Nonnull labsID) {
+        weakself.labsID = labsID;
+        [weakself requestData];
+    };
+    [view show];
 }
 
 - (void)setupUI {
@@ -37,6 +80,7 @@ static NSString *sceneCVID = @"sceneCell";
     searchView.searchTF.text = _keyWords;
     DDWeakSelf;
     searchView.searchBlock = ^{
+        [weakself.searchView.searchTF resignFirstResponder];
         [weakself requestData];
     };
     [self.view addSubview:searchView];
@@ -53,38 +97,81 @@ static NSString *sceneCVID = @"sceneCell";
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        if (_type == 4) {
+            layout.estimatedItemSize = CGSizeMake(SCREEN_WIDTH - 20, 215);
+        }
         CGRect rect = CGRectMake(0, self.searchView.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - self.searchView.bottom);
         _collectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
         _collectionView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-//        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        _collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif, 0);
+        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif, 0);
+        _collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:sceneCVID];
-        
+        [_collectionView registerClass:[MaterialCVCell class] forCellWithReuseIdentifier:materialCVID];
+        [_collectionView registerClass:[ShopCVCell class] forCellWithReuseIdentifier:shopCVID];
+        [_collectionView registerClass:[GoodsCVCell class] forCellWithReuseIdentifier:goodsCVID];
+        [_collectionView registerClass:[DesignerCVCell class] forCellWithReuseIdentifier:designerCVID];
     }
     
     return _collectionView;
 }
 
 - (void)requestData {
-    NSString *urlString = [NSString stringWithFormat:URLGet_Index_SearchAppoint,(int)_type,_searchView.searchTF.text,1,@"",PageCount,self.pageNumber];
+//    NSString *keyWord = _searchView.searchTF.text;
+    NSString *keyWord = @"";
+    NSString *urlString = [NSString stringWithFormat:URLGet_Index_SearchAppoint,(int)_type,keyWord,1,_labsID,PageCount,self.pageNumber];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-                NSLog(@"----   %@",json);
-        NSArray *tempArr = [SceneModel mj_objectArrayWithKeyValuesArray:json[@"list"]];
+//        NSLog(@"----   %@",json);
+        NSArray *tempArr = [self chooseSearchType:json];
         [self.dataSource addObjectsFromArray:tempArr];
         [self.collectionView reloadData];
-        
+        [self.collectionView  scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     } Failure:^(NSError * _Nonnull error) {
         
     }];
 }
 
+//设计师的素材分类
+- (void)requestClassify {
+    [NetTool getRequest:URLGet_Material_Labs Params:nil Success:^(id  _Nonnull json) {
+//        NSLog(@"----   %@",json);
+        NSArray *tempArr = json;
+        self.classifyDataSource = [LabelSelectModel mj_objectArrayWithKeyValuesArray:tempArr];
+        self.navBar.rightBtn.hidden = NO;
+    } Failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+
+- (NSArray *)chooseSearchType:(id)json {
+    NSArray *tempArr = json[@"list"];
+    if (_type == 1) {
+        tempArr = [GoodsModel mj_objectArrayWithKeyValuesArray:tempArr];
+    }
+    else if (_type == 2) {
+        tempArr = [SceneModel mj_objectArrayWithKeyValuesArray:tempArr];
+    }
+    else if (_type == 3) {
+        tempArr = [ShopModel mj_objectArrayWithKeyValuesArray:tempArr];
+    }
+    else if (_type == 4) {
+        tempArr = [DesignerModel mj_objectArrayWithKeyValuesArray:tempArr];
+    }
+    else if (_type == 5) {
+        tempArr = [MaterialModel mj_objectArrayWithKeyValuesArray:tempArr];
+        for (MaterialModel *model in tempArr) {
+            model.labelInfoList = [LabelModel mj_objectArrayWithKeyValuesArray:model.labelInfoList];
+        }
+    }
+    return tempArr;
+}
+
+//1 商品 2 场景 3 店铺 4 设计师 5 素材
 #pragma mark - collectionView delegate
 /** 每组几个cell*/
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -93,29 +180,112 @@ static NSString *sceneCVID = @"sceneCell";
 
 //cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
+    if (_type == 1) {
+        CGFloat imageWidth = (SCREEN_WIDTH - 16 * 2 - 10) / 2;
+        return CGSizeMake(imageWidth , imageWidth + 96);
+    }
+    else if (_type == 2) {
+        return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
+    }
+    else if (_type == 3) {
+        return CGSizeMake(SCREEN_WIDTH - 20 , 130);
+    }
+    else if (_type == 4) {
+        return CGSizeMake(SCREEN_WIDTH - 20 , 215);
+    }
+    else if (_type == 5 ) {
+        return CGSizeMake(SCREEN_WIDTH , 130);
+    }
+    return CGSizeZero;
 }
 
 //cell行间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
+    if (_type == 1) {
+        return 10;
+    }
+    else if (_type == 3 || _type == 4) {
+        return 8;
+    }
+    return 0;
 }
 
 //cell列间距
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    if (_type == 1) {
+        return 10;
+    }
     return 0;
 }
 
 //section四周的边距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, 0, 10, 0);
+    if (_type == 1) {
+        return UIEdgeInsetsMake(8, 16, 10, 16);
+    }
+    else if (_type == 3 || _type == 4) {
+        return UIEdgeInsetsMake(10, 10, 0, 10);
+    }
+    return UIEdgeInsetsMake(0, 0, 0, 0);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (_type == 1) {
+        GoodsDetailsVC *vc = [[GoodsDetailsVC alloc] init];
+        GoodsModel *model = self.dataSource[indexPath.row];
+        vc.goodsID = model.goodsId;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (_type == 2) {
+        SceneDetailsVC *vc = [[SceneDetailsVC alloc] init];
+        SceneModel *model = self.dataSource[indexPath.row];
+        vc.sceneId = model.sceneId.intValue;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (_type == 3) {
+        
+    } else if (_type == 4) {
+        
+    } else if (_type == 5) {
+        MaterialDetailsVC *vc = [[MaterialDetailsVC alloc] init];
+        vc.materialId = [self.dataSource[indexPath.row] materialId];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 //数据源
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    HomeSceneCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:sceneCVID forIndexPath:indexPath];
-    cell.model = self.dataSource[indexPath.row];
-    return cell;
+    if (_type == 1) {
+        GoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:goodsCVID forIndexPath:indexPath];
+        cell.model = self.dataSource[indexPath.row];
+        return cell;
+    }
+    else if (_type == 2) {
+        HomeSceneCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:sceneCVID forIndexPath:indexPath];
+        cell.model = self.dataSource[indexPath.row];
+        return cell;
+    }
+    else if (_type == 3) {
+        ShopCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:shopCVID forIndexPath:indexPath];
+        cell.model = self.dataSource[indexPath.row];
+        return cell;
+    }
+    else if (_type == 4) {
+        DesignerCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:designerCVID forIndexPath:indexPath];
+        cell.model = self.dataSource[indexPath.row];
+        DDWeakSelf;
+        cell.clickBlock = ^{
+            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
+            DesignerModel *model = self.dataSource[indexPath.row];
+            vc.designerId = model.designerId;
+            [weakself.navigationController pushViewController:vc animated:YES];
+        };
+        return cell;
+    }
+    else if (_type == 5) {
+        MaterialCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:materialCVID forIndexPath:indexPath];
+        cell.model = self.dataSource[indexPath.row];
+        return cell;
+    }
+    return [[UICollectionViewCell alloc] init];
 }
 
 @end

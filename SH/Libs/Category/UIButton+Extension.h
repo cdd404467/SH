@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, ButtonEdgeInsetsStyle) {
     ButtonEdgeInsetsStyleBottom, // image在下，label在上
     ButtonEdgeInsetsStyleRight // image在右，label在左
 };
+
 @interface UIButton (Extension)
 
 /**
@@ -26,6 +27,9 @@ typedef NS_ENUM(NSUInteger, ButtonEdgeInsetsStyle) {
  */
 - (void)layoutWithEdgeInsetsStyle:(ButtonEdgeInsetsStyle)style
                         imageTitleSpace:(CGFloat)space;
+
+//按钮block
+- (void)addEventHandler:(void(^)(void))block;
 @end
 
 NS_ASSUME_NONNULL_END

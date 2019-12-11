@@ -7,7 +7,6 @@
 //
 
 #import "SecondClassifyCVCell.h"
-#import <UIImageView+WebCache.h>
 #import "ClassifyModel.h"
 
 @interface SecondClassifyCVCell()
@@ -49,7 +48,8 @@
 - (void)setModel:(ClassifyModel *)model {
     _model = model;
     
-    [_goodsImageView sd_setImageWithURL:ImgUrl_SD(model.img) placeholderImage:TestImage];
+    int width = (SCREEN_WIDTH - KFit_W(100) - 20 * 2 - 25 * 2) / 3 * 2;
+    [_goodsImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.img, width) placeholderImage:PlaceHolderImg];
     _nameLab.text = model.name;
 }
 

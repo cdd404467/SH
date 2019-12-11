@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "LoginVC.h"
 
 @interface BaseViewController ()
 
@@ -27,14 +28,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-//    if (@available(iOS 11.0, *)) {
-//
-//    } else {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
+    if (@available(iOS 11.0, *)) {
+
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationController.navigationBar.hidden = YES;
+    _navBar = [[CustomNavBar alloc] init];
+    [self.view addSubview:_navBar];
+//    [self.view insertSubview:_navBar atIndex:1001];
+    _backBtn = _navBar.leftBtn;
+    if (self.navigationController.viewControllers.count > 1) {
+        _navBar.leftBtn.hidden = NO;
+        [_navBar.leftBtn addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
+    
     _backBtn = self.mainNavController.backBtn;
-    [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleTransition];
+    
 }
 
 - (void)setBackBtnTintColor:(UIColor *)backBtnTintColor {
@@ -47,7 +60,7 @@
         imageName = @"close_back";
     }
     UIImage *image = [UIImage imageNamed:imageName];
-    [_backBtn setImage:[image imageWithTintColor:backBtnTintColor] forState:UIControlStateNormal];
+    [_backBtn setImage:[image imageWithTintColor_My:backBtnTintColor] forState:UIControlStateNormal];
     _backBtn.tintColor = backBtnTintColor;
 }
 
@@ -69,18 +82,26 @@
     _backBtn.backgroundColor = backBtnBgColor;
 }
 
-//- (void)jumpToLoginWithComplete:(void (^ __nullable)(void))handler {
-//    LoginVC *vc = [[LoginVC alloc] init];
+- (void)jumpToLoginWithComplete:(void (^ __nullable)(void))handler {
+    LoginVC *vc = [[LoginVC alloc] init];
 //    vc.isJump = NO;
-//    vc.loginCompleteBlock = ^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (handler) {
-//                handler();
-//            }
-//        });
-//    };
-//    BaseNavigationController *navVC = [[BaseNavigationController alloc] initWithRootViewController:vc];
-//    [self presentViewController:navVC animated:YES completion:nil];
-//}
+    vc.loginCompleteBlock = ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (handler) {
+                handler();
+            }
+        });
+    };
+    BaseNavigationController *navVC = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    navVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:navVC animated:YES completion:nil];
+}
+
+
+- (void)popViewController {
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 @end

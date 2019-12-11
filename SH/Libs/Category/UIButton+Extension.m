@@ -7,6 +7,14 @@
 //
 
 #import "UIButton+Extension.h"
+#import <objc/runtime.h>
+
+typedef void(^ButtonEventsBlock)(void);
+
+@interface UIButton()
+/** 事件回调的block */
+@property (nonatomic, copy) ButtonEventsBlock buttonEventsBlock;
+@end
 
 @implementation UIButton (Extension)
 - (void)layoutWithEdgeInsetsStyle:(ButtonEdgeInsetsStyle)style
@@ -71,4 +79,29 @@
     self.titleEdgeInsets = labelEdgeInsets;
     self.imageEdgeInsets = imageEdgeInsets;
 }
+
+#pragma mark - button的block
+//------- 添加属性 -------//
+
+static void *my_buttonEventsBlockKey = &my_buttonEventsBlockKey;
+
+- (ButtonEventsBlock)buttonEventsBlock {
+    return objc_getAssociatedObject(self, &my_buttonEventsBlockKey);
+}
+
+- (void)setButtonEventsBlock:(ButtonEventsBlock)buttonEventsBlock {
+    objc_setAssociatedObject(self, &my_buttonEventsBlockKey, buttonEventsBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (void)addEventHandler:(void (^)(void))block {
+    self.buttonEventsBlock = block;
+    [self addTarget:self action:@selector(addEventHandler) forControlEvents:UIControlEventTouchUpInside];
+}
+
+// 按钮点击
+- (void)addEventHandler {
+    !self.buttonEventsBlock ?: self.buttonEventsBlock();
+}
+
+
 @end

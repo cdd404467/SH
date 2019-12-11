@@ -7,7 +7,6 @@
 //
 
 #import "BannerImageCell.h"
-#import <UIImageView+WebCache.h>
 
 @interface BannerImageCell()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -34,7 +33,7 @@
 
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
-    [_imageView sd_setImageWithURL:_imageURL placeholderImage:TestImage];
+    [_imageView sd_setImageWithURL:_imageURL placeholderImage:PlaceHolderImg];
 }
 
 @end

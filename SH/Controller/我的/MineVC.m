@@ -9,6 +9,9 @@
 #import "MineVC.h"
 #import "MinePageHeader.h"
 #import "LoginVC.h"
+#import "ShopCarVC.h"
+#import "ReceiverAddressVC.h"
+
 
 @interface MineVC ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -21,10 +24,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我的";
-    [self vhl_setNavBarTitleColor:UIColor.whiteColor];
-    [self vhl_setNavBarBackgroundColor:HEXColor(@"#333434", 1)];
-    [self.view addSubview:self.tableView];
+    self.navBar.title = @"我的";
+    self.navBar.backgroundColor = HEXColor(@"#333434", 1);
+    self.navBar.titleLabel.textColor = UIColor.whiteColor;
+    [self.view insertSubview:self.tableView belowSubview:self.navBar];
 }
 
 #pragma mark - 初始化
@@ -72,6 +75,7 @@
         _tableView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _tableView.separatorColor = HEXColor(@"#e1e1e1", 1);
         _tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+        _tableView.rowHeight = 50.f;
         //取消垂直滚动条
         _tableView.showsVerticalScrollIndicator = NO;
         if (@available(iOS 11.0, *)) {
@@ -80,7 +84,7 @@
             _tableView.estimatedSectionFooterHeight = 0;
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } 
-        _tableView.contentInset = UIEdgeInsetsMake(NAV_HEIGHT, 0, TABBAR_HEIGHT, 0);
+        _tableView.contentInset = UIEdgeInsetsMake(NAV_HEIGHT, 0, TABBAR_HEIGHT + 20, 0);
         _tableView.scrollIndicatorInsets = _tableView.contentInset;
         _tableView.tableHeaderView = self.tableHeader;
     }
@@ -104,11 +108,6 @@
     return [self.titleArray[section] count];
 }
 
-//cell的高度
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
-}
-
 //section header的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 10;
@@ -122,7 +121,24 @@
 //cell点击
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-   
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+            {
+                ShopCarVC *vc = [[ShopCarVC alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 1:
+            {
+                ReceiverAddressVC *vc = [[ReceiverAddressVC alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                
+            default:
+                break;
+        }
+    }
 }
 
 //数据源

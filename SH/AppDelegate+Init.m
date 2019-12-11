@@ -8,8 +8,7 @@
 
 #import "AppDelegate+Init.h"
 #import "MainTabbarVC.h"
-#import <IQKeyboardManager.h>
-#import "VHLNavigation.h"
+#import "IQKeyboardManager.h"
 
 @implementation AppDelegate (Init)
 
@@ -24,13 +23,16 @@
     //初始化window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
+    if(@available(iOS 13.0,*)) {
+        self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+    }
     //加载根视图视图
     MainTabbarVC *rootVC = [[MainTabbarVC alloc] init];
 //    rootVC.selectedIndex = 0;
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
-    [VHLNavigation vhl_setDefaultNavBackgroundColor:UIColor.whiteColor];
-    [VHLNavigation vhl_setDefaultNavBarShadowImageHidden:YES];
+//    [VHLNavigation vhl_setDefaultNavBackgroundColor:UIColor.whiteColor];
+//    [VHLNavigation vhl_setDefaultNavBarShadowImageHidden:YES];
 }
 
 

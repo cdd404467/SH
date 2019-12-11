@@ -38,7 +38,7 @@
     _headImageview = [[UIImageView alloc] init];
     _headImageview.frame = CGRectMake(15, 15, 40, 40);
     _headImageview.contentMode = UIViewContentModeScaleAspectFill;
-    _headImageview.image = TestImage;
+    _headImageview.image = PlaceHolderImg;
     [self.contentView addSubview:_headImageview];
     [HelperTool drawRound:_headImageview];
     

@@ -26,8 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self vhl_setNavBarBackgroundColor:UIColor.whiteColor];
-    [self vhl_setNavBarShadowImageHidden:YES];
+//    [self vhl_setNavBarBackgroundColor:UIColor.whiteColor];
+//    [self vhl_setNavBarShadowImageHidden:YES];
     [self setCompleteDBtn];
     [self setCancelBtn];
 }

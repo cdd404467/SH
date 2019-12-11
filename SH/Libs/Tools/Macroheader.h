@@ -14,7 +14,7 @@
 #import "QuickTool.h"
 
 
-#define TestImage [UIImage imageNamed:@"app_icon"]
+#define PlaceHolderImg [UIImage imageNamed:@"app_icon"]
 
 //十六进制颜色转换
 #define HEXColor(string,alpha) [UIColor colorWithHexString:(string) andAlpha:(alpha)]
@@ -24,7 +24,9 @@
 //全局主题色
 #define MainColor [UIColor colorWithHexString:@"#FF5100"]
 #define Like_Color HEXColor(@"#ededed", 1)
-#define ImgUrl_SD(urlStr) [NSURL URLWithString:urlStr]
+//#define ImgUrl_SD(urlStr) [NSURL URLWithString:urlStr]
+#define ImgUrl_SD_OSS(urlStr,width) [NSURL URLWithString:[urlStr stringByAppendingString:[NSString stringWithFormat:@"?x-oss-process=image/resize,w_%d",width]]]
+#define MainBgColor HEXColor(@"#F6F6F6", 1)
 
 // 适配宽比例
 #define Scale_W [UIScreen mainScreen].bounds.size.width / 375.f
@@ -43,7 +45,7 @@
 
 /*** 适配iPhoneX 顶部和底部 ***/
 //返回状态栏高度
-#define STATEBAR_HEIGHT (iPhoneX ? 44.f : 20.f)
+#define STATEBAR_HEIGHT UIApplication.sharedApplication.statusBarFrame.size.height
 //返回tabbar的高度
 #define TABBAR_HEIGHT (iPhoneX ? (49.f + 34.f) : 49.f)
 //返回导航栏高度
@@ -71,7 +73,7 @@
 //NSUserDefaults
 #define UserDefault [NSUserDefaults standardUserDefaults]
 //存储的手机号
-#define User_Phone [UserDefault objectForKey:@"phoneNumber"]
+#define User_Phone [UserDefault objectForKey:@"userPhoneNumber"]
 //判断userToken
 #define Get_User_Token [User_Info objectForKey:@"userToken"]
 //存储的token

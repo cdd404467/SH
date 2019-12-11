@@ -18,14 +18,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navBar.title = self.title;
     [self setupUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_searchView.searchTF becomeFirstResponder];
 }
 
 - (void)setupUI {
     SearchView *searchView = [[SearchView alloc] init];
     searchView.top = NAV_HEIGHT;
     searchView.searchTF.placeholder = self.title;
-    [searchView.searchTF becomeFirstResponder];
     DDWeakSelf;
     searchView.searchBlock = ^{
         [weakself jumpToResult];
@@ -33,6 +38,7 @@
     [self.view addSubview:searchView];
     _searchView = searchView;
 }
+
 
 - (void)jumpToResult {
     [self.view endEditing:YES];

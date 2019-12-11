@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (Color)
-+ (UIImage * _Nonnull)imageWithColor:(UIColor * _Nonnull)color size:(CGSize)size;
-+ (UIImage * _Nonnull)imageWithColor:(UIColor * _Nonnull)color;
++ (UIImage * _Nonnull) imageWithColor:(UIColor * _Nonnull)color size:(CGSize)size;
++ (UIImage * _Nonnull) imageWithColor:(UIColor * _Nonnull)color;
 
-- (UIImage *_Nullable) imageWithTintColor:(UIColor *_Nullable)tintColor;
+- (UIImage *_Nullable) imageWithTintColor_My:(UIColor *_Nullable)tintColor;
 
++ (UIImage *_Nullable)imageWithGradientColor:(NSArray *_Nullable)colors andRect:(CGRect)bounds  andGradientType:(int)gradientType;
 @end

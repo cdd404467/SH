@@ -8,7 +8,6 @@
 
 #import "SceneView.h"
 #import "SceneModel.h"
-#import <UIImageView+WebCache.h>
 
 @interface SceneView()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -28,22 +27,32 @@
 
 - (void)setupUI {
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(20, 0, SCREEN_WIDTH - 40, KFit_W(200));
-    imageView.image = TestImage;
+    imageView.image = PlaceHolderImg;
     [self addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.top.mas_equalTo(0);
+        make.height.mas_equalTo(KFit_W(200));
+    }];
     _imageView = imageView;
     
     UILabel *explainLab = [[UILabel alloc] init];
-    explainLab.frame = CGRectMake(imageView.left, imageView.bottom + 10, imageView.width, 20);
     explainLab.font = [UIFont systemFontOfSize:14];
     explainLab.textColor = HEXColor(@"#4A4A4A", 1);
     [self addSubview:explainLab];
+    [explainLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(imageView);
+        make.top.mas_equalTo(imageView.mas_bottom).offset(10);
+        make.height.mas_equalTo(20);
+    }];
     _explainLab = explainLab;
 }
 
 - (void)setModel:(SceneModel *)model {
     _model = model;
-    [self.imageView sd_setImageWithURL:ImgUrl_SD(model.logo) placeholderImage:TestImage];
+    int width = (SCREEN_WIDTH - 40) * 2;
+    [self.imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, width) placeholderImage:PlaceHolderImg];
     self.explainLab.text = model.detail;
 }
 

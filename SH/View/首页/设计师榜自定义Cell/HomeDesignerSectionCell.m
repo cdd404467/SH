@@ -8,7 +8,6 @@
 
 #import "HomeDesignerSectionCell.h"
 #import "DesignerModel.h"
-#import <UIImageView+WebCache.h>
 
 @interface HomeDesignerSectionCell()
 @property (nonatomic, strong) UIImageView *bgView;
@@ -93,13 +92,13 @@
 - (void)setModel:(DesignerModel *)model {
     _model = model;
     //设置背景
-    if (_rank == 1) {
+    if (_rank == 0) {
         _bgView.image = [UIImage imageNamed:@"designer_bg_NO1"];
     } else {
         _bgView.image = [UIImage imageNamed:@"designer_bg_other"];
     }
     
-    [_headerView sd_setImageWithURL:ImgUrl_SD(model.headimgurl) placeholderImage:TestImage];
+    [_headerView sd_setImageWithURL:ImgUrl_SD_OSS(model.headimgurl,120) placeholderImage:PlaceHolderImg];
     _rankImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ranking_NO%ld",(long)_rank + 1]];
     _designerLevel.text = [NSString stringWithFormat:@"lv%ld",(long)model.level];
     

@@ -32,6 +32,7 @@ static NSString *cellid = @"designer";
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        //水平滚动
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH, 150);
         _collectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
@@ -45,7 +46,6 @@ static NSString *cellid = @"designer";
         }
         
         [_collectionView registerClass:[HomeDesignerSectionCell class] forCellWithReuseIdentifier:cellid];
-        
     }
     
     return _collectionView;
@@ -77,6 +77,14 @@ static NSString *cellid = @"designer";
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     
     return UIEdgeInsetsMake(0, 15, 0, 15);
+}
+
+//点击
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    DesignerModel *model = self.designerArr[indexPath.row];
+    if (self.clickBlock) {
+        self.clickBlock(model.designerId);
+    }
 }
 
 //数据源

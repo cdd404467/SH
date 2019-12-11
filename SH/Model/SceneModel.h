@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SceneModel : NSObject
-
 //场景图片
 @property (nonatomic, copy) NSString *icon;
 //场景名字

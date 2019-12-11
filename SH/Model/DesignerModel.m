@@ -10,4 +10,26 @@
 
 @implementation DesignerModel
 
+- (NSArray *)labelArray {
+    if (!_labelArray) {
+        _labelArray = [self.labelNames componentsSeparatedByString:@","];
+    }
+    return _labelArray;
+}
+
+@end
+
+@implementation FinishedWorkModel
+
+
+@end
+
+@implementation DynamicImgModel
+
+
+@end
+
+@implementation DynamicStateModel
+
+
 @end

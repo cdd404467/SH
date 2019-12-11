@@ -14,45 +14,96 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - BRPickerView (2.4.5):
+    - BRPickerView/AddressPickerView (= 2.4.5)
+    - BRPickerView/Base (= 2.4.5)
+    - BRPickerView/DatePickerView (= 2.4.5)
+    - BRPickerView/StringPickerView (= 2.4.5)
+  - BRPickerView/AddressPickerView (2.4.5):
+    - BRPickerView/Base
+  - BRPickerView/Base (2.4.5)
+  - BRPickerView/DatePickerView (2.4.5):
+    - BRPickerView/Base
+  - BRPickerView/StringPickerView (2.4.5):
+    - BRPickerView/Base
   - CYLTabBarController (1.28.3):
     - CYLTabBarController/Core (= 1.28.3)
   - CYLTabBarController/Core (1.28.3)
+  - FLAnimatedImage (1.0.12)
   - IQKeyboardManager (6.4.0)
+  - JXCategoryView (1.5.2)
+  - JXPagingView/Pager (1.1.19)
   - Masonry (1.1.0)
   - MJExtension (3.1.0)
   - SDWebImage (5.1.0):
     - SDWebImage/Core (= 5.1.0)
   - SDWebImage/Core (5.1.0)
+  - Somo (0.8.0)
+  - XHLaunchAd (3.9.8):
+    - FLAnimatedImage (~> 1.0.12)
+  - YBImageBrowser (3.0.6):
+    - YBImageBrowser/Core (= 3.0.6)
+  - YBImageBrowser/Core (3.0.6):
+    - SDWebImage (>= 5.0.0)
+    - YYImage
+  - YBImageBrowser/Video (3.0.6):
+    - YBImageBrowser/Core
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
   - YYText (1.0.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.2.1)
+  - BRPickerView (~> 2.4.5)
   - CYLTabBarController (~> 1.28.3)
   - IQKeyboardManager (~> 6.4.0)
+  - JXCategoryView (~> 1.5.2)
+  - JXPagingView/Pager
   - Masonry (~> 1.1.0)
   - MJExtension (~> 3.1.0)
   - SDWebImage (~> 5.1.0)
+  - Somo (~> 0.8.0)
+  - XHLaunchAd (~> 3.9.8)
+  - YBImageBrowser (~> 3.0.6)
+  - YBImageBrowser/Video
   - YYText (~> 1.0.7)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - BRPickerView
     - CYLTabBarController
+    - FLAnimatedImage
     - IQKeyboardManager
+    - JXCategoryView
+    - JXPagingView
     - Masonry
     - MJExtension
     - SDWebImage
+    - Somo
+    - XHLaunchAd
+    - YBImageBrowser
+    - YYImage
     - YYText
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  BRPickerView: 0bd32f1fc4e338ecf6643b5e82f7a7c77db68cbe
   CYLTabBarController: cd14c6260a38337600737873a57b3114c7065a8e
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IQKeyboardManager: fcef267266379c003181fc3592f6bdb8bf4db839
+  JXCategoryView: b284d35a7a8772eada05dd78642233e1eb763ea8
+  JXPagingView: d28c0e245b850cdb47e3f04c07d8c35e30c18531
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
   SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
+  Somo: 1e2335634d16babfb361c77b9cde743c5f45154b
+  XHLaunchAd: 45048592af01aa501c9d2d0c45e95ca74c4d0596
+  YBImageBrowser: 59d3e8e035351a9f2f89760742628329378a634b
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 35aa30fb60870fa1671cf2728d1959f98f15b3d7
+PODFILE CHECKSUM: c1e77ba26f3fb2a21832e845774a17b86f93478b
 
 COCOAPODS: 1.5.3

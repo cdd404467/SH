@@ -8,7 +8,6 @@
 
 #import "BaseNavigationController.h"
 
-
 @interface BaseNavigationController ()<UIGestureRecognizerDelegate>
 
 @end
@@ -46,17 +45,18 @@
 {
     if (self.childViewControllers.count > 0) {
         viewController.hidesBottomBarWhenPushed = YES;
+    
         //返回按钮自定义
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 38, 38)];
-        _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _backBtn.layer.cornerRadius = 4.f;
-        _backBtn.clipsToBounds = YES;
-        _backBtn.frame = CGRectMake(0, 0, 38, 38);
-        [_backBtn setImage:[UIImage imageNamed:@"popBack"] forState:UIControlStateNormal];
-        [_backBtn addTarget:self action:@selector(popBack) forControlEvents:UIControlEventTouchUpInside];
-        [view addSubview:_backBtn];
-        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
-        viewController.navigationItem.leftBarButtonItem = leftBarButtonItem;
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 38, 38)];
+//        _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        _backBtn.layer.cornerRadius = 4.f;
+//        _backBtn.clipsToBounds = YES;
+//        _backBtn.frame = CGRectMake(0, 0, 38, 38);
+//        [_backBtn setImage:[UIImage imageNamed:@"popBack"] forState:UIControlStateNormal];
+//        [_backBtn addTarget:self action:@selector(popBack) forControlEvents:UIControlEventTouchUpInside];
+//        [view addSubview:_backBtn];
+//        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+//        viewController.navigationItem.leftBarButtonItem = leftBarButtonItem;
     }
     [super pushViewController:viewController animated:animated];
 }

@@ -25,6 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 //水平渐变
 + (void)addLayerHorizontal:(UIView *)view startColor:(UIColor *)sColor endColor:(UIColor *)eColor;
 
+//image画画圆角
++ (UIImage*)originImage:(UIImage *)image scaleToSize:(CGSize)size;
+
++ (NSString*)dictionaryToJson:(NSDictionary *)dic;
+
++ (UIImage *)globalGradientColor:(CGRect)rect;
 @end
 
 NS_ASSUME_NONNULL_END

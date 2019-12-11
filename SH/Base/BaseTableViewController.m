@@ -27,13 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-    [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleTransition];
+//    [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleTransition];
 }
 
 - (void)setBackBtnTintColor:(UIColor *)backBtnTintColor {
     _backBtnTintColor = backBtnTintColor;
     UIImage *image = [UIImage imageNamed:@"popBack"];
-    [_backBtn setImage:[image imageWithTintColor:backBtnTintColor] forState:UIControlStateNormal];
+    [_backBtn setImage:[image imageWithTintColor_My:backBtnTintColor] forState:UIControlStateNormal];
     _backBtn.tintColor = backBtnTintColor;
 }
 

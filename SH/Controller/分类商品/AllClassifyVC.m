@@ -27,7 +27,7 @@ static NSString *cvID = @"SecondClassifyCVCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"全部分类";
+    self.navBar.titleLabel.text = @"全部分类";
     [self.view addSubview:self.leftTableView];
     [self.view addSubview:self.rightCollectionView];
     [self setupUI];
@@ -44,7 +44,7 @@ static NSString *cvID = @"SecondClassifyCVCell";
 //懒加载tableView
 - (UITableView *)leftTableView {
     if (!_leftTableView) {
-        _leftTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KFit_W(100), SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _leftTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, KFit_W(100), SCREEN_HEIGHT - NAV_HEIGHT) style:UITableViewStylePlain];
         _leftTableView.delegate = self;
         _leftTableView.dataSource = self;
         _leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -58,8 +58,7 @@ static NSString *cvID = @"SecondClassifyCVCell";
             _leftTableView.estimatedSectionFooterHeight = 0;
             _leftTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        _leftTableView.contentInset = UIEdgeInsetsMake(NAV_HEIGHT, 0, Bottom_Height_Dif + 20, 0);
-        _leftTableView.scrollIndicatorInsets = UIEdgeInsetsMake(NAV_HEIGHT, 0, Bottom_Height_Dif, 0);
+        _leftTableView.contentInset = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif + 20, 0);
     }
     return _leftTableView;
 }
@@ -76,7 +75,7 @@ static NSString *cvID = @"SecondClassifyCVCell";
         layout.minimumInteritemSpacing = itemSpace;
         layout.minimumLineSpacing = lineSpace;
         layout.sectionInset = UIEdgeInsetsMake(5, edgeSpace, edgeSpace, edgeSpace);
-        CGRect rect = CGRectMake(KFit_W(100), 0, SCREEN_WIDTH - KFit_W(100), SCREEN_HEIGHT);
+        CGRect rect = CGRectMake(KFit_W(100), NAV_HEIGHT, SCREEN_WIDTH - KFit_W(100), SCREEN_HEIGHT - NAV_HEIGHT);
         _rightCollectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
         _rightCollectionView.backgroundColor = UIColor.whiteColor;
         _rightCollectionView.delegate = self;
@@ -84,8 +83,7 @@ static NSString *cvID = @"SecondClassifyCVCell";
         if (@available(iOS 11.0, *)) {
             _rightCollectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        _rightCollectionView.contentInset = UIEdgeInsetsMake(NAV_HEIGHT + 50, 0, Bottom_Height_Dif + 20, 0);
-        _rightCollectionView.scrollIndicatorInsets = UIEdgeInsetsMake(NAV_HEIGHT, 0, Bottom_Height_Dif, 0);
+        _rightCollectionView.contentInset = UIEdgeInsetsMake(50, 0, Bottom_Height_Dif + 20, 0);
         [_rightCollectionView registerClass:[SecondClassifyCVCell class] forCellWithReuseIdentifier:cvID];
         
     }

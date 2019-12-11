@@ -7,7 +7,7 @@
 //
 
 #import "ShopTBCell.h"
-#import <YYText.h>
+#import "YYText.h"
 
 @interface ShopTBCell()
 @property (nonatomic, strong) UIImageView *shopImageView;
@@ -37,10 +37,11 @@
     return self;
 }
 
+
 - (void)setupUI {
     _shopImageView = [[UIImageView alloc] init];
     _shopImageView.frame = CGRectMake(15, 10, 110, 110);
-    _shopImageView.image = TestImage;
+    _shopImageView.image = PlaceHolderImg;
     [self.contentView addSubview:_shopImageView];
     [HelperTool drawRound:_shopImageView radiu:8.f];
     
@@ -105,7 +106,7 @@
 
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
-    static NSString *identifier = @"EvaluationTBCell";
+    static NSString *identifier = @"ShopTBCell";
     ShopTBCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[ShopTBCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];

@@ -12,45 +12,42 @@
 #import "HomePageModel.h"
 #import "HomeSceneCVCell.h"
 #import "HomeDesignerListCVCell.h"
-#import "HotGoodsCVCell.h"
+#import "SceneIconCVCell.h"
+#import "GoodsCVCell.h"
 #import "ColorfulFlowLayout.h"
 #import "AllClassifyVC.h"
 #import "SearchAllKindsVC.h"
 #import "GoodsDetailsVC.h"
+#import "SceneDetailsVC.h"
+#import "HomePageHeaderView.h"
+#import "MoreFooterView.h"
+#import "DesignerMainPageVC.h"
 
-
-static NSString *section_One = @"sceneCell";
-static NSString *section_Two = @"HomeDesignerListCVCell";
-static NSString *section_Four = @"HotGoodsCVCell";
+static NSString *iconCVID = @"SceneIconCVCell";
+static NSString *sceneCVID = @"sceneCell";
+static NSString *designerCVID = @"HomeDesignerListCVCell";
+static NSString *goodsCVID = @"HotGoodsCVCell";
 static NSString *section_Header = @"section_Header";
+static NSString *section_Footer = @"MoreFooterView";
 @interface HomePageVC ()<UICollectionViewDelegate, UICollectionViewDataSource, ColorfulDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 //数据源
 @property (nonatomic, strong) HomePageModel *dataSource;
+@property (nonatomic, strong) HomePageHeaderView *headerView;
 @end
 
 @implementation HomePageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.title = @"首页";
-    [self vhl_setNavBarTitleColor:UIColor.whiteColor];
-    [self vhl_setNavBarBackgroundColor:HEXColor(@"#333434", 1)];
-    
+    [UserDefault setObject:@"eyJhbGciOiJIUzUxMiJ9.eyJuaWNrbmFtZSI6IlpKRyIsImhlYWRpbWd1cmwiOiJodHRwczovL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9RMGo0VHdHVGZUSzNmaWNiMXdFSXJzdUY1MzFOU1VPdFJudk9YOTBiMU1FWHU0WmxQNVA2NlZqVjFVUjhXbnNrT09GZkJjcDl2eHBiZFY4RnJwOXpaancvMTMyIiwiaWQiOjEwMDI1NjE5LCJleHAiOjE1NzY0ODI2NDIsIm9wZW5pZCI6Im8ySGVQNG5FMkZaNldGRmRLR2hPdXNCRERibW8iLCJhcHBpZCI6Ind4MWNkZjllZDUzMTMwMWY3MyJ9.iKIyXxlB0zBTz_OpqMxqlpZLhentF9Vmi3_bvrouo-t_q1t_fU6H3Yc9ktdZa27am1czJrmKFyUdTUPgcf_U8A" forKey:@"userToken"];
     [self setNavBar];
     [self.view addSubview:self.collectionView];
     [self requestData];
-    
-    
-    
-//    CGRect statusRect1 = UIApplication.sharedApplication.statusBarFrame;
-//
-//    UITabBarController *tab = (UITabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-//    UINavigationController *nav = tab.viewControllers[0];
-//    CGRect navRect1 = nav.navigationBar.frame;
 }
 
 - (void)setNavBar {
+    self.navBar.backgroundColor = HEXColor(@"#333434", 1);
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NavBarHeight)];
     titleView.backgroundColor = UIColor.clearColor;
     //搜索按钮
@@ -77,51 +74,55 @@ static NSString *section_Header = @"section_Header";
     [classBtn addTarget:self action:@selector(jumpToAllClassify) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:classBtn];
     
-    self.navigationItem.titleView = titleView;
+//    self.navigationItem.titleView = titleView;
+    self.navBar.navBarView = titleView;
+}
+
+- (HomePageHeaderView *)headerView {
+    if (!_headerView) {
+        _headerView = [[HomePageHeaderView alloc] init];
+    }
+    
+    return _headerView;
 }
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         ColorfulFlowLayout *layout = [[ColorfulFlowLayout alloc] init];
-        CGRect rect = SCREEN_BOUNDS;
+        CGRect rect = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
         _collectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
         _collectionView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        } 
-//        [_collectionView addSubview:[self addHeaderView]];
-        //设置滚动范围偏移200
-        //        _collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(NAV_HEIGHT + 106 + 35, 0, 0, 0);
-        //设置内容范围偏移200
-        _collectionView.contentInset = UIEdgeInsetsMake(NAV_HEIGHT, 0, TABBAR_HEIGHT, 0);
-        [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:section_One];
-        [_collectionView registerClass:[HomeDesignerListCVCell class] forCellWithReuseIdentifier:section_Two];
-        
-        [_collectionView registerClass:[HotGoodsCVCell class] forCellWithReuseIdentifier:section_Four];
-        
+        }
+        [_collectionView addSubview:self.headerView];
+        _collectionView.contentInset = UIEdgeInsetsMake(KFit_W(220), 0, TABBAR_HEIGHT + 40, 0);
+        [_collectionView registerClass:[SceneIconCVCell class] forCellWithReuseIdentifier:iconCVID];
+        [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:sceneCVID];
+        [_collectionView registerClass:[HomeDesignerListCVCell class] forCellWithReuseIdentifier:designerCVID];
+        [_collectionView registerClass:[GoodsCVCell class] forCellWithReuseIdentifier:goodsCVID];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"test"];
         [_collectionView registerClass:[HomeSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header];
+        [_collectionView registerClass:[MoreFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:section_Footer];
     }
 
     return _collectionView;
 }
-
-
-
 
 #pragma mark 请求数据
 - (void)requestData {
     [NetTool getRequest:URLGet_Index_Data Params:nil Success:^(id  _Nonnull json) {
 //        NSLog(@"----   %@",json);
         self.dataSource = [HomePageModel mj_objectWithKeyValues:json];
+        self.dataSource.BANNER = [BannerModel mj_objectArrayWithKeyValuesArray:self.dataSource.BANNER];
+        self.dataSource.FIRSTSCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.FIRSTSCENE];
         self.dataSource.SCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.SCENE];
         self.dataSource.DESIGNER = [DesignerModel mj_objectArrayWithKeyValuesArray:self.dataSource.DESIGNER];
         self.dataSource.GOODS = [GoodsModel mj_objectArrayWithKeyValuesArray:self.dataSource.GOODS];
+        self.headerView.bannerArray = self.dataSource.BANNER;
         [self.collectionView reloadData];
-        
     } Failure:^(NSError * _Nonnull error) {
                     
     }];
@@ -137,38 +138,49 @@ static NSString *section_Header = @"section_Header";
 //搜索
 - (void)jumpToSearch {
     SearchAllKindsVC *vc = [[SearchAllKindsVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:vc animated:NO];
 }
-
 
 
 #pragma mark - collectionView delegate
 /** 总共多少组*/
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 4;
+    return 5;
 }
 
 /** 每组几个cell*/
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.dataSource.SCENE.count;
+        if (self.dataSource.FIRSTSCENE.count > 8) {
+            if (self.dataSource.isPullDown) {
+                return self.dataSource.FIRSTSCENE.count;
+            } else {
+                return 8;
+            }
+        } else {
+            return self.dataSource.FIRSTSCENE.count;
+        }
     } else if (section == 1) {
+        return self.dataSource.SCENE.count;
+    } else if (section == 2) {
         return 1;
-    } else if (section == 3) {
+    } else if (section == 4) {
         return self.dataSource.GOODS.count;
     } else {
         return 2;
     }
-    
 }
 
 //cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
+        CGFloat itemWidth = (SCREEN_WIDTH - 20 * 2 - 25 * 3) / 4;
+        return CGSizeMake(itemWidth, KFit_W(44) + 25);
     } else if (indexPath.section == 1) {
+        return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
+    } else if (indexPath.section == 2) {
         return CGSizeMake(SCREEN_WIDTH , 170);
-    } else if (indexPath.section == 3) {
+    } else if (indexPath.section == 4) {
         CGFloat imageWidth = (SCREEN_WIDTH - 16 * 2 - 10) / 2;
         return CGSizeMake(imageWidth , imageWidth + 96);
     } else {
@@ -178,7 +190,9 @@ static NSString *section_Header = @"section_Header";
 
 //cell行间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == 3) {
+    if (section == 0) {
+        return 20;
+    } else if (section == 4) {
         return 10;
     } else {
         return 0;
@@ -187,7 +201,9 @@ static NSString *section_Header = @"section_Header";
 
 //cell列间距
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == 3) {
+    if (section == 0) {
+        return 25;
+    } else if (section == 4) {
         return 10;
     } else {
         return 0;
@@ -196,7 +212,9 @@ static NSString *section_Header = @"section_Header";
 
 //section四周的边距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == 3) {
+    if (section == 0) {
+        return UIEdgeInsetsMake(20, 20, 0, 20);
+    } else if (section == 4) {
         return UIEdgeInsetsMake(0, 16, 10, 16);
     } else {
         return UIEdgeInsetsMake(0, 0, 10, 0);
@@ -205,8 +223,21 @@ static NSString *section_Header = @"section_Header";
 
 //设置header尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    
+    if (section == 0) {
+        return CGSizeZero;
+    }
     return CGSizeMake(SCREEN_WIDTH, 65);
+}
+
+//设置footer尺寸
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        if (self.dataSource.FIRSTSCENE.count > 8) {
+            return CGSizeMake(SCREEN_WIDTH, 40);
+        }
+        return CGSizeZero;
+    }
+    return CGSizeZero;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
@@ -217,23 +248,41 @@ static NSString *section_Header = @"section_Header";
 
 //设置头部
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    UICollectionReusableView *view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader] && indexPath.section != 0) {
         NSArray *titleArr = @[@"热门场景",@"设计师榜",@"砍价活动",@"热门商品"];
         HomeSectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header forIndexPath:indexPath];
-        header.title = titleArr[indexPath.section];
-        if (indexPath.section == 0) {
-            header.showMoreBtn = NO;
-        } else {
-            
-        }
-        return header;
+        header.title = titleArr[indexPath.section - 1];
+        view = header;
+    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter] && indexPath.section == 0) {
+        MoreFooterView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:section_Footer forIndexPath:indexPath];
+        footer.model = self.dataSource;
+        DDWeakSelf;
+        footer.pullBlock = ^{
+//            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+//            [UIView performWithoutAnimation:^{
+//            [weakself.collectionView reloadSections:indexSet];
+//              }];
+            [weakself.collectionView reloadData];
+        };
+        view = footer;
     }
-    return nil;
+    return view;
 }
 
 //点击cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
+    if (indexPath.section == 0) {
+        SceneDetailsVC *vc= [[SceneDetailsVC alloc] init];
+        SceneModel *model = self.dataSource.FIRSTSCENE[indexPath.row];
+        vc.sceneId = [model.sceneId intValue];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.section == 1) {
+        SceneDetailsVC *vc= [[SceneDetailsVC alloc] init];
+        SceneModel *model = self.dataSource.SCENE[indexPath.row];
+        vc.sceneId = [model.sceneId intValue];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.section == 4) {
         GoodsDetailsVC *vc= [[GoodsDetailsVC alloc] init];
         GoodsModel *model = self.dataSource.GOODS[indexPath.row];
         vc.goodsID = model.goodsId;
@@ -244,15 +293,25 @@ static NSString *section_Header = @"section_Header";
 //数据源
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        HomeSceneCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:section_One forIndexPath:indexPath];
-        cell.model = self.dataSource.SCENE[indexPath.row];
+        SceneIconCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:iconCVID forIndexPath:indexPath];
+        cell.model = self.dataSource.FIRSTSCENE[indexPath.row];
         return cell;
     } else if (indexPath.section == 1) {
-        HomeDesignerListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:section_Two forIndexPath:indexPath];
+        HomeSceneCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:sceneCVID forIndexPath:indexPath];
+        cell.model = self.dataSource.SCENE[indexPath.row];
+        return cell;
+    } else if (indexPath.section == 2) {
+        HomeDesignerListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:designerCVID forIndexPath:indexPath];
+        DDWeakSelf;
+        cell.clickBlock = ^(NSString * _Nonnull designerId) {
+            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
+            vc.designerId = designerId;
+            [weakself.navigationController pushViewController:vc animated:YES];
+        };
         cell.designerArr = self.dataSource.DESIGNER;
         return cell;
-    } else if (indexPath.section == 3) {
-        HotGoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:section_Four forIndexPath:indexPath];
+    } else if (indexPath.section == 4) {
+        GoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:goodsCVID forIndexPath:indexPath];
         cell.model = self.dataSource.GOODS[indexPath.row];
         return cell;
     } else {
@@ -265,7 +324,8 @@ static NSString *section_Header = @"section_Header";
 //设置分区不同的背景色
 - (UIColor *)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout backgroundColorForSection:(NSInteger)section
 {
-    return [@[_collectionView.backgroundColor,
+    return [@[UIColor.whiteColor,
+              _collectionView.backgroundColor,
               _collectionView.backgroundColor,
               _collectionView.backgroundColor,
               UIColor.whiteColor

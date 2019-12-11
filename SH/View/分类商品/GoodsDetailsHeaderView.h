@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class GoodsDetailModel;
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void(^SelectBlock)(void);
 @interface GoodsDetailsHeaderView : UIView
-@property (nonatomic, copy) NSArray *imageArray;
+@property (nonatomic, strong) NSMutableDictionary *specValue;
+@property (nonatomic, strong) GoodsDetailModel *model;
+@property (nonatomic, copy) SelectBlock selectBlock;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -92,10 +92,16 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/BRPickerView/BRPickerView/Base/BRPickerView.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
+  install_resource "${PODS_ROOT}/YBImageBrowser/YBImageBrowser/YBImageBrowser.bundle"
+  install_resource "${PODS_ROOT}/YBImageBrowser/Video/YBImageBrowserVideo.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/BRPickerView/BRPickerView/Base/BRPickerView.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
+  install_resource "${PODS_ROOT}/YBImageBrowser/YBImageBrowser/YBImageBrowser.bundle"
+  install_resource "${PODS_ROOT}/YBImageBrowser/Video/YBImageBrowserVideo.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

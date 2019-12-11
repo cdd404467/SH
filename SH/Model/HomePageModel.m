@@ -11,5 +11,11 @@
 
 @implementation HomePageModel
 
+- (BOOL) isPullDown {
+    if (!_isPullDown) {
+        _isPullDown = NO;
+    }
+    return _isPullDown;
+}
 @end
 

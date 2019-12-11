@@ -33,9 +33,9 @@
     [super viewDidLoad];
     if (!_webTitle)
         self.title = @"尚乎数码";
-    [self vhl_setNavBarBackgroundColor:Like_Color];
-    [self vhl_setNavBarShadowImageHidden:YES];
-    [self vhl_setNavigationSwitchStyle:1];
+//    [self vhl_setNavBarBackgroundColor:Like_Color];
+//    [self vhl_setNavBarShadowImageHidden:YES];
+//    [self vhl_setNavigationSwitchStyle:1];
     [self.backBtn setImage:[UIImage imageNamed:@"close_back"] forState:UIControlStateNormal];
     self.backBtn.left = self.backBtn.left + 2;
     
@@ -111,7 +111,7 @@
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(0, 5, 30, 30);
     [leftBtn setImage:image forState:UIControlStateNormal];
-    [leftBtn setImage:[image imageWithTintColor:RGBA(0, 0, 0, 0.25)] forState:UIControlStateDisabled];
+    [leftBtn setImage:[image imageWithTintColor_My:RGBA(0, 0, 0, 0.25)] forState:UIControlStateDisabled];
     [leftBtn addTarget:self action:@selector(webViewGoBack) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:leftBtn];
     leftBtn.centerX = bottomView.width / 3;
@@ -121,7 +121,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0, 5, 30, 30);
     [rightBtn setImage:image forState:UIControlStateNormal];
-    [rightBtn setImage:[image imageWithTintColor:RGBA(0, 0, 0, 0.25)] forState:UIControlStateDisabled];
+    [rightBtn setImage:[image imageWithTintColor_My:RGBA(0, 0, 0, 0.25)] forState:UIControlStateDisabled];
     [rightBtn addTarget:self action:@selector(webViewGoForward) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:rightBtn];
     rightBtn.centerX = bottomView.width / 3 * 2;

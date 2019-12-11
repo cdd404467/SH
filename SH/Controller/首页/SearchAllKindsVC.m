@@ -18,20 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"搜索";
+    self.navBar.title = @"搜索";
     [self setupUI];
-    
-    
-//    UIView *view = [[UIView alloc] init];
-//    view.frame = CGRectMake(0, STATEBAR_HEIGHT, SCREEN_WIDTH - 50, 44);
-//    view.backgroundColor = UIColor.redColor;
-//    [self.navigationItem.titleView sizeToFit];
-//    self.navigationItem.titleView = view;
-//    self.backBtn.backgroundColor = UIColor.redColor;
-//    self.backBtn.backgroundColor = UIColor.redColor;
-//
-//    [self vhl_setNavBarHidden:YES];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_searchView.searchTF becomeFirstResponder];
 }
 
 - (void)setupUI {
