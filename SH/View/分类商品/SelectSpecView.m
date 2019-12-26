@@ -28,6 +28,8 @@ static NSString *section_Footer = @"SpecSecFooter";
 @property (nonatomic, strong) UILabel *inventoryLab;
 @property (nonatomic, strong) UIButton *joinShopCarBtn;
 @property (nonatomic, strong) UIButton *buyNowBtn;
+//确定加入购物车
+@property (nonatomic, strong) UIButton *yesBtn;
 @property (nonatomic, strong) NSMutableDictionary *specDict;
 @property (nonatomic, strong) ImageLabView *countLab;
 @end
@@ -149,10 +151,24 @@ static NSString *section_Footer = @"SpecSecFooter";
         make.width.height.bottom.mas_equalTo(self.joinShopCarBtn);
         make.right.mas_equalTo(-15);
     }];
-    [_buyNowBtn.superview layoutIfNeeded];
-    NSArray *colors= @[HEXColor(@"#FE7900", 1),HEXColor(@"#FF5100", 1)];
-    UIImage *image = [UIImage imageWithGradientColor:colors andRect:_buyNowBtn.bounds andGradientType:1];
-    [_buyNowBtn setBackgroundImage:image forState:UIControlStateNormal];
+    
+    _yesBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _yesBtn.adjustsImageWhenHighlighted = NO;
+    [_yesBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [_yesBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    _yesBtn.layer.cornerRadius = 20.f;
+    _yesBtn.clipsToBounds = YES;
+    _yesBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_yesBtn addTarget:self action:@selector(joinShopCar) forControlEvents:UIControlEventTouchUpInside];
+    [_backgroundView addSubview:_yesBtn];
+    [_yesBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.bottom.mas_equalTo(self.joinShopCarBtn);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+    }];
+    [_yesBtn.superview layoutIfNeeded];
+    [_buyNowBtn setBackgroundImage:[HelperTool globalGradientColor:_buyNowBtn.bounds] forState:UIControlStateNormal];
+    [_yesBtn setBackgroundImage:[HelperTool globalGradientColor:_yesBtn.bounds] forState:UIControlStateNormal];
     
     //数量
     UILabel *countTxtLab = [[UILabel alloc] init];
@@ -261,6 +277,21 @@ static NSString *section_Footer = @"SpecSecFooter";
 
 - (void)show {
     self.hidden = NO;
+    if (_btnCountType == 1) {
+        _yesBtn.hidden = YES;
+        _joinShopCarBtn.hidden = NO;
+        _buyNowBtn.hidden = NO;
+    } else {
+        [_yesBtn removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        _yesBtn.hidden = NO;
+        _joinShopCarBtn.hidden = YES;
+        _buyNowBtn.hidden = YES;
+        if (_btnCountType == 2) {
+            [_yesBtn addTarget:self action:@selector(joinShopCar) forControlEvents:UIControlEventTouchUpInside];
+        } else if (_btnCountType == 3) {
+            [_yesBtn addTarget:self action:@selector(buyNow) forControlEvents:UIControlEventTouchUpInside];
+        }
+    }
     self.backgroundColor = RGBA(0, 0, 0, 0.0);
     [UIView animateWithDuration:AniTime animations:^{
         self.backgroundColor = RGBA(0, 0, 0, 0.3);
@@ -268,12 +299,14 @@ static NSString *section_Footer = @"SpecSecFooter";
     }];
 }
 
+//立即购买
 - (void)buyNow {
     if (self.buyNowBlock) {
         self.buyNowBlock([self findIndex], self.countLab.textLab.text.intValue);
     }
 }
 
+//加入购物车
 - (void)joinShopCar {
     if (self.joinShopCarBlock) {
         self.joinShopCarBlock([self findIndex],self.countLab.textLab.text.intValue);
@@ -428,7 +461,6 @@ static NSString *section_Footer = @"SpecSecFooter";
         self.hidden = YES;
     }];
 }
-
 
 - (void)removeAllSubviews {
     [UIView animateWithDuration:AniTime animations:^{

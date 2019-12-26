@@ -9,7 +9,10 @@
 #import "ShopModel.h"
 
 @implementation ShopModel
-
-
-
+- (NSArray *)labelArray {
+    if (!_labelArray) {
+        _labelArray = [self.labelNames componentsSeparatedByString:@","];
+    }
+    return _labelArray;
+}
 @end

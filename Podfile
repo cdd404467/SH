@@ -15,4 +15,11 @@ target 'SH' do
 	pod 'YBImageBrowser', '~> 3.0.6'
         pod 'YBImageBrowser/Video'
 	pod 'BRPickerView', '~> 2.4.5'
+	pod 'MBProgressHUD', '~> 1.1.0'
+	pod 'SGPagingView', '~> 1.6.7'
+	pod 'DZNEmptyDataSet', '~> 1.8.1'
+#shareSDK
+	pod 'mob_sharesdk'
+	pod 'mob_sharesdk/ShareSDKUI'
+	pod 'mob_sharesdk/ShareSDKPlatforms/WeChatFull'
 end

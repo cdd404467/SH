@@ -96,4 +96,9 @@
     _saleCountLab.text = [NSString stringWithFormat:@"销量: %@",model.saleCount];
 }
 
+// 返回特定的高
+-(UICollectionViewLayoutAttributes *) preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+    return layoutAttributes;
+}
 @end

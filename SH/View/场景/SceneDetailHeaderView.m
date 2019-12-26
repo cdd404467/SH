@@ -53,7 +53,7 @@ static NSString *iconCVID = @"SceneIconCVCell";
 
 - (void)setBannerURL:(NSString *)bannerURL {
     _bannerURL = bannerURL;
-    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(bannerURL, ((int)SCREEN_WIDTH * 2))];
+    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(bannerURL, ((int)(SCREEN_WIDTH * 3 / 2))) placeholderImage:PlaceHolder_Banner];
 }
 
 - (void)setIconArray:(NSArray *)iconArray {

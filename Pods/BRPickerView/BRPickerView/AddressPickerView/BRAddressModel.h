@@ -11,37 +11,80 @@
 
 /// 省
 @interface BRProvinceModel : NSObject
-/** 省对应的code或id */
-@property (nonatomic, copy) NSString *code;
-/** 省的名称 */
-@property (nonatomic, copy) NSString *name;
+///** 省对应的code或id */
+//@property (nonatomic, copy) NSString *code;
+///** 省的名称 */
+//@property (nonatomic, copy) NSString *name;
 /** 省的索引 */
 @property (nonatomic, assign) NSInteger index;
-/** 城市数组 */
-@property (nonatomic, copy) NSArray *citylist;
-
+///** 城市数组 */
+//@property (nonatomic, copy) NSArray *citylist;
+//id
+@property (nonatomic, copy) NSString *id;
+//name
+//@property (nonatomic, copy) NSString *name;
+//fullName
+@property (nonatomic, copy) NSString *fullName;
+//拼音
+@property (nonatomic, copy) NSString *pinyin;
+//lat
+@property (nonatomic, copy) NSString *lat;
+//lng
+@property (nonatomic, copy) NSString *lng;
+//pid
+@property (nonatomic, copy) NSString *pid;
+//children
+@property (nonatomic, copy) NSArray *children;
 @end
 
 /// 市
 @interface BRCityModel : NSObject
-/** 市对应的code或id */
-@property (nonatomic, copy) NSString *code;
-/** 市的名称 */
-@property (nonatomic, copy) NSString *name;
+///** 市对应的code或id */
+//@property (nonatomic, copy) NSString *code;
+///** 市的名称 */
+//@property (nonatomic, copy) NSString *name;
 /** 市的索引 */
 @property (nonatomic, assign) NSInteger index;
-/** 地区数组 */
-@property (nonatomic, copy) NSArray *arealist;
-
+///** 地区数组 */
+//@property (nonatomic, copy) NSArray *arealist;
+@property (nonatomic, copy) NSString *id;
+//name
+//@property (nonatomic, copy) NSString *name;
+//fullName
+@property (nonatomic, copy) NSString *fullName;
+//拼音
+@property (nonatomic, copy) NSString *pinyin;
+//lat
+@property (nonatomic, copy) NSString *lat;
+//lng
+@property (nonatomic, copy) NSString *lng;
+//pid
+@property (nonatomic, copy) NSString *pid;
+//children
+@property (nonatomic, copy) NSArray *children;
 @end
 
 /// 区
 @interface BRAreaModel : NSObject
-/** 区对应的code或id */
-@property (nonatomic, copy) NSString *code;
-/** 区的名称 */
-@property (nonatomic, copy) NSString *name;
+///** 区对应的code或id */
+//@property (nonatomic, copy) NSString *code;
+///** 区的名称 */
+//@property (nonatomic, copy) NSString *name;
 /** 区的索引 */
 @property (nonatomic, assign) NSInteger index;
-
+@property (nonatomic, copy) NSString *id;
+//name
+//@property (nonatomic, copy) NSString *name;
+//fullName
+@property (nonatomic, copy) NSString *fullName;
+//拼音
+@property (nonatomic, copy) NSString *pinyin;
+//lat
+@property (nonatomic, copy) NSString *lat;
+//lng
+@property (nonatomic, copy) NSString *lng;
+//pid
+@property (nonatomic, copy) NSString *pid;
+//children
+@property (nonatomic, copy) NSArray *children;
 @end

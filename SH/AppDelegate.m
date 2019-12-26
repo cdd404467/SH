@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppDelegate+Init.h"
+#import "WXApiManager.h"
 
 @interface AppDelegate ()
 
@@ -50,6 +51,19 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+//打开app处理URL
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    NSString *urlString = [url absoluteString];
+    
+    
+    
+
+    if (urlString.length > 2 && [[urlString substringToIndex:2] isEqualToString:@"wx"]) {
+        return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    }
+    return YES;
 }
 
 

@@ -84,7 +84,6 @@
 
 - (void)jumpToLoginWithComplete:(void (^ __nullable)(void))handler {
     LoginVC *vc = [[LoginVC alloc] init];
-//    vc.isJump = NO;
     vc.loginCompleteBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (handler) {

@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^SelectGoodsBlock)(NSIndexPath *atIndexPath);
-typedef void(^ChangeCountBlock)(NSIndexPath *atIndexPath, NSInteger count);
+typedef void(^ChangeCountBlock)(NSIndexPath *atIndexPath, NSInteger count ,NSString *carID ,NSInteger type);//type 0是减，1是加
 typedef void(^ChangeCountErrorBlock)(NSString *error);
 @interface ShopCarCVCell : UICollectionViewCell
 @property (nonatomic, strong) ShopGoodsModel *model;

@@ -36,8 +36,9 @@
 - (void)setModel:(FinishedWorkModel *)model {
     _model = model;
     int width = (SCREEN_WIDTH - 15 * 2 - 10);
-    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.works, width) placeholderImage:PlaceHolderImg];
+//    model.works = [model.works stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.works, width / 2) placeholderImage:PlaceHolderImg];
+    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.works, width / 2)];
 }
-
 
 @end

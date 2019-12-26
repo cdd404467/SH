@@ -35,6 +35,9 @@
     searchView.searchBlock = ^{
         [weakself jumpToResult];
     };
+    searchView.cancelBlock = ^{
+        [weakself.navigationController popToRootViewControllerAnimated:NO];
+    };
     [self.view addSubview:searchView];
     _searchView = searchView;
 }

@@ -10,10 +10,10 @@
 #import "MaterialCVCell.h"
 #import "MaterialDetailsVC.h"
 #import "MaterialModel.h"
-
+#import <UIScrollView+EmptyDataSet.h>
 
 static NSString *materialCVID = @"MaterialCVCell";
-@interface DesignerMaterialListView()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface DesignerMaterialListView()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 
@@ -32,6 +32,8 @@ static NSString *materialCVID = @"MaterialCVCell";
         _collectionView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.emptyDataSetSource = self;
+        _collectionView.emptyDataSetDelegate = self;
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
@@ -44,6 +46,26 @@ static NSString *materialCVID = @"MaterialCVCell";
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.collectionView.frame = self.bounds;
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_works"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"暂无素材";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
 }
 
 #pragma mark - collectionView delegate

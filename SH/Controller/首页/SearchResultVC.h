@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchResultVC : BaseViewController
 @property (nonatomic, copy) NSString *keyWords;
+//1 商品 2 场景 3 店铺 4 设计师 5素材
 @property (nonatomic, assign) NSInteger type;
 @end
 

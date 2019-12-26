@@ -52,7 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray *specList;
 //skuList
 @property (nonatomic, copy) NSArray *skuList;
-
+//评论列表
+@property (nonatomic, copy) NSArray *evaluateList;
 
 //html cell height
 @property (nonatomic, assign) CGFloat cellHeight;

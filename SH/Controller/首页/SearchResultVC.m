@@ -23,18 +23,22 @@
 #import "MaterialDetailsVC.h"
 #import "DesignerMainPageVC.h"
 #import "SceneDetailsVC.h"
+#import <UIScrollView+EmptyDataSet.h>
+#import "ScreenClassView.h"
+#import "UIView+Border.h"
 
 static NSString *sceneCVID = @"sceneCell";
 static NSString *materialCVID = @"MaterialCVCell";
 static NSString *shopCVID = @"ShopCVCell";
 static NSString *goodsCVID = @"GoodsCVCell";
 static NSString *designerCVID = @"designerCVCell";
-@interface SearchResultVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface SearchResultVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) SearchView *searchView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *classifyDataSource;
 @property (nonatomic, copy) NSString *labsID;
+@property (nonatomic, assign) int goodsSortType;
 @end
 
 @implementation SearchResultVC
@@ -42,8 +46,14 @@ static NSString *designerCVID = @"designerCVCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.labsID = @"";
+    self.goodsSortType = 1;
+    [self setupUI];
+    [self.view addSubview:self.collectionView];
     if (_type == 1) {
         self.navBar.title = @"商品列表";
+        [self addSelectView];
+        self.collectionView.top = self.collectionView.top + 49;
+        self.collectionView.height = self.collectionView.height - 49;
     } else if (_type == 2) {
         self.navBar.title = @"场景列表";
     } else if (_type == 3) {
@@ -56,9 +66,6 @@ static NSString *designerCVID = @"designerCVCell";
     } else if (_type == 5) {
         self.navBar.title = @"素材列表";
     }
-    
-    [self setupUI];
-    [self.view addSubview:self.collectionView];
     [self requestData];
 }
 
@@ -83,8 +90,24 @@ static NSString *designerCVID = @"designerCVCell";
         [weakself.searchView.searchTF resignFirstResponder];
         [weakself requestData];
     };
+    searchView.cancelBlock = ^{
+        [weakself.navigationController popToRootViewControllerAnimated:NO];
+    };
     [self.view addSubview:searchView];
     _searchView = searchView;
+}
+
+//如果是商品结果页面，需要添加
+- (void)addSelectView {
+    ScreenClassView *topView = [[ScreenClassView alloc] init];
+    topView.frame = CGRectMake(0, self.searchView.bottom, SCREEN_WIDTH, 49);
+    [topView addBorder:HEXColor(@"#F6F6F6", 1) width:0.7f direction:BorderDirectionBottom | BorderDirectionTop];
+    DDWeakSelf;
+    topView.btnClickBlock = ^(NSInteger type) {
+        weakself.goodsSortType = (int)type;
+        [weakself requestData];
+    };
+    [self.view addSubview:topView];
 }
 
 - (NSMutableArray *)dataSource {
@@ -105,11 +128,12 @@ static NSString *designerCVID = @"designerCVCell";
         _collectionView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.emptyDataSetSource = self;
+        _collectionView.emptyDataSetDelegate = self;
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif, 0);
-        _collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif + 30, 0);
         [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:sceneCVID];
         [_collectionView registerClass:[MaterialCVCell class] forCellWithReuseIdentifier:materialCVID];
         [_collectionView registerClass:[ShopCVCell class] forCellWithReuseIdentifier:shopCVID];
@@ -121,13 +145,14 @@ static NSString *designerCVID = @"designerCVCell";
 }
 
 - (void)requestData {
-//    NSString *keyWord = _searchView.searchTF.text;
-    NSString *keyWord = @"";
-    NSString *urlString = [NSString stringWithFormat:URLGet_Index_SearchAppoint,(int)_type,keyWord,1,_labsID,PageCount,self.pageNumber];
+    NSString *keyWord = _searchView.searchTF.text;
+//    NSString *keyWord = @"";
+    NSString *urlString = [NSString stringWithFormat:URLGet_Index_SearchAppoint,(int)_type,keyWord,self.goodsSortType,_labsID,PageCount,self.pageNumber];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
+    [NetTool getRequest:urlString Params:nil Success:^(id _Nonnull json) {
 //        NSLog(@"----   %@",json);
         NSArray *tempArr = [self chooseSearchType:json];
+        [self.dataSource removeAllObjects];
         [self.dataSource addObjectsFromArray:tempArr];
         [self.collectionView reloadData];
         [self.collectionView  scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -169,6 +194,26 @@ static NSString *designerCVID = @"designerCVCell";
         }
     }
     return tempArr;
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_search"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"抱歉,没有找到相关内容";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
 }
 
 //1 商品 2 场景 3 店铺 4 设计师 5 素材

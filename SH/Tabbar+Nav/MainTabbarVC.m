@@ -42,7 +42,8 @@
     //去掉tabbar的黑线
 //    [self.tabBar setBackgroundImage:[UIImage new]];
 //    [self.tabBar setShadowImage:[UIImage new]];
-    [TabbarPlusButton registerPlusButton];
+    //添加 + 号
+//    [TabbarPlusButton registerPlusButton];
 //    [self initTabbar];
     
 }

@@ -159,29 +159,29 @@
     NSMutableArray *tempArr1 = [NSMutableArray array];
     for (NSDictionary *proviceDic in self.dataSourceArr) {
         BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
-        proviceModel.code = [proviceDic objectForKey:@"code"];
-        proviceModel.name = [proviceDic objectForKey:@"name"];
+        proviceModel.id = [proviceDic objectForKey:@"id"];
+        proviceModel.fullName = [proviceDic objectForKey:@"fullName"];
         proviceModel.index = [self.dataSourceArr indexOfObject:proviceDic];
-        NSArray *cityList = [proviceDic.allKeys containsObject:@"cityList"] ? [proviceDic objectForKey:@"cityList"] : [proviceDic objectForKey:@"citylist"];
+        NSArray *cityList = [proviceDic.allKeys containsObject:@"children"] ? [proviceDic objectForKey:@"children"] : [proviceDic objectForKey:@"children"];
         NSMutableArray *tempArr2 = [NSMutableArray array];
         for (NSDictionary *cityDic in cityList) {
             BRCityModel *cityModel = [[BRCityModel alloc]init];
-            cityModel.code = [cityDic objectForKey:@"code"];
-            cityModel.name = [cityDic objectForKey:@"name"];
+            cityModel.id = [cityDic objectForKey:@"id"];
+            cityModel.fullName = [cityDic objectForKey:@"fullName"];
             cityModel.index = [cityList indexOfObject:cityDic];
-            NSArray *areaList = [cityDic.allKeys containsObject:@"areaList"] ? [cityDic objectForKey:@"areaList"] : [cityDic objectForKey:@"arealist"];
+            NSArray *areaList = [cityDic.allKeys containsObject:@"children"] ? [cityDic objectForKey:@"children"] : [cityDic objectForKey:@"children"];
             NSMutableArray *tempArr3 = [NSMutableArray array];
             for (NSDictionary *areaDic in areaList) {
                 BRAreaModel *areaModel = [[BRAreaModel alloc]init];
-                areaModel.code = [areaDic objectForKey:@"code"];
-                areaModel.name = [areaDic objectForKey:@"name"];
+                areaModel.id = [areaDic objectForKey:@"id"];
+                areaModel.fullName = [areaDic objectForKey:@"fullName"];
                 areaModel.index = [areaList indexOfObject:areaDic];
                 [tempArr3 addObject:areaModel];
             }
-            cityModel.arealist = [tempArr3 copy];
+            cityModel.children = [tempArr3 copy];
             [tempArr2 addObject:cityModel];
         }
-        proviceModel.citylist = [tempArr2 copy];
+        proviceModel.children = [tempArr2 copy];
         [tempArr1 addObject:proviceModel];
     }
     self.provinceModelArr = [tempArr1 copy];
@@ -208,7 +208,7 @@
             @weakify(self)
             [self.provinceModelArr enumerateObjectsUsingBlock:^(BRProvinceModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
-                if (selectProvinceName && [model.name isEqualToString:selectProvinceName]) {
+                if (selectProvinceName && [model.fullName isEqualToString:selectProvinceName]) {
                     self.provinceIndex = idx;
                     self.selectProvinceModel = model;
                     *stop = YES;
@@ -231,7 +231,7 @@
             @weakify(self)
             [self.cityModelArr enumerateObjectsUsingBlock:^(BRCityModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
-                if (selectCityName && [model.name isEqualToString:selectCityName]) {
+                if (selectCityName && [model.fullName isEqualToString:selectCityName]) {
                     self.cityIndex = idx;
                     self.selectCityModel = model;
                     *stop = YES;
@@ -254,7 +254,7 @@
             @weakify(self)
             [self.areaModelArr enumerateObjectsUsingBlock:^(BRAreaModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
-                if (selectAreaName && [model.name isEqualToString:selectAreaName]) {
+                if (selectAreaName && [model.fullName isEqualToString:selectAreaName]) {
                     self.areaIndex = idx;
                     self.selectAreaModel = model;
                     *stop = YES;
@@ -287,16 +287,16 @@
 - (NSArray *)getCityModelArray:(NSInteger)provinceIndex {
     BRProvinceModel *provinceModel = self.provinceModelArr[provinceIndex];
     // 返回城市模型数组
-    return provinceModel.citylist;
+    return provinceModel.children;
 }
 
 // 根据 省索引和城市索引 获取 区域模型数组
 - (NSArray *)getAreaModelArray:(NSInteger)provinceIndex cityIndex:(NSInteger)cityIndex {
     BRProvinceModel *provinceModel = self.provinceModelArr[provinceIndex];
-    if (provinceModel.citylist && provinceModel.citylist.count > 0) {
-        BRCityModel *cityModel = provinceModel.citylist[cityIndex];
+    if (provinceModel.children && provinceModel.children.count > 0) {
+        BRCityModel *cityModel = provinceModel.children[cityIndex];
         // 返回地区模型数组
-        return cityModel.arealist;
+        return cityModel.children;
     } else {
         return nil;
     }
@@ -378,13 +378,13 @@
     label.minimumScaleFactor = 0.5f;
     if (component == 0) {
         BRProvinceModel *model = self.provinceModelArr[row];
-        label.text = model.name;
+        label.text = model.fullName;
     } else if (component == 1) {
         BRCityModel *model = self.cityModelArr[row];
-        label.text = model.name;
+        label.text = model.fullName;
     } else if (component == 2) {
         BRAreaModel *model = self.areaModelArr[row];
-        label.text = model.name;
+        label.text = model.fullName;
     }
     
     return bgView;
@@ -549,8 +549,8 @@
 - (BRCityModel *)selectCityModel {
     if (!_selectCityModel) {
         _selectCityModel = [[BRCityModel alloc]init];
-        _selectCityModel.code = @"";
-        _selectCityModel.name = @"";
+        _selectCityModel.id = @"";
+        _selectCityModel.fullName = @"";
     }
     return _selectCityModel;
 }
@@ -558,8 +558,8 @@
 - (BRAreaModel *)selectAreaModel {
     if (!_selectAreaModel) {
         _selectAreaModel = [[BRAreaModel alloc]init];
-        _selectAreaModel.code = @"";
-        _selectAreaModel.name = @"";
+        _selectAreaModel.id = @"";
+        _selectAreaModel.fullName = @"";
     }
     return _selectAreaModel;
 }

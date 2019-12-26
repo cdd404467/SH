@@ -14,7 +14,9 @@
 #import "QuickTool.h"
 
 
-#define PlaceHolderImg [UIImage imageNamed:@"app_icon"]
+#define PlaceHolderImg [UIImage imageNamed:@"placeholder"]
+#define PlaceHolder_Banner [UIImage imageNamed:@"placeholder_banner"]
+#define PlaceHolder_Header [UIImage imageNamed:@"placeholder_header"]
 
 //十六进制颜色转换
 #define HEXColor(string,alpha) [UIColor colorWithHexString:(string) andAlpha:(alpha)]
@@ -24,6 +26,7 @@
 //全局主题色
 #define MainColor [UIColor colorWithHexString:@"#FF5100"]
 #define Like_Color HEXColor(@"#ededed", 1)
+#define Line_Color RGBA(232, 232, 232, 1)
 //#define ImgUrl_SD(urlStr) [NSURL URLWithString:urlStr]
 #define ImgUrl_SD_OSS(urlStr,width) [NSURL URLWithString:[urlStr stringByAppendingString:[NSString stringWithFormat:@"?x-oss-process=image/resize,w_%d",width]]]
 #define MainBgColor HEXColor(@"#F6F6F6", 1)
@@ -72,12 +75,14 @@
 /*********   本地存储   *********/
 //NSUserDefaults
 #define UserDefault [NSUserDefaults standardUserDefaults]
+//用户信息
+#define User_Info [UserDefault objectForKey:@"userInfo"]
 //存储的手机号
-#define User_Phone [UserDefault objectForKey:@"userPhoneNumber"]
+#define User_Phone [User_Info objectForKey:@"mobile"]
 //判断userToken
-#define Get_User_Token [User_Info objectForKey:@"userToken"]
+#define Get_User_Token [User_Info objectForKey:@"token"]
 //存储的token
-#define User_Token ([UserDefault objectForKey:@"userToken"] ? [UserDefault objectForKey:@"userToken"] : @"")
+#define User_Token ([User_Info objectForKey:@"token"] ? [User_Info objectForKey:@"token"] : @"")
 
 
 

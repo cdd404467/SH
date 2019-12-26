@@ -7,6 +7,7 @@
 //
 
 #import "EvaluationTBCell.h"
+#import "EvaluateModel.h"
 
 @interface EvaluationTBCell()
 @property (nonatomic, strong) UIImageView *headImageview;
@@ -43,7 +44,6 @@
     [HelperTool drawRound:_headImageview];
     
     _nickNameLab = [[UILabel alloc] init];
-    _nickNameLab.text = @"叫我周董";
     _nickNameLab.textColor = HEXColor(@"#090203", 1);
     _nickNameLab.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_nickNameLab];
@@ -56,18 +56,15 @@
     
     _timeLab = [[UILabel alloc] init];
     _timeLab.textColor = HEXColor(@"#9B9B9B", 1);
-    _timeLab.text = @"2018-10-1";
     _timeLab.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_timeLab];
     [_timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.headImageview);
         make.top.mas_equalTo(self.headImageview.mas_bottom).offset(8);
         make.height.mas_equalTo(17);
-        make.width.mas_equalTo(100);
     }];
 
     _specLab = [[UILabel alloc] init];
-    _specLab.text = @"红色-XL";
     _specLab.textColor = _timeLab.textColor;
     _specLab.font = _timeLab.font;
     [self.contentView addSubview:_specLab];
@@ -75,28 +72,40 @@
         make.left.mas_equalTo(self.timeLab.mas_right).offset(15);
         make.centerY.mas_equalTo(self.timeLab);
         make.height.mas_equalTo(17);
-        make.width.mas_equalTo(100);
+        make.right.mas_lessThanOrEqualTo(-15);
     }];
     
     _contentLab = [[UILabel alloc] init];
-    _contentLab.numberOfLines = 2;
+//    _contentLab.numberOfLines = 2;
     _contentLab.textColor = HEXColor(@"#090203", 1);
-    _contentLab.text = @"我评价你个锤子我评价你个锤子我评价你个锤子我评价你个锤子我评价你个锤子我评价你个锤子";
     _contentLab.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:_contentLab];
     [_contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.headImageview);
         make.right.mas_equalTo(self.nickNameLab);
         make.top.mas_equalTo(self.timeLab.mas_bottom).offset(10);
-        make.height.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+    }];
+    
+    UIView *bottomLine = [[UIView alloc] init];
+    bottomLine.backgroundColor = Line_Color;
+    [self.contentView addSubview:bottomLine];
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.right.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(0.5);
     }];
 }
-//label.preferredMaxLayoutWidth = width;//给一个maxWidth
-//[label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];//设置huggingPriority
-//宽度够
-//[_label1 setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 
-//[label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+- (void)setModel:(EvaluateModel *)model {
+    _model = model;
+    [_headImageview sd_setImageWithURL:ImgUrl_SD_OSS(model.headimgurl, 80) placeholderImage:PlaceHolderImg];
+    _nickNameLab.text = model.userName;
+    _timeLab.text = model.gmtCreate;
+    _specLab.text = model.skuName;
+    _contentLab.text = model.evaluateName;
+}
+
 
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {

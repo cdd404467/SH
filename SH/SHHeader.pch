@@ -16,4 +16,5 @@
 #import <Masonry.h>
 #import <UIImageView+WebCache.h>
 #import "UIImage+Extension.h"
+#import "NotificationNameHeader.h"
 #endif /* SHHeader_pch */

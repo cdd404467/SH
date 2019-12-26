@@ -29,15 +29,30 @@ PODS:
   - CYLTabBarController (1.28.3):
     - CYLTabBarController/Core (= 1.28.3)
   - CYLTabBarController/Core (1.28.3)
+  - DZNEmptyDataSet (1.8.1)
   - FLAnimatedImage (1.0.12)
   - IQKeyboardManager (6.4.0)
   - JXCategoryView (1.5.2)
   - JXPagingView/Pager (1.1.19)
   - Masonry (1.1.0)
+  - MBProgressHUD (1.1.0)
   - MJExtension (3.1.0)
+  - mob_sharesdk (4.3.4):
+    - mob_sharesdk/ShareSDK (= 4.3.4)
+    - MOBFoundation
+  - mob_sharesdk/ShareSDK (4.3.4):
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/WeChatFull (4.3.4):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKUI (4.3.4):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - MOBFoundation (3.2.8)
   - SDWebImage (5.1.0):
     - SDWebImage/Core (= 5.1.0)
   - SDWebImage/Core (5.1.0)
+  - SGPagingView (1.6.7)
   - Somo (0.8.0)
   - XHLaunchAd (3.9.8):
     - FLAnimatedImage (~> 1.0.12)
@@ -57,12 +72,18 @@ DEPENDENCIES:
   - AFNetworking (~> 3.2.1)
   - BRPickerView (~> 2.4.5)
   - CYLTabBarController (~> 1.28.3)
+  - DZNEmptyDataSet (~> 1.8.1)
   - IQKeyboardManager (~> 6.4.0)
   - JXCategoryView (~> 1.5.2)
   - JXPagingView/Pager
   - Masonry (~> 1.1.0)
+  - MBProgressHUD (~> 1.1.0)
   - MJExtension (~> 3.1.0)
+  - mob_sharesdk
+  - mob_sharesdk/ShareSDKPlatforms/WeChatFull
+  - mob_sharesdk/ShareSDKUI
   - SDWebImage (~> 5.1.0)
+  - SGPagingView (~> 1.6.7)
   - Somo (~> 0.8.0)
   - XHLaunchAd (~> 3.9.8)
   - YBImageBrowser (~> 3.0.6)
@@ -74,13 +95,18 @@ SPEC REPOS:
     - AFNetworking
     - BRPickerView
     - CYLTabBarController
+    - DZNEmptyDataSet
     - FLAnimatedImage
     - IQKeyboardManager
     - JXCategoryView
     - JXPagingView
     - Masonry
+    - MBProgressHUD
     - MJExtension
+    - mob_sharesdk
+    - MOBFoundation
     - SDWebImage
+    - SGPagingView
     - Somo
     - XHLaunchAd
     - YBImageBrowser
@@ -91,19 +117,24 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   BRPickerView: 0bd32f1fc4e338ecf6643b5e82f7a7c77db68cbe
   CYLTabBarController: cd14c6260a38337600737873a57b3114c7065a8e
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IQKeyboardManager: fcef267266379c003181fc3592f6bdb8bf4db839
   JXCategoryView: b284d35a7a8772eada05dd78642233e1eb763ea8
   JXPagingView: d28c0e245b850cdb47e3f04c07d8c35e30c18531
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
+  mob_sharesdk: ecee6e8ba42f76a252a40d2da7a1f7301b9831d6
+  MOBFoundation: 2dc0a63371eccccabef13b1df3fe57564003bc85
   SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
+  SGPagingView: 21152cbb9e25a7259ea2415b028c22f55f362ea2
   Somo: 1e2335634d16babfb361c77b9cde743c5f45154b
   XHLaunchAd: 45048592af01aa501c9d2d0c45e95ca74c4d0596
   YBImageBrowser: 59d3e8e035351a9f2f89760742628329378a634b
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: c1e77ba26f3fb2a21832e845774a17b86f93478b
+PODFILE CHECKSUM: 24b20c5ca056396db99ac75fb43b1e693a4bfc8c
 
 COCOAPODS: 1.5.3

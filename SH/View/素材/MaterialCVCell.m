@@ -51,7 +51,7 @@
     [_nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.imageView.mas_right).offset(15);
         make.top.mas_equalTo(self.imageView);
-        make.width.mas_greaterThanOrEqualTo(150);
+        make.right.mas_lessThanOrEqualTo(-100);
     }];
     
     _priceLab = [[UILabel alloc] init];
@@ -62,12 +62,10 @@
     [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.nameLab.mas_right).offset(3);
         make.centerY.mas_equalTo(self.nameLab);
+        make.height.mas_equalTo(30);
         make.right.mas_equalTo(-10);
     }];
     
-    [_priceLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-    [_nameLab setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-
     _labsView = [[LabsView alloc] init];
     [self.contentView addSubview:_labsView];
     [_labsView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,13 +84,13 @@
     [_detailLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.nameLab);
         make.bottom.mas_equalTo(self.imageView.mas_bottom).offset(-2);
-        make.right.mas_equalTo(self.priceLab);
+        make.right.mas_equalTo(-10);
     }];
 }
 
 - (void)setModel:(MaterialModel *)model {
     _model = model;
-    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, 180) placeholderImage:PlaceHolderImg];
+    [_imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, 130) placeholderImage:PlaceHolderImg];
     _nameLab.text = model.name;
     _priceLab.text = [NSString stringWithFormat:@"¥%@",model.price];
     _detailLab.text = model.detail;
@@ -104,4 +102,9 @@
     _labsView.labelArray = [mArr copy];
 }
 
+// 返回特定的高
+-(UICollectionViewLayoutAttributes *) preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+    return layoutAttributes;
+}
 @end

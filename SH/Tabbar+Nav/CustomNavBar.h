@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *bottomLine;
 @property (nonatomic, strong) UIButton *rightBtn;
 @property (nonatomic, copy) NSString *title;
+//返回按钮模式 - 0:返回箭头 1:关闭箭头
+@property (nonatomic, assign) NSInteger backMode;
+@property (nonatomic, strong) UIColor *backBtnTintColor;
 @end
 
 NS_ASSUME_NONNULL_END

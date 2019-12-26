@@ -31,5 +31,11 @@
 
 @implementation DynamicStateModel
 
+- (CGFloat)cellHeight {
+    if (!_cellHeight) {
+        _cellHeight = 0;
+    }
+    return _cellHeight;
+}
 
 @end

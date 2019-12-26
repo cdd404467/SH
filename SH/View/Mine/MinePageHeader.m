@@ -12,8 +12,6 @@
 static const CGFloat iconWidth = 55.f;
 
 @interface MinePageHeader()
-//昵称
-@property (nonatomic, strong) UILabel *nickNameLab;
 //我的订单
 @property (nonatomic, strong) UIButton *myOrderBtn;
 //退款/售后
@@ -45,13 +43,14 @@ static const CGFloat iconWidth = 55.f;
     [self addSubview:infoBgView];
     
     UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(18, 25, 64, 64)];
-    headerImageView.backgroundColor = UIColor.blackColor;
-    [HelperTool drawRound:headerImageView borderWidth:2.f borderColor:UIColor.whiteColor];
+    headerImageView.layer.cornerRadius = 64 / 2;
+    headerImageView.clipsToBounds = YES;
+    headerImageView.layer.borderColor = UIColor.whiteColor.CGColor;
+    headerImageView.layer.borderWidth = 2.f;
     [self addSubview:headerImageView];
     _headerImageView = headerImageView;
     
     UILabel *nickNameLab = [[UILabel alloc] init];
-    nickNameLab.text = @"一叶知秋";
     nickNameLab.font = [UIFont systemFontOfSize:20 weight:UIFontWeightMedium];
     nickNameLab.textColor = UIColor.whiteColor;
     [self addSubview:nickNameLab];
@@ -59,9 +58,9 @@ static const CGFloat iconWidth = 55.f;
         make.left.mas_equalTo(headerImageView.mas_right).offset(15);
         make.top.mas_equalTo(headerImageView);
         make.height.mas_equalTo(28);
-        make.right.mas_equalTo(-10);
+        make.right.mas_lessThanOrEqualTo(-10);
     }];
-    
+    _nickNameLab = nickNameLab;
     
     //下半部分订单view
     UIView *botView = [[UIView alloc] init];
@@ -85,7 +84,8 @@ static const CGFloat iconWidth = 55.f;
         [btn setTitle:titleArr[i] forState:UIControlStateNormal];
         [btn setImage:[UIImage imageNamed:imgArr[i]] forState:UIControlStateNormal];
         [btn layoutWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:9];
-
+        btn.tag = 100 + i;
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [botView addSubview:btn];
         if (i == 0) {
             _myOrderBtn = btn;
@@ -96,6 +96,12 @@ static const CGFloat iconWidth = 55.f;
         } else {
             _bargainOrderBtn = btn;
         }
+    }
+}
+
+- (void)btnClick:(UIButton *)sender {
+    if (self.btnClickBlock) {
+        self.btnClickBlock(sender.tag - 100);
     }
 }
 

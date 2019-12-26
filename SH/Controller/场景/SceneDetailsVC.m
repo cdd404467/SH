@@ -34,7 +34,6 @@ static NSString *headerID = @"ScreenClassView";
 @property (nonatomic, strong) SceneDetailHeaderView *headerView;
 @property (nonatomic, strong) NSMutableArray *goodsDataSource;
 @property (nonatomic, strong) NSMutableArray *sucaiDataSource;
-@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, copy) NSString *imgUrl;
 @property (nonatomic, strong) NSArray *iconArray;
 @property (nonatomic, assign) int listType;
@@ -74,13 +73,6 @@ static NSString *headerID = @"ScreenClassView";
         _sucaiDataSource = [NSMutableArray arrayWithCapacity:0];
     }
     return _sucaiDataSource;
-}
-//只有一个的时候使用的数据源
-- (NSMutableArray *)dataSource {
-    if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _dataSource;
 }
 
 - (UICollectionView *)collectionView {
@@ -154,25 +146,32 @@ static NSString *headerID = @"ScreenClassView";
 
 //商品和素材列表
 - (void)requestListWithGoodsType:(int)type sortType:(int)sortType group:(dispatch_group_t _Nullable)group {
-    if (group)
+    if (group) {
         dispatch_group_enter(group);
+    }
     NSString *urlString = [NSString stringWithFormat:URLGet_Scene_Detail_List,_sceneId,type,sortType,PageCount,1];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
 //            NSLog(@"----   %@",json);
         if ([[json allKeys] containsObject:@"list"]) {
             NSArray *tempArr = json[@"list"];
             if (type == 1 && tempArr.count > 0) {
-                self.goodsDataSource = [GoodsModel mj_objectArrayWithKeyValuesArray:tempArr];
+                tempArr = [GoodsModel mj_objectArrayWithKeyValuesArray:tempArr];
+                [self.goodsDataSource removeAllObjects];
+                [self.goodsDataSource addObjectsFromArray:tempArr];
             } else if (type == 2 && tempArr.count > 0) {
-                self.sucaiDataSource = [MaterialModel mj_objectArrayWithKeyValuesArray:tempArr];
+                tempArr = [MaterialModel mj_objectArrayWithKeyValuesArray:tempArr];
+                [self.sucaiDataSource removeAllObjects];
+                [self.sucaiDataSource addObjectsFromArray:tempArr];
                 for (MaterialModel *model in self.sucaiDataSource) {
                     model.labelInfoList = [LabelModel mj_objectArrayWithKeyValuesArray:model.labelInfoList];
                 }
             }
         }
-        
-        if (group)
+        if (group) {
             dispatch_group_leave(group);
+        } else {
+            [self.collectionView reloadData];
+        }
     } Failure:^(NSError * _Nonnull error) {
                     
     }];
@@ -199,10 +198,8 @@ static NSString *headerID = @"ScreenClassView";
         else {
             if (self.goodsDataSource.count != 0) {
                 self.listType = 1;
-                [self.dataSource addObjectsFromArray:self.goodsDataSource];
             } else if (self.sucaiDataSource.count !=0) {
                 self.listType = 2;
-                [self.dataSource addObjectsFromArray:self.sucaiDataSource];
             }
             [self.view addSubview:self.collectionView];
             self.headerView.frame = CGRectMake(0, -self.headerHeight, SCREEN_WIDTH, self.headerHeight);
@@ -217,7 +214,10 @@ static NSString *headerID = @"ScreenClassView";
 #pragma mark - collectionView delegate
 /** 每组几个cell*/
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    if (_listType == 1) {
+        return self.goodsDataSource.count;
+    }
+    return self.sucaiDataSource.count;
 }
 
 //cell的大小
@@ -266,12 +266,12 @@ static NSString *headerID = @"ScreenClassView";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (_listType == 1) {
         GoodsDetailsVC *vc = [[GoodsDetailsVC alloc] init];
-        GoodsModel *model = self.dataSource[indexPath.row];
+        GoodsModel *model = self.goodsDataSource[indexPath.row];
         vc.goodsID = model.goodsId;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (_listType == 2) {
         MaterialDetailsVC *vc = [[MaterialDetailsVC alloc] init];
-        MaterialModel *model = self.dataSource[indexPath.row];
+        MaterialModel *model = self.sucaiDataSource[indexPath.row];
         vc.materialId = model.materialId;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -295,11 +295,11 @@ static NSString *headerID = @"ScreenClassView";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (_listType == 1) {
         GoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:goodsCVID forIndexPath:indexPath];
-        cell.model = self.dataSource[indexPath.row];
+        cell.model = self.goodsDataSource[indexPath.row];
         return cell;
     } else {
         MaterialCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:materialCVID forIndexPath:indexPath];
-        cell.model = self.dataSource[indexPath.row];
+        cell.model = self.sucaiDataSource[indexPath.row];
         return cell;
     }
 }

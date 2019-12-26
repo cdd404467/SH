@@ -9,6 +9,7 @@
 #import "AppDelegate+Init.h"
 #import "MainTabbarVC.h"
 #import "IQKeyboardManager.h"
+#import "WXApi.h"
 
 @implementation AppDelegate (Init)
 
@@ -31,8 +32,6 @@
 //    rootVC.selectedIndex = 0;
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
-//    [VHLNavigation vhl_setDefaultNavBackgroundColor:UIColor.whiteColor];
-//    [VHLNavigation vhl_setDefaultNavBarShadowImageHidden:YES];
 }
 
 
@@ -42,6 +41,10 @@
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 10.0f;    // 输入框距离键盘的距离
+    
+    /*** 注册微信 - 官方SDK ***/
+//    [WXApi registerApp:@"wx63410989373f8975" enableMTA:YES];
+    [WXApi registerApp:@"wxa9974a0f587be201" universalLink:@"https://www.shanghusm.com/"];
 }
 
 @end

@@ -142,9 +142,8 @@
     //执行加操作
     if (sender.tag == 100) {
         if (_model.goodsNum < 99999) {
-            _model.goodsNum = ++_model.goodsNum;
             if (self.changeCountBlock) {
-                self.changeCountBlock(_indexPath, _model.goodsNum);
+                self.changeCountBlock(_indexPath, _model.goodsNum + 1, _model.shopCarID, 1);
             }
         }
         else {
@@ -156,9 +155,8 @@
     //减操作
     else if (sender.tag == 101) {
         if (_model.goodsNum > 1) {
-            _model.goodsNum = --_model.goodsNum;
             if (self.changeCountBlock) {
-                self.changeCountBlock(_indexPath, _model.goodsNum);
+                self.changeCountBlock(_indexPath, _model.goodsNum - 1, _model.shopCarID, 0);
             }
         }
         else {

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *name;
 //标签名称
 @property (nonatomic, copy) NSString *labelNames;
+//标签数组
+@property (nonatomic, copy) NSArray *labelArray;
 //热度
 @property (nonatomic, copy) NSString *viewNum;
 @end

@@ -49,7 +49,7 @@ static CGFloat navBar_Height = 44.f;
     [leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(4);
         make.height.mas_equalTo(42);
-        make.width.mas_equalTo(38);
+        make.width.mas_equalTo(42);
         make.centerY.mas_equalTo(navBarView);
     }];
     _leftBtn = leftBtn;
@@ -76,7 +76,7 @@ static CGFloat navBar_Height = 44.f;
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.centerY.mas_equalTo(navBarView);
         make.height.mas_equalTo(42);
-        make.width.mas_equalTo(SCREEN_WIDTH - 48 * 2);
+        make.width.mas_equalTo(SCREEN_WIDTH - 56 * 2);
 //        make.left.mas_equalTo(leftBtn.mas_right).offset(5);
 //        make.right.mas_equalTo(rightBtn.mas_left).offset(-5);
     }];
@@ -99,7 +99,7 @@ static CGFloat navBar_Height = 44.f;
 }
 
 - (void)setNavBarView:(UIView *)navBarView {
-    if (navBarView.width > (SCREEN_WIDTH - 55 * 2)) {
+    if (navBarView.width > (SCREEN_WIDTH - 59 * 2)) {
         [_navBarView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [_navBarView removeFromSuperview];
         _navBarView = navBarView;
@@ -118,6 +118,33 @@ static CGFloat navBar_Height = 44.f;
             make.height.mas_equalTo(navBarView.height);
         }];
     }
+}
+
+- (void)setBackMode:(NSInteger)backMode {
+    _backMode = backMode;
+    _leftBtn.hidden = NO;
+    NSString *imageName = [NSString string];
+    if (backMode == 0) {
+        imageName = @"popBack";
+    } else if (backMode == 1) {
+        imageName = @"close_back";
+    }
+    UIImage *image = [UIImage imageNamed:imageName];
+    [_leftBtn setImage:image forState:UIControlStateNormal];
+}
+
+- (void)setBackBtnTintColor:(UIColor *)backBtnTintColor {
+    _backBtnTintColor = backBtnTintColor;
+    _leftBtn.hidden = NO;
+    NSString *imageName = [NSString string];
+    if (_backMode == 0) {
+        imageName = @"popBack";
+    } else if (_backMode == 1) {
+        imageName = @"close_back";
+    }
+    UIImage *image = [UIImage imageNamed:imageName];
+    [_leftBtn setImage:[image imageWithTintColor_My:backBtnTintColor] forState:UIControlStateNormal];
+    _leftBtn.tintColor = backBtnTintColor;
 }
 
 @end

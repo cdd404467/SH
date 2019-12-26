@@ -76,7 +76,6 @@
         }
     };
     [self.contentView addSubview:_imgsView];
-    
 }
 
 - (void)setModel:(DynamicStateModel *)model {

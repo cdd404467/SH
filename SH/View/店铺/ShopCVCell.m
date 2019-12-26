@@ -9,12 +9,12 @@
 #import "ShopCVCell.h"
 #import <YYText.h>
 #import "ShopModel.h"
+#import "LabsView.h"
 
 @interface ShopCVCell()
 @property (nonatomic, strong) UIImageView *shopImageView;
 @property (nonatomic, strong) UILabel *shopNameLab;
-@property (nonatomic, strong) UIImageView *signImg;
-@property (nonatomic, strong) UILabel *signLab;
+@property (nonatomic, strong) LabsView *labsView;
 @property (nonatomic, strong) YYLabel *hotLab;
 @end
 
@@ -61,21 +61,12 @@
         make.height.mas_equalTo(44);
     }];
 
-    _signImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sign_bgImg"]];
-    [bgView addSubview:_signImg];
-    [_signImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.shopNameLab);
-        make.top.mas_equalTo(self.shopNameLab.mas_bottom).offset(8);
-        make.width.mas_equalTo(60);
-        make.height.mas_equalTo(17);
-    }];
-
-    _signLab = [[UILabel alloc] init];
-    _signLab.text = @"动漫";
-    _signLab.textAlignment = NSTextAlignmentCenter;
-    [_signImg addSubview:_signLab];
-    [_signLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(0);
+    _labsView = [[LabsView alloc] init];
+    [bgView addSubview:_labsView];
+    [_labsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(self.shopNameLab);
+        make.top.mas_equalTo(self.shopImageView.mas_top).offset(55);
+        make.height.mas_equalTo(18);
     }];
 
     //商家热度
@@ -103,7 +94,7 @@
     
     [_shopImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, 120) placeholderImage:PlaceHolderImg];
     _shopNameLab.text = model.name;
-    
+    _labsView.labelArray = model.labelArray;
     NSString *str = @"商家热度: ";
     NSString *hot = model.viewNum;
     NSString *text = [str stringByAppendingString:hot];
@@ -114,4 +105,9 @@
     _hotLab.attributedText = mtext;
 }
 
+// 返回特定的高
+-(UICollectionViewLayoutAttributes *) preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+    return layoutAttributes;
+}
 @end

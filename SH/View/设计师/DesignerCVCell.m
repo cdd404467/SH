@@ -73,6 +73,7 @@
         make.height.mas_equalTo(20);
     }];
     [detailBtn.titleLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+//    detailBtn.hidden = YES;
     
     _nickNameLab = [[UILabel alloc] init];
     _nickNameLab.textColor = HEXColor(@"#090203", 1);
@@ -155,7 +156,6 @@
 -(UICollectionViewLayoutAttributes *) preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
     [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
     UICollectionViewLayoutAttributes *attributes = [layoutAttributes copy];
-    
     attributes.size = CGSizeMake(SCREEN_WIDTH - 20, _model.cellHeight);
     return attributes;
 }

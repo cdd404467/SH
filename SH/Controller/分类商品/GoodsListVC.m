@@ -73,7 +73,6 @@ static NSString *cvID = @"HotGoodsCVCell";
         [weakself requestDataWithType:type];
     };
     [self.view addSubview:topView];
-
 }
 
 #pragma mark 请求数据

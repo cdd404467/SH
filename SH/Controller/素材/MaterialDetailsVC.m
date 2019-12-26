@@ -17,6 +17,7 @@
 #import "DesignerMainPageVC.h"
 #import <YBImageBrowser.h>
 #import <YBIBVideoData.h>
+#import "CddHud.h"
 
 @interface MaterialDetailsVC ()<WKNavigationDelegate>
 @property (nonatomic, strong) WKWebView *webView;
@@ -216,9 +217,12 @@
         make.bottom.mas_equalTo(-Bottom_Height_Dif);
         make.height.mas_equalTo(56);
     }];
-    
+    DDWeakSelf;
     _applyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _applyBtn.layer.cornerRadius = 20.f;
+    [_applyBtn addEventHandler:^{
+        [CddHud showTextOnly:@"该素材不可用" view:weakself.view];
+    }];
     _applyBtn.layer.borderColor = HEXColor(@"#ECECEC", 1).CGColor;
     _applyBtn.layer.borderWidth = 1.f;
     _applyBtn.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -240,7 +244,6 @@
         _lookOverBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [_lookOverBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
         [_lookOverBtn setTitle:@"查看设计师" forState:UIControlStateNormal];
-        DDWeakSelf;
         [_lookOverBtn addEventHandler:^{
             DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
             vc.designerId = weakself.dataSource.designerId;

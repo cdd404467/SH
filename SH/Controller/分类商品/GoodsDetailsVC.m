@@ -17,6 +17,10 @@
 #import "UIButton+Extension.h"
 #import "HtmlStringTBCell.h"
 #import "SelectSpecView.h"
+#import "CddHud.h"
+#import "ShopCarVC.h"
+#import "ConfirmOrderVC.h"
+#import "EvaluateModel.h"
 
 @interface GoodsDetailsVC ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -30,15 +34,22 @@
 @property (nonatomic, strong) SelectSpecView *specView;
 @property (nonatomic, strong) NSMutableArray *selectArray;
 @property (nonatomic, strong) NSMutableDictionary *specDict;
+@property (nonatomic, strong) UIView *bottomView;
 @end
 
 @implementation GoodsDetailsVC
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navBar.title = @"商品详情";
     [self.view addSubview:self.tableView];
-    
+    _bottomView = [[UIView alloc] init];
+    _bottomView.backgroundColor = UIColor.whiteColor;
+    [self.view addSubview:_bottomView];
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-Bottom_Height_Dif);
+        make.left.right.mas_equalTo(0);
+        make.height.mas_equalTo(49);
+    }];
     HtmlStringTBCell *cell = [HtmlStringTBCell cellWithTableView:self.tableView];
     self.tempCellArray = [NSMutableArray arrayWithObject:cell];
     
@@ -48,7 +59,6 @@
 //    });
     
     [self requestData];
-    [self requestEva];
 }
 
 
@@ -78,7 +88,24 @@
         };
         //立即购买
         _specView.buyNowBlock = ^(NSInteger index, int buyCount) {
-        
+            [weakself.specView complete];
+            SkuListModel *model = weakself.dataSource.skuList[index];
+            NSDictionary *dict = @{@"id":@(model.goodsId),
+                                   @"skuId":@(model.skuId),
+                                   @"goodsNum":@(buyCount)
+            };
+            NSDecimalNumber *singlePrice = [NSDecimalNumber decimalNumberWithString:weakself.dataSource.goodsPrice];
+            NSDecimalNumber *count = [NSDecimalNumber decimalNumberWithString:@(buyCount).stringValue];
+            NSDecimalNumber *money = [singlePrice decimalNumberByMultiplyingBy:count];
+            
+            ConfirmOrderVC *vc = [[ConfirmOrderVC alloc] init];
+            vc.isCarPay = NO;
+            vc.isBargain = NO;
+            vc.goodsInfoList = @[dict];
+            vc.money = money.stringValue;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakself.navigationController pushViewController:vc animated:YES];
+            });
         };
         //选中替换信息
         _specView.completeBlock = ^(NSMutableDictionary * _Nonnull mDict) {
@@ -96,6 +123,7 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.bounces = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _tableView.sectionFooterHeight = 0.0001;
@@ -112,6 +140,7 @@
         _headerView = [[GoodsDetailsHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH + 115 + 70)];
         DDWeakSelf;
         _headerView.selectBlock = ^{
+            weakself.specView.btnCountType = 1;
             [weakself.specView show];
         };
         self.tableView.tableHeaderView = _headerView;
@@ -120,20 +149,15 @@
 }
 
 - (void)setupUI {
-    UIView *bottomView = [[UIView alloc] init];
-    bottomView.backgroundColor = UIColor.whiteColor;
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-Bottom_Height_Dif);
-        make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(49);
-    }];
-    
-    CGFloat leftWidth = KFit_W(50);
-    CGFloat rightWidth = (SCREEN_WIDTH - leftWidth * 3) / 2;
-    NSArray *titleArr = @[@"分享",@"购物车",@"收藏"];
-    NSArray *imgArr = @[@"goods_share",@"goods_icon_shopCar",@"collect_normal"];
-    for (NSInteger i = 0; i < 3; i ++) {
+    [_bottomView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    DDWeakSelf;
+//    NSArray *titleArr = @[@"分享",@"购物车",@"收藏"];
+    NSArray *titleArr = @[@"购物车",@"收藏"];
+//    NSArray *imgArr = @[@"goods_share",@"goods_icon_shopCar",@"collect_normal"];
+    NSArray *imgArr = @[@"goods_icon_shopCar",@"collect_normal"];
+    CGFloat leftWidth = KFit_W(65);
+    CGFloat rightWidth = (SCREEN_WIDTH - leftWidth * titleArr.count) / 2;
+    for (NSInteger i = 0; i < titleArr.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(i * leftWidth, 0, leftWidth, 49);
         [btn setTitleColor:HEXColor(@"#353535", 1) forState:UIControlStateNormal];
@@ -141,14 +165,22 @@
         btn.backgroundColor = UIColor.whiteColor;
         [btn setTitle:titleArr[i] forState:UIControlStateNormal];
         [btn setImage:[UIImage imageNamed:imgArr[i]] forState:UIControlStateNormal];
-        if (i == 1) {
+        if (i == 0) {
             _shopCarBtn = btn;
+            [_shopCarBtn addEventHandler:^{
+                if (![weakself judgeLogin]) {
+                    return;
+                }
+                ShopCarVC *vc = [[ShopCarVC alloc] init];
+                [weakself.navigationController pushViewController:vc animated:YES];
+            }];
         }
-        if (i == 2) {
+        if (i == 1) {
             [btn setImage:[UIImage imageNamed:@"collect_selected"] forState:UIControlStateSelected];
             _collectionBtn = btn;
+            [self collectionBtnClickEvent];
         }
-        [bottomView addSubview:btn];
+        [_bottomView addSubview:btn];
         [btn layoutWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:2];
     }
     
@@ -160,34 +192,58 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        btn.frame = CGRectMake(leftWidth * 3 + i * rightWidth, 0, rightWidth, 49);
-        [bottomView addSubview:btn];
+        btn.frame = CGRectMake(leftWidth * titleArr.count + i * rightWidth, 0, rightWidth, 49);
+        [_bottomView addSubview:btn];
         if (i == 0) {
             [btn setTitle:@"加入购物车" forState:UIControlStateNormal];
+            [btn addEventHandler:^{
+                if (![weakself judgeLogin]) {
+                    return;
+                }
+                weakself.specView.btnCountType = 2;
+                [weakself.specView show];
+            }];
             btn.backgroundColor = HEXColor(@"#090203", 1);
         } else {
             [btn setTitle:@"立即购买" forState:UIControlStateNormal];
             NSArray *colors= @[HEXColor(@"#FE7900", 1),HEXColor(@"#FF5100", 1)];
             UIImage *image = [UIImage imageWithGradientColor:colors andRect:btn.bounds andGradientType:1];
             [btn addEventHandler:^{
-                
+                if (![weakself judgeLogin]) {
+                    return;
+                }
+                weakself.specView.btnCountType = 3;
+                [weakself.specView show];
             }];
             [btn setBackgroundImage:image forState:UIControlStateNormal];
         }
     }
 }
 
+//判断收藏按钮应该绑定哪个事件
+- (void)collectionBtnClickEvent {
+    self.collectionBtn.selected = self.dataSource.isCollect;
+    [_collectionBtn removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+    if (_collectionBtn.selected) {
+        [_collectionBtn addTarget:self action:@selector(cancelCollectGoods) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [_collectionBtn addTarget:self action:@selector(collectGoods) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
 #pragma mark 请求数据
 - (void)requestData {
     NSString *urlString = [NSString stringWithFormat:URLGet_Goods_Details,_goodsID];
-    [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-        NSLog(@"----   %@",json);
+    [NetTool getRequest:urlString Params:nil Success:^(id _Nonnull json) {
+//        NSLog(@"----   %@",json);
         self.dataSource = [GoodsDetailModel mj_objectWithKeyValues:json];
         self.dataSource.specList = [SpecListModel mj_objectArrayWithKeyValuesArray:self.dataSource.specList];
         self.dataSource.skuList = [SkuListModel mj_objectArrayWithKeyValuesArray:self.dataSource.skuList];
+        self.dataSource.evaluateList = [EvaluateModel mj_objectArrayWithKeyValuesArray:self.dataSource.evaluateList];
         for (SpecListModel *model in self.dataSource.specList) {
             model.goodsSkuSpecVals = [GoodsSkuSpecValsModel mj_objectArrayWithKeyValuesArray:model.goodsSkuSpecVals];
         }
+        
         //默认选择第一个
         for (NSInteger i = 0; i < self.dataSource.specList.count; i++) {
             SpecListModel *spModel = self.dataSource.specList[i];
@@ -212,59 +268,111 @@
     }];
 }
 
+- (BOOL)judgeLogin {
+    DDWeakSelf;
+    if (!Get_User_Token) {
+        [self jumpToLoginWithComplete:^{
+            [weakself requestData];
+        }];
+        return NO;
+    }
+    return YES;
+}
+
+//收藏
+- (void)collectGoods {
+    if (![self judgeLogin]) {
+        return;
+    }
+    NSDictionary *dict = @{@"type":@1,
+                           @"typeId":@(_dataSource.goodsId)
+    };
+    __block MBProgressHUD *hud = [CddHud show:self.view];
+    [NetTool postRequest:URLPost_Collect Params:dict Success:^(id  _Nonnull json) {
+        [CddHud showSwitchText:hud text:@"已收藏"];
+//        NSLog(@"--- %@",json);
+        self.dataSource.isCollect = YES;
+        [self collectionBtnClickEvent];
+    }Error:^(id  _Nullable json) {
+        
+    } Failure:^(NSError * _Nonnull error) {
+        [CddHud hideHUD:self.view];
+    }];
+}
+
+//取消收藏
+- (void)cancelCollectGoods {
+    if (![self judgeLogin]) {
+        return;
+    }
+    NSDictionary *dict = @{@"type":@1,
+                           @"typeId":@(_dataSource.goodsId)
+    };
+    __block MBProgressHUD *hud = [CddHud show:self.view];
+    [NetTool putRequest:URLPut_Cancel_Collect Params:dict Success:^(id  _Nonnull json) {
+        [CddHud showSwitchText:hud text:@"已取消收藏"];
+//        NSLog(@"c--- %@",json);
+        self.dataSource.isCollect = NO;
+        [self collectionBtnClickEvent];
+    } Error:nil Failure:^(NSError * _Nonnull error) {
+        [CddHud hideHUD:self.view];
+    }];
+}
+
 //加入购物车
 - (void)joinShopCarWithIndex:(NSInteger)index count:(int)count {
-    
     SkuListModel *model = self.dataSource.skuList[index];
     NSDictionary *dict = @{@"goodsId":@(model.goodsId),
                            @"skuId":@(model.skuId),
                            @"goodsNum":@(count)
     };
-//    NSLog(@"dict ---- %@",params);
     
+    __block MBProgressHUD *hud = [CddHud show:self.specView];
     [NetTool postRequest:URLPost_Add_ShopCar Params:dict Success:^(id  _Nonnull json) {
+        [CddHud showSwitchText:hud text:@"添加成功~"];
+//        NSLog(@"json ---- %@",json);
+        if ([json integerValue] == 1) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(Delay_Time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.specView complete];
+            });
+        }
+    } Error:^(id  _Nullable json) {
         
-        NSLog(@"json---- %@",json);
     } Failure:^(NSError * _Nonnull error) {
         
     }];
 }
 
-//获取评价
-- (void)requestEva {
-    NSString *urlString = [NSString stringWithFormat:URLGet_Goods_Evaluation,_goodsID,PageCount,1];
-    //    NSLog(@"urlString ------  %@",urlString);
-        [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-//            NSLog(@"----   %@",json);
-            
-        } Failure:^(NSError * _Nonnull error) {
-            
-        }];
-}
 
 #pragma mark - tableView delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 //每组的cell个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
+        if (self.dataSource.evaluateList.count < 3) {
+            return self.dataSource.evaluateList.count;
+        }
         return 2;
-    } else if (section == 1) {
-        return 1;
-    } else {
+    }
+//    else if (section == 1) {
+//        return 1;
+//    }
+    else {
         return 1;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 140;
-    } else if (indexPath.section == 1) {
-        return 130;
-    } else {
-//        return 500;
+        return 120;
+    }
+//    else if (indexPath.section == 1) {
+//        return 130;
+//    }
+    else {
         return self.dataSource.cellHeight;
     }
 }
@@ -282,28 +390,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GoodsDetailsSectionHeader *header = [GoodsDetailsSectionHeader headerWithTableView:tableView];
     header.title = self.secDataSource[section];
-    switch (section) {
-        case 0:
-        {
-            
-        }
-            break;
-        case 1:
-        {
-            header.showMoreBtn = NO;
+    if (section == 0) {
+        header.showMoreBtn = NO;
+        if (self.dataSource.evaluateCount.integerValue > 0) {
+            header.showLine = YES;
+        } else {
             header.showLine = NO;
         }
-            
-            break;
-        case 2:
-        {
-            header.showLine = NO;
-            header.showMoreBtn = NO;
-        }
-            break;
-        default:
-            break;
+    } else if (section == 1) {
+        header.showLine = NO;
+        header.showMoreBtn = NO;
     }
+    
     return header;
 }
 
@@ -311,18 +409,26 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         EvaluationTBCell *cell = [EvaluationTBCell cellWithTableView:tableView];
-        
+        NSArray *tempArr = [NSArray array];
+        if (self.dataSource.evaluateList.count < 3) {
+            tempArr = self.dataSource.evaluateList;
+        } else {
+            tempArr = [self.dataSource.evaluateList subarrayWithRange:NSMakeRange(0, 2)];
+        }
+        cell.model = tempArr[indexPath.row];
         return cell;
-    } else if (indexPath.section == 1) {
-        ShopTBCell *cell = [ShopTBCell cellWithTableView:tableView];
-        
-        return cell;
-    } else {
+    }
+//    else if (indexPath.section == 1) {
+//        ShopTBCell *cell = [ShopTBCell cellWithTableView:tableView];
+//
+//        return cell;
+//    }
+    else {
         HtmlStringTBCell *cell = self.tempCellArray[indexPath.row];
         cell.model = self.dataSource;
         DDWeakSelf;
         cell.cellHeightBlock = ^{
-            [weakself.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:2], nil] withRowAnimation:UITableViewRowAnimationNone];
+            [weakself.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:1], nil] withRowAnimation:UITableViewRowAnimationNone];
         };
         return cell;
     }

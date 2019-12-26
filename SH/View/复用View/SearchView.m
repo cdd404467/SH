@@ -32,7 +32,6 @@
     searchTF.tintColor = MainColor;
     searchTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     searchTF.returnKeyType = UIReturnKeySearch;
-    searchTF.enablesReturnKeyAutomatically = YES;
     searchTF.font = [UIFont systemFontOfSize:14];
     searchTF.delegate = self;
     UIImageView *leftImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_icon"]];
@@ -67,7 +66,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField.text.length > 0) {
+    if (textField.text.length >= 0) {
         if (self.searchBlock) {
             self.searchBlock();
         }

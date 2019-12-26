@@ -31,6 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*)dictionaryToJson:(NSDictionary *)dic;
 
 + (UIImage *)globalGradientColor:(CGRect)rect;
+
+//获取IP地址
++ (NSString *)getIPaddress;
+
+// 获取当前显示的控制器
++ (UIViewController *)getCurrentVC;
 @end
 
 NS_ASSUME_NONNULL_END

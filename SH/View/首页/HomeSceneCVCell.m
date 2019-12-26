@@ -40,4 +40,10 @@
     _sceneView.model = model;
 }
 
+
+// 返回特定的高
+-(UICollectionViewLayoutAttributes *) preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+    return layoutAttributes;
+}
 @end

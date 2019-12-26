@@ -19,28 +19,28 @@
 #import "SearchAllKindsVC.h"
 #import "GoodsDetailsVC.h"
 #import "SceneDetailsVC.h"
-#import "HomePageHeaderView.h"
 #import "MoreFooterView.h"
 #import "DesignerMainPageVC.h"
+#import "HomePageBannerView.h"
+
 
 static NSString *iconCVID = @"SceneIconCVCell";
 static NSString *sceneCVID = @"sceneCell";
 static NSString *designerCVID = @"HomeDesignerListCVCell";
 static NSString *goodsCVID = @"HotGoodsCVCell";
 static NSString *section_Header = @"section_Header";
+static NSString *section_Header_banner = @"HomePageBannerView";
 static NSString *section_Footer = @"MoreFooterView";
 @interface HomePageVC ()<UICollectionViewDelegate, UICollectionViewDataSource, ColorfulDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 //数据源
 @property (nonatomic, strong) HomePageModel *dataSource;
-@property (nonatomic, strong) HomePageHeaderView *headerView;
 @end
 
 @implementation HomePageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [UserDefault setObject:@"eyJhbGciOiJIUzUxMiJ9.eyJuaWNrbmFtZSI6IlpKRyIsImhlYWRpbWd1cmwiOiJodHRwczovL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9RMGo0VHdHVGZUSzNmaWNiMXdFSXJzdUY1MzFOU1VPdFJudk9YOTBiMU1FWHU0WmxQNVA2NlZqVjFVUjhXbnNrT09GZkJjcDl2eHBiZFY4RnJwOXpaancvMTMyIiwiaWQiOjEwMDI1NjE5LCJleHAiOjE1NzY0ODI2NDIsIm9wZW5pZCI6Im8ySGVQNG5FMkZaNldGRmRLR2hPdXNCRERibW8iLCJhcHBpZCI6Ind4MWNkZjllZDUzMTMwMWY3MyJ9.iKIyXxlB0zBTz_OpqMxqlpZLhentF9Vmi3_bvrouo-t_q1t_fU6H3Yc9ktdZa27am1czJrmKFyUdTUPgcf_U8A" forKey:@"userToken"];
     [self setNavBar];
     [self.view addSubview:self.collectionView];
     [self requestData];
@@ -60,7 +60,8 @@ static NSString *section_Footer = @"MoreFooterView";
     searchBtn.backgroundColor = UIColor.blackColor;
     [searchBtn setImage:[UIImage imageNamed:@"search_icon"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(jumpToSearch) forControlEvents:UIControlEventTouchUpInside];
-    [searchBtn setTitle:@"搜索商品、场景、店铺、设计师、素材" forState:UIControlStateNormal];
+//    [searchBtn setTitle:@"搜索商品、场景、店铺、设计师、素材" forState:UIControlStateNormal];
+    [searchBtn setTitle:@"搜索商品、场景、设计师、素材" forState:UIControlStateNormal];
     [searchBtn setTitleColor:HEXColor(@"#9B9B9B", 1) forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [titleView addSubview:searchBtn];
@@ -78,14 +79,6 @@ static NSString *section_Footer = @"MoreFooterView";
     self.navBar.navBarView = titleView;
 }
 
-- (HomePageHeaderView *)headerView {
-    if (!_headerView) {
-        _headerView = [[HomePageHeaderView alloc] init];
-    }
-    
-    return _headerView;
-}
-
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         ColorfulFlowLayout *layout = [[ColorfulFlowLayout alloc] init];
@@ -97,14 +90,14 @@ static NSString *section_Footer = @"MoreFooterView";
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        [_collectionView addSubview:self.headerView];
-        _collectionView.contentInset = UIEdgeInsetsMake(KFit_W(220), 0, TABBAR_HEIGHT + 40, 0);
+        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT + 40, 0);
         [_collectionView registerClass:[SceneIconCVCell class] forCellWithReuseIdentifier:iconCVID];
         [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:sceneCVID];
         [_collectionView registerClass:[HomeDesignerListCVCell class] forCellWithReuseIdentifier:designerCVID];
         [_collectionView registerClass:[GoodsCVCell class] forCellWithReuseIdentifier:goodsCVID];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"test"];
         [_collectionView registerClass:[HomeSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header];
+        [_collectionView registerClass:[HomePageBannerView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header_banner];
         [_collectionView registerClass:[MoreFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:section_Footer];
     }
 
@@ -119,9 +112,9 @@ static NSString *section_Footer = @"MoreFooterView";
         self.dataSource.BANNER = [BannerModel mj_objectArrayWithKeyValuesArray:self.dataSource.BANNER];
         self.dataSource.FIRSTSCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.FIRSTSCENE];
         self.dataSource.SCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.SCENE];
-        self.dataSource.DESIGNER = [DesignerModel mj_objectArrayWithKeyValuesArray:self.dataSource.DESIGNER];
+//        self.dataSource.DESIGNER = [DesignerModel mj_objectArrayWithKeyValuesArray:self.dataSource.DESIGNER];
         self.dataSource.GOODS = [GoodsModel mj_objectArrayWithKeyValuesArray:self.dataSource.GOODS];
-        self.headerView.bannerArray = self.dataSource.BANNER;
+//        self.headerView.bannerArray = self.dataSource.BANNER;
         [self.collectionView reloadData];
     } Failure:^(NSError * _Nonnull error) {
                     
@@ -145,7 +138,7 @@ static NSString *section_Footer = @"MoreFooterView";
 #pragma mark - collectionView delegate
 /** 总共多少组*/
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 5;
+    return 3;
 }
 
 /** 每组几个cell*/
@@ -160,13 +153,17 @@ static NSString *section_Footer = @"MoreFooterView";
         } else {
             return self.dataSource.FIRSTSCENE.count;
         }
-    } else if (section == 1) {
+    }
+    else if (section == 1) {
         return self.dataSource.SCENE.count;
-    } else if (section == 2) {
-        return 1;
-    } else if (section == 4) {
+    }
+//    else if (section == 2) {
+//        return 1;
+//    }
+    else if (section == 2) {
         return self.dataSource.GOODS.count;
-    } else {
+    }
+    else {
         return 2;
     }
 }
@@ -178,12 +175,15 @@ static NSString *section_Footer = @"MoreFooterView";
         return CGSizeMake(itemWidth, KFit_W(44) + 25);
     } else if (indexPath.section == 1) {
         return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
-    } else if (indexPath.section == 2) {
-        return CGSizeMake(SCREEN_WIDTH , 170);
-    } else if (indexPath.section == 4) {
+    }
+//    else if (indexPath.section == 2) {
+//        return CGSizeMake(SCREEN_WIDTH , 170);
+//    }
+    else if (indexPath.section == 2) {
         CGFloat imageWidth = (SCREEN_WIDTH - 16 * 2 - 10) / 2;
         return CGSizeMake(imageWidth , imageWidth + 96);
-    } else {
+    }
+    else {
         return CGSizeMake(60 , 60);
     }
 }
@@ -192,39 +192,47 @@ static NSString *section_Footer = @"MoreFooterView";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if (section == 0) {
         return 20;
-    } else if (section == 4) {
-        return 10;
-    } else {
-        return 0;
     }
+    else if (section == 2) {
+        return 10;
+    }
+    return 0;
+//    else {
+//        return 0;
+//    }
 }
 
 //cell列间距
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     if (section == 0) {
         return 25;
-    } else if (section == 4) {
-        return 10;
-    } else {
-        return 0;
     }
+    else if (section == 2) {
+        return 10;
+    }
+    return 0;
+//    else {
+//        return 0;
+//    }
 }
 
 //section四周的边距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == 0) {
         return UIEdgeInsetsMake(20, 20, 0, 20);
-    } else if (section == 4) {
+    } else if (section == 2) {
         return UIEdgeInsetsMake(0, 16, 10, 16);
-    } else {
-        return UIEdgeInsetsMake(0, 0, 10, 0);
     }
+    return UIEdgeInsetsMake(0, 0, 10, 0);
+//    else {
+//        return UIEdgeInsetsMake(0, 0, 10, 0);
+//    }
 }
 
 //设置header尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return CGSizeZero;
+        return CGSizeMake(SCREEN_WIDTH, KFit_W(220));
     }
     return CGSizeMake(SCREEN_WIDTH, 65);
 }
@@ -248,12 +256,20 @@ static NSString *section_Footer = @"MoreFooterView";
 
 //设置头部
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader] && indexPath.section != 0) {
-        NSArray *titleArr = @[@"热门场景",@"设计师榜",@"砍价活动",@"热门商品"];
-        HomeSectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header forIndexPath:indexPath];
-        header.title = titleArr[indexPath.section - 1];
-        view = header;
+    UICollectionReusableView *view = [UICollectionReusableView new];
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        if (indexPath.section == 0) {
+            HomePageBannerView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header_banner forIndexPath:indexPath];
+            header.bannerArray = self.dataSource.BANNER;
+            view = header;
+        } else {
+//            NSArray *titleArr = @[@"热门场景",@"设计师榜",@"砍价活动",@"热门商品"];
+              NSArray *titleArr = @[@"热门场景",@"热门商品"];
+              HomeSectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header forIndexPath:indexPath];
+              header.title = titleArr[indexPath.section - 1];
+              header.showMoreBtn = NO;
+              view = header;
+        }
     } else if ([kind isEqualToString:UICollectionElementKindSectionFooter] && indexPath.section == 0) {
         MoreFooterView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:section_Footer forIndexPath:indexPath];
         footer.model = self.dataSource;
@@ -282,7 +298,7 @@ static NSString *section_Footer = @"MoreFooterView";
         SceneModel *model = self.dataSource.SCENE[indexPath.row];
         vc.sceneId = [model.sceneId intValue];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (indexPath.section == 4) {
+    } else if (indexPath.section == 2) {
         GoodsDetailsVC *vc= [[GoodsDetailsVC alloc] init];
         GoodsModel *model = self.dataSource.GOODS[indexPath.row];
         vc.goodsID = model.goodsId;
@@ -296,25 +312,29 @@ static NSString *section_Footer = @"MoreFooterView";
         SceneIconCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:iconCVID forIndexPath:indexPath];
         cell.model = self.dataSource.FIRSTSCENE[indexPath.row];
         return cell;
-    } else if (indexPath.section == 1) {
+    }
+    else if (indexPath.section == 1) {
         HomeSceneCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:sceneCVID forIndexPath:indexPath];
         cell.model = self.dataSource.SCENE[indexPath.row];
         return cell;
-    } else if (indexPath.section == 2) {
-        HomeDesignerListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:designerCVID forIndexPath:indexPath];
-        DDWeakSelf;
-        cell.clickBlock = ^(NSString * _Nonnull designerId) {
-            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
-            vc.designerId = designerId;
-            [weakself.navigationController pushViewController:vc animated:YES];
-        };
-        cell.designerArr = self.dataSource.DESIGNER;
-        return cell;
-    } else if (indexPath.section == 4) {
+    }
+//    else if (indexPath.section == 2) {
+//        HomeDesignerListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:designerCVID forIndexPath:indexPath];
+//        DDWeakSelf;
+//        cell.clickBlock = ^(NSString * _Nonnull designerId) {
+//            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
+//            vc.designerId = designerId;
+//            [weakself.navigationController pushViewController:vc animated:YES];
+//        };
+//        cell.designerArr = self.dataSource.DESIGNER;
+//        return cell;
+//    }
+    else if (indexPath.section == 2) {
         GoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:goodsCVID forIndexPath:indexPath];
         cell.model = self.dataSource.GOODS[indexPath.row];
         return cell;
-    } else {
+    }
+    else {
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"test" forIndexPath:indexPath];
         return cell;
     }
@@ -326,8 +346,8 @@ static NSString *section_Footer = @"MoreFooterView";
 {
     return [@[UIColor.whiteColor,
               _collectionView.backgroundColor,
-              _collectionView.backgroundColor,
-              _collectionView.backgroundColor,
+//              _collectionView.backgroundColor,
+//              _collectionView.backgroundColor,
               UIColor.whiteColor
               ] objectAtIndex:section];
 }

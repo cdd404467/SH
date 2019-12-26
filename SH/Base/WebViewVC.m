@@ -32,13 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (!_webTitle)
-        self.title = @"尚乎数码";
-//    [self vhl_setNavBarBackgroundColor:Like_Color];
-//    [self vhl_setNavBarShadowImageHidden:YES];
-//    [self vhl_setNavigationSwitchStyle:1];
-    [self.backBtn setImage:[UIImage imageNamed:@"close_back"] forState:UIControlStateNormal];
-    self.backBtn.left = self.backBtn.left + 2;
-    
+        self.navBar.title = @"尚乎数码";
+    self.navBar.backMode = 1;
+    self.navBar.backgroundColor = Like_Color;
     if (self.needBottom == YES) {
         [self setBottomView];
     }
@@ -61,6 +57,7 @@
     [self.view addSubview:self.progressView];
     //1.创建WKWebView
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0,NAV_HEIGHT,SCREEN_WIDTH,self.wvHeight)];
+    _webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT, 0);
     _webView.backgroundColor = UIColor.whiteColor;
     //2.创建URL
     NSString *urlString = _webUrl;
@@ -97,9 +94,8 @@
             [self.progressView setProgress:newprogress animated:YES];
         }
     } else if (object == self.webView && [keyPath isEqualToString:@"title"]) {
-        self.title = self.webView.title;
+        self.navBar.title = self.webView.title;
     }
-    
 }
 
 - (void)setBottomView {
@@ -129,8 +125,6 @@
     rightBtn.transform = CGAffineTransformMakeRotation(M_PI);
     _rightBtn = rightBtn;
 }
-
-
 
 //webView 返回事件
 - (void)webViewGoBack {

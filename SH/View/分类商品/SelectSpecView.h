@@ -19,7 +19,11 @@ typedef void(^CompleteBlock)(NSMutableDictionary *mDict);
 @property (nonatomic, copy) JoinShopCarBlock joinShopCarBlock;
 @property (nonatomic, copy) BuyNowBlock buyNowBlock;
 @property (nonatomic, copy) CompleteBlock completeBlock;
+//1-无确定按钮 2加入购物车 3j立即购买
+@property (nonatomic, assign) NSInteger btnCountType;
+
 - (void)show;
+- (void)complete;
 @end
 
 @interface SpecSecHeader : UICollectionReusableView

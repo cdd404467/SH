@@ -12,6 +12,20 @@
 		FC1C56CC23868AC400287F10 /* SceneIconCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1C56CB23868AC400287F10 /* SceneIconCVCell.m */; };
 		FC1C56D223879B3E00287F10 /* ScreenClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1C56D123879B3E00287F10 /* ScreenClassView.m */; };
 		FC1C56D9238B6E7500287F10 /* SuspendFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1C56D8238B6E7500287F10 /* SuspendFlowLayout.m */; };
+		FC23BBF423ADD3DA00223B58 /* ConfirmOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BBF323ADD3DA00223B58 /* ConfirmOrderModel.m */; };
+		FC23BBF723AE000700223B58 /* PaySuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BBF623AE000700223B58 /* PaySuccessVC.m */; };
+		FC23BBFA23AE01E200223B58 /* OrderStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BBF923AE01E200223B58 /* OrderStatusView.m */; };
+		FC23BBFD23AE12F200223B58 /* ReceiverInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BBFC23AE12F200223B58 /* ReceiverInfoView.m */; };
+		FC23BC0123B054D300223B58 /* OrderListSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC0023B054D300223B58 /* OrderListSectionHeader.m */; };
+		FC23BC0423B0596100223B58 /* OrderListTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC0323B0596100223B58 /* OrderListTBCell.m */; };
+		FC23BC0723B05DAC00223B58 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC0623B05DAC00223B58 /* OrderModel.m */; };
+		FC23BC0A23B06A7900223B58 /* OrderListSectionFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC0923B06A7900223B58 /* OrderListSectionFooter.m */; };
+		FC23BC0D23B0A93700223B58 /* EvaluateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC0C23B0A93700223B58 /* EvaluateModel.m */; };
+		FC23BC1123B1AA9200223B58 /* TempVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC1023B1AA9200223B58 /* TempVC.m */; };
+		FC23BC1423B1DD4E00223B58 /* NSURL+DealWithString.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC1323B1DD4E00223B58 /* NSURL+DealWithString.m */; };
+		FC23BC1723B2F7CE00223B58 /* SearchAllKindsResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC1623B2F7CE00223B58 /* SearchAllKindsResultsVC.m */; };
+		FC23BC1A23B3037700223B58 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC1923B3037700223B58 /* SearchModel.m */; };
+		FC23BC1D23B329F500223B58 /* SearchResultSecHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC23BC1C23B329F500223B58 /* SearchResultSecHeader.m */; };
 		FC3CDBAC2390E73A00E519BE /* DesignerDynamicStateListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBAB2390E73A00E519BE /* DesignerDynamicStateListView.m */; };
 		FC3CDBAF2390E98200E519BE /* DynamicStateTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBAE2390E98200E519BE /* DynamicStateTBCell.m */; };
 		FC3CDBB22390EE1800E519BE /* DynamicStateImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBB12390EE1800E519BE /* DynamicStateImgView.m */; };
@@ -26,6 +40,9 @@
 		FC3CDBD323A0AD9100E519BE /* ReceiveAddressTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBD223A0AD9100E519BE /* ReceiveAddressTBCell.m */; };
 		FC3CDBD623A0B6B400E519BE /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBD523A0B6B400E519BE /* AddressModel.m */; };
 		FC3CDBD923A0C62200E519BE /* EditAddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3CDBD823A0C62200E519BE /* EditAddressVC.m */; };
+		FC44398523A1070200E0D096 /* area.json in Resources */ = {isa = PBXBuildFile; fileRef = FC44398423A1070000E0D096 /* area.json */; };
+		FC44398A23A1E36200E0D096 /* CddHud.m in Sources */ = {isa = PBXBuildFile; fileRef = FC44398923A1E36200E0D096 /* CddHud.m */; };
+		FC44398D23A2105800E0D096 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = FC44398C23A2105800E0D096 /* Alert.m */; };
 		FC80539F232F32F90021B2E8 /* ClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC80539E232F32F90021B2E8 /* ClassifyModel.m */; };
 		FC8053A3232F36AE0021B2E8 /* FirstClassifyTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053A2232F36AE0021B2E8 /* FirstClassifyTBCell.m */; };
 		FC8053A6232F56940021B2E8 /* SecondClassifyCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053A5232F56940021B2E8 /* SecondClassifyCVCell.m */; };
@@ -44,6 +61,18 @@
 		FC8053D1233353960021B2E8 /* GoodsDetailsSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D0233353960021B2E8 /* GoodsDetailsSectionHeader.m */; };
 		FC8053D423335B630021B2E8 /* EvaluationTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D323335B630021B2E8 /* EvaluationTBCell.m */; };
 		FC8053D823336B190021B2E8 /* ShopTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8053D723336B190021B2E8 /* ShopTBCell.m */; };
+		FC8A01D023A32C8300AE3916 /* ConfirmOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01CF23A32C8300AE3916 /* ConfirmOrderVC.m */; };
+		FC8A01D323A3392B00AE3916 /* OrderGoodsTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01D223A3392B00AE3916 /* OrderGoodsTBCell.m */; };
+		FC8A01DA23A6791000AE3916 /* MyInvoiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01D923A6791000AE3916 /* MyInvoiceVC.m */; };
+		FC8A01DE23A67D3600AE3916 /* InvoiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01DD23A67D3600AE3916 /* InvoiceModel.m */; };
+		FC8A01E223A67F3700AE3916 /* MyInvoiceTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01E123A67F3700AE3916 /* MyInvoiceTBCell.m */; };
+		FC8A01E523A6868000AE3916 /* EditInvoiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01E423A6868000AE3916 /* EditInvoiceVC.m */; };
+		FC8A01E923A864D400AE3916 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FC8A01E823A864D400AE3916 /* LaunchImage.png */; };
+		FC8A01EC23A8663A00AE3916 /* LaunchImage_1.png in Resources */ = {isa = PBXBuildFile; fileRef = FC8A01EA23A8663A00AE3916 /* LaunchImage_1.png */; };
+		FC8A01ED23A8663A00AE3916 /* LaunchImage_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC8A01EB23A8663A00AE3916 /* LaunchImage_2.png */; };
+		FC8A01F523A9C6BE00AE3916 /* HomePageBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01F423A9C6BE00AE3916 /* HomePageBannerView.m */; };
+		FC8A01F823A9F02C00AE3916 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01F723A9F02C00AE3916 /* SettingVC.m */; };
+		FC8A01FB23A9FC2500AE3916 /* CddActionSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A01F923A9FC2500AE3916 /* CddActionSheetView.m */; };
 		FC8D484D231E69F900BF6635 /* MinePageHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D484C231E69F900BF6635 /* MinePageHeader.m */; };
 		FC8D4850231F521100BF6635 /* HelperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D484F231F521100BF6635 /* HelperTool.m */; };
 		FC8D485A231F868D00BF6635 /* UIButton+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D4859231F868D00BF6635 /* UIButton+Extension.m */; };
@@ -72,6 +101,8 @@
 		FC8D48C52327A18300BF6635 /* UIView+Border.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D48C42327A18300BF6635 /* UIView+Border.m */; };
 		FC8D48C8232890C900BF6635 /* AllClassifyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8D48C7232890C900BF6635 /* AllClassifyVC.m */; };
 		FC90EFB7234ECB2400CFA802 /* LaunchAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC90EFB6234ECB2400CFA802 /* LaunchAdManager.m */; };
+		FC99D9AC23AB77360055DA83 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC99D9A923AB77360055DA83 /* WXApiManager.m */; };
+		FC99D9B323AC65520055DA83 /* MyOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FC99D9B223AC65520055DA83 /* MyOrdersVC.m */; };
 		FCA0839C2337CB6C001FBE35 /* MaterialCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA0839B2337CB6C001FBE35 /* MaterialCVCell.m */; };
 		FCA0839F2337CC88001FBE35 /* MaterialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA0839E2337CC88001FBE35 /* MaterialModel.m */; };
 		FCA083A523387206001FBE35 /* ShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA083A423387206001FBE35 /* ShopModel.m */; };
@@ -105,7 +136,7 @@
 		FCA19933231E58A700F08C43 /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA19931231E58A700F08C43 /* UIViewController+Extension.m */; };
 		FCA19936231E5E7100F08C43 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA19935231E5E7100F08C43 /* BaseTableViewController.m */; };
 		FCA19939231E5F2E00F08C43 /* UITableViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA19938231E5F2E00F08C43 /* UITableViewController+Extension.m */; };
-		FCA8F88B233490B7003EC14B /* HomePageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA8F88A233490B7003EC14B /* HomePageHeaderView.m */; };
+		FCA1D55923AA074C00C8DFAB /* AboutUSVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA1D55823AA074C00C8DFAB /* AboutUSVC.m */; };
 		FCA8F88E2334935D003EC14B /* BannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA8F88D2334935D003EC14B /* BannerModel.m */; };
 		FCAC434D238FB17A00C32DBA /* LabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAC434C238FB17900C32DBA /* LabsView.m */; };
 		FCAC43542390210600C32DBA /* DesignerMainPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAC43532390210600C32DBA /* DesignerMainPageVC.m */; };
@@ -113,6 +144,7 @@
 		FCAC435A2390252A00C32DBA /* DesignerMaterialListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAC43592390252A00C32DBA /* DesignerMaterialListView.m */; };
 		FCAC435D2390B7DB00C32DBA /* FinishedProductCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAC435C2390B7DB00C32DBA /* FinishedProductCVCell.m */; };
 		FCAC43602390D2E100C32DBA /* DesignerFinishedProductListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAC435F2390D2E100C32DBA /* DesignerFinishedProductListView.m */; };
+		FCAE2C4623AC6D4B00CF8D91 /* OrderChildsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAE2C4523AC6D4B00CF8D91 /* OrderChildsVC.m */; };
 		FCB225EF233528B20074CB94 /* JXPageControlChameleon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225E4233528B20074CB94 /* JXPageControlChameleon.swift */; };
 		FCB225F0233528B20074CB94 /* JXPageControlBoldLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225E5233528B20074CB94 /* JXPageControlBoldLine.swift */; };
 		FCB225F1233528B20074CB94 /* JXPageControlScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225E6233528B20074CB94 /* JXPageControlScale.swift */; };
@@ -160,6 +192,34 @@
 		FC1C56D123879B3E00287F10 /* ScreenClassView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScreenClassView.m; sourceTree = "<group>"; };
 		FC1C56D7238B6E7500287F10 /* SuspendFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuspendFlowLayout.h; sourceTree = "<group>"; };
 		FC1C56D8238B6E7500287F10 /* SuspendFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuspendFlowLayout.m; sourceTree = "<group>"; };
+		FC23BBF223ADD3DA00223B58 /* ConfirmOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderModel.h; sourceTree = "<group>"; };
+		FC23BBF323ADD3DA00223B58 /* ConfirmOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderModel.m; sourceTree = "<group>"; };
+		FC23BBF523AE000700223B58 /* PaySuccessVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaySuccessVC.h; sourceTree = "<group>"; };
+		FC23BBF623AE000700223B58 /* PaySuccessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaySuccessVC.m; sourceTree = "<group>"; };
+		FC23BBF823AE01E200223B58 /* OrderStatusView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderStatusView.h; sourceTree = "<group>"; };
+		FC23BBF923AE01E200223B58 /* OrderStatusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderStatusView.m; sourceTree = "<group>"; };
+		FC23BBFB23AE12F200223B58 /* ReceiverInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReceiverInfoView.h; sourceTree = "<group>"; };
+		FC23BBFC23AE12F200223B58 /* ReceiverInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReceiverInfoView.m; sourceTree = "<group>"; };
+		FC23BBFF23B054D300223B58 /* OrderListSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderListSectionHeader.h; sourceTree = "<group>"; };
+		FC23BC0023B054D300223B58 /* OrderListSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderListSectionHeader.m; sourceTree = "<group>"; };
+		FC23BC0223B0596100223B58 /* OrderListTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderListTBCell.h; sourceTree = "<group>"; };
+		FC23BC0323B0596100223B58 /* OrderListTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderListTBCell.m; sourceTree = "<group>"; };
+		FC23BC0523B05DAC00223B58 /* OrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
+		FC23BC0623B05DAC00223B58 /* OrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
+		FC23BC0823B06A7900223B58 /* OrderListSectionFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderListSectionFooter.h; sourceTree = "<group>"; };
+		FC23BC0923B06A7900223B58 /* OrderListSectionFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderListSectionFooter.m; sourceTree = "<group>"; };
+		FC23BC0B23B0A93700223B58 /* EvaluateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaluateModel.h; sourceTree = "<group>"; };
+		FC23BC0C23B0A93700223B58 /* EvaluateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaluateModel.m; sourceTree = "<group>"; };
+		FC23BC0F23B1AA9200223B58 /* TempVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempVC.h; sourceTree = "<group>"; };
+		FC23BC1023B1AA9200223B58 /* TempVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempVC.m; sourceTree = "<group>"; };
+		FC23BC1223B1DD4E00223B58 /* NSURL+DealWithString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+DealWithString.h"; sourceTree = "<group>"; };
+		FC23BC1323B1DD4E00223B58 /* NSURL+DealWithString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DealWithString.m"; sourceTree = "<group>"; };
+		FC23BC1523B2F7CE00223B58 /* SearchAllKindsResultsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchAllKindsResultsVC.h; sourceTree = "<group>"; };
+		FC23BC1623B2F7CE00223B58 /* SearchAllKindsResultsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchAllKindsResultsVC.m; sourceTree = "<group>"; };
+		FC23BC1823B3037700223B58 /* SearchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
+		FC23BC1923B3037700223B58 /* SearchModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
+		FC23BC1B23B329F500223B58 /* SearchResultSecHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultSecHeader.h; sourceTree = "<group>"; };
+		FC23BC1C23B329F500223B58 /* SearchResultSecHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultSecHeader.m; sourceTree = "<group>"; };
 		FC3CDBAA2390E73A00E519BE /* DesignerDynamicStateListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesignerDynamicStateListView.h; sourceTree = "<group>"; };
 		FC3CDBAB2390E73A00E519BE /* DesignerDynamicStateListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesignerDynamicStateListView.m; sourceTree = "<group>"; };
 		FC3CDBAD2390E98200E519BE /* DynamicStateTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicStateTBCell.h; sourceTree = "<group>"; };
@@ -188,6 +248,11 @@
 		FC3CDBD523A0B6B400E519BE /* AddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
 		FC3CDBD723A0C62200E519BE /* EditAddressVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditAddressVC.h; sourceTree = "<group>"; };
 		FC3CDBD823A0C62200E519BE /* EditAddressVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditAddressVC.m; sourceTree = "<group>"; };
+		FC44398423A1070000E0D096 /* area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area.json; sourceTree = "<group>"; };
+		FC44398823A1E36200E0D096 /* CddHud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CddHud.h; sourceTree = "<group>"; };
+		FC44398923A1E36200E0D096 /* CddHud.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CddHud.m; sourceTree = "<group>"; };
+		FC44398B23A2105800E0D096 /* Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		FC44398C23A2105800E0D096 /* Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		FC80539D232F32F90021B2E8 /* ClassifyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassifyModel.h; sourceTree = "<group>"; };
 		FC80539E232F32F90021B2E8 /* ClassifyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassifyModel.m; sourceTree = "<group>"; };
 		FC8053A1232F36AE0021B2E8 /* FirstClassifyTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstClassifyTBCell.h; sourceTree = "<group>"; };
@@ -225,6 +290,28 @@
 		FC8053D623336B190021B2E8 /* ShopTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShopTBCell.h; sourceTree = "<group>"; };
 		FC8053D723336B190021B2E8 /* ShopTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopTBCell.m; sourceTree = "<group>"; };
 		FC8053D92333D02E0021B2E8 /* SH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SH-Bridging-Header.h"; sourceTree = "<group>"; };
+		FC8A01CE23A32C8300AE3916 /* ConfirmOrderVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderVC.h; sourceTree = "<group>"; };
+		FC8A01CF23A32C8300AE3916 /* ConfirmOrderVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderVC.m; sourceTree = "<group>"; };
+		FC8A01D123A3392B00AE3916 /* OrderGoodsTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderGoodsTBCell.h; sourceTree = "<group>"; };
+		FC8A01D223A3392B00AE3916 /* OrderGoodsTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderGoodsTBCell.m; sourceTree = "<group>"; };
+		FC8A01D823A6791000AE3916 /* MyInvoiceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyInvoiceVC.h; sourceTree = "<group>"; };
+		FC8A01D923A6791000AE3916 /* MyInvoiceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyInvoiceVC.m; sourceTree = "<group>"; };
+		FC8A01DC23A67D3600AE3916 /* InvoiceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InvoiceModel.h; sourceTree = "<group>"; };
+		FC8A01DD23A67D3600AE3916 /* InvoiceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvoiceModel.m; sourceTree = "<group>"; };
+		FC8A01E023A67F3700AE3916 /* MyInvoiceTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyInvoiceTBCell.h; sourceTree = "<group>"; };
+		FC8A01E123A67F3700AE3916 /* MyInvoiceTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyInvoiceTBCell.m; sourceTree = "<group>"; };
+		FC8A01E323A6868000AE3916 /* EditInvoiceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditInvoiceVC.h; sourceTree = "<group>"; };
+		FC8A01E423A6868000AE3916 /* EditInvoiceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditInvoiceVC.m; sourceTree = "<group>"; };
+		FC8A01E823A864D400AE3916 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
+		FC8A01EA23A8663A00AE3916 /* LaunchImage_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage_1.png; sourceTree = "<group>"; };
+		FC8A01EB23A8663A00AE3916 /* LaunchImage_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage_2.png; sourceTree = "<group>"; };
+		FC8A01F223A8D45000AE3916 /* NotificationNameHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationNameHeader.h; sourceTree = "<group>"; };
+		FC8A01F323A9C6BE00AE3916 /* HomePageBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageBannerView.h; sourceTree = "<group>"; };
+		FC8A01F423A9C6BE00AE3916 /* HomePageBannerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageBannerView.m; sourceTree = "<group>"; };
+		FC8A01F623A9F02C00AE3916 /* SettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingVC.h; sourceTree = "<group>"; };
+		FC8A01F723A9F02C00AE3916 /* SettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingVC.m; sourceTree = "<group>"; };
+		FC8A01F923A9FC2500AE3916 /* CddActionSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CddActionSheetView.m; sourceTree = "<group>"; };
+		FC8A01FA23A9FC2500AE3916 /* CddActionSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CddActionSheetView.h; sourceTree = "<group>"; };
 		FC8D484B231E69F900BF6635 /* MinePageHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinePageHeader.h; sourceTree = "<group>"; };
 		FC8D484C231E69F900BF6635 /* MinePageHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinePageHeader.m; sourceTree = "<group>"; };
 		FC8D484E231F521100BF6635 /* HelperTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperTool.h; sourceTree = "<group>"; };
@@ -282,6 +369,10 @@
 		FC8D48C7232890C900BF6635 /* AllClassifyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllClassifyVC.m; sourceTree = "<group>"; };
 		FC90EFB5234ECB2400CFA802 /* LaunchAdManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaunchAdManager.h; sourceTree = "<group>"; };
 		FC90EFB6234ECB2400CFA802 /* LaunchAdManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LaunchAdManager.m; sourceTree = "<group>"; };
+		FC99D9A823AB77360055DA83 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		FC99D9A923AB77360055DA83 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
+		FC99D9B123AC65520055DA83 /* MyOrdersVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyOrdersVC.h; sourceTree = "<group>"; };
+		FC99D9B223AC65520055DA83 /* MyOrdersVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyOrdersVC.m; sourceTree = "<group>"; };
 		FCA0839A2337CB6C001FBE35 /* MaterialCVCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialCVCell.h; sourceTree = "<group>"; };
 		FCA0839B2337CB6C001FBE35 /* MaterialCVCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaterialCVCell.m; sourceTree = "<group>"; };
 		FCA0839D2337CC88001FBE35 /* MaterialModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialModel.h; sourceTree = "<group>"; };
@@ -350,8 +441,8 @@
 		FCA19935231E5E7100F08C43 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		FCA19937231E5F2E00F08C43 /* UITableViewController+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+Extension.h"; sourceTree = "<group>"; };
 		FCA19938231E5F2E00F08C43 /* UITableViewController+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+Extension.m"; sourceTree = "<group>"; };
-		FCA8F889233490B7003EC14B /* HomePageHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageHeaderView.h; sourceTree = "<group>"; };
-		FCA8F88A233490B7003EC14B /* HomePageHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageHeaderView.m; sourceTree = "<group>"; };
+		FCA1D55723AA074C00C8DFAB /* AboutUSVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutUSVC.h; sourceTree = "<group>"; };
+		FCA1D55823AA074C00C8DFAB /* AboutUSVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutUSVC.m; sourceTree = "<group>"; };
 		FCA8F88C2334935D003EC14B /* BannerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BannerModel.h; sourceTree = "<group>"; };
 		FCA8F88D2334935D003EC14B /* BannerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BannerModel.m; sourceTree = "<group>"; };
 		FCAC434B238FB17900C32DBA /* LabsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LabsView.h; sourceTree = "<group>"; };
@@ -366,6 +457,8 @@
 		FCAC435C2390B7DB00C32DBA /* FinishedProductCVCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FinishedProductCVCell.m; sourceTree = "<group>"; };
 		FCAC435E2390D2E100C32DBA /* DesignerFinishedProductListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesignerFinishedProductListView.h; sourceTree = "<group>"; };
 		FCAC435F2390D2E100C32DBA /* DesignerFinishedProductListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesignerFinishedProductListView.m; sourceTree = "<group>"; };
+		FCAE2C4423AC6D4B00CF8D91 /* OrderChildsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderChildsVC.h; sourceTree = "<group>"; };
+		FCAE2C4523AC6D4B00CF8D91 /* OrderChildsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderChildsVC.m; sourceTree = "<group>"; };
 		FCB225E4233528B20074CB94 /* JXPageControlChameleon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlChameleon.swift; sourceTree = "<group>"; };
 		FCB225E5233528B20074CB94 /* JXPageControlBoldLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlBoldLine.swift; sourceTree = "<group>"; };
 		FCB225E6233528B20074CB94 /* JXPageControlScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlScale.swift; sourceTree = "<group>"; };
@@ -450,6 +543,28 @@
 				FC1C56D8238B6E7500287F10 /* SuspendFlowLayout.m */,
 			);
 			path = "CV头部悬停";
+			sourceTree = "<group>";
+		};
+		FC23BBFE23B0547900223B58 /* 我的订单View */ = {
+			isa = PBXGroup;
+			children = (
+				FC23BBFF23B054D300223B58 /* OrderListSectionHeader.h */,
+				FC23BC0023B054D300223B58 /* OrderListSectionHeader.m */,
+				FC23BC0823B06A7900223B58 /* OrderListSectionFooter.h */,
+				FC23BC0923B06A7900223B58 /* OrderListSectionFooter.m */,
+				FC23BC0223B0596100223B58 /* OrderListTBCell.h */,
+				FC23BC0323B0596100223B58 /* OrderListTBCell.m */,
+			);
+			path = "我的订单View";
+			sourceTree = "<group>";
+		};
+		FC23BC0E23B1AA3C00223B58 /* TempFolder */ = {
+			isa = PBXGroup;
+			children = (
+				FC23BC0F23B1AA9200223B58 /* TempVC.h */,
+				FC23BC1023B1AA9200223B58 /* TempVC.m */,
+			);
+			path = TempFolder;
 			sourceTree = "<group>";
 		};
 		FC3CDBC2239E40A200E519BE /* CV流水标签 */ = {
@@ -553,9 +668,69 @@
 			path = "店铺";
 			sourceTree = "<group>";
 		};
+		FC8A01D723A678D600AE3916 /* 发票 */ = {
+			isa = PBXGroup;
+			children = (
+				FC8A01D823A6791000AE3916 /* MyInvoiceVC.h */,
+				FC8A01D923A6791000AE3916 /* MyInvoiceVC.m */,
+				FC8A01E323A6868000AE3916 /* EditInvoiceVC.h */,
+				FC8A01E423A6868000AE3916 /* EditInvoiceVC.m */,
+			);
+			path = "发票";
+			sourceTree = "<group>";
+		};
+		FC8A01DB23A67CFA00AE3916 /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				FCA083C4233BBCB1001FBE35 /* ShopCarModel.h */,
+				FCA083C5233BBCB1001FBE35 /* ShopCarModel.m */,
+				FC3CDBD423A0B6B400E519BE /* AddressModel.h */,
+				FC3CDBD523A0B6B400E519BE /* AddressModel.m */,
+				FC8A01DC23A67D3600AE3916 /* InvoiceModel.h */,
+				FC8A01DD23A67D3600AE3916 /* InvoiceModel.m */,
+				FC23BBF223ADD3DA00223B58 /* ConfirmOrderModel.h */,
+				FC23BBF323ADD3DA00223B58 /* ConfirmOrderModel.m */,
+				FC23BC0523B05DAC00223B58 /* OrderModel.h */,
+				FC23BC0623B05DAC00223B58 /* OrderModel.m */,
+			);
+			path = "我的";
+			sourceTree = "<group>";
+		};
+		FC8A01DF23A67EFF00AE3916 /* 发票View */ = {
+			isa = PBXGroup;
+			children = (
+				FC8A01E023A67F3700AE3916 /* MyInvoiceTBCell.h */,
+				FC8A01E123A67F3700AE3916 /* MyInvoiceTBCell.m */,
+			);
+			path = "发票View";
+			sourceTree = "<group>";
+		};
+		FC8A01E723A8644F00AE3916 /* LaunchImage */ = {
+			isa = PBXGroup;
+			children = (
+				FC8A01EA23A8663A00AE3916 /* LaunchImage_1.png */,
+				FC8A01EB23A8663A00AE3916 /* LaunchImage_2.png */,
+				FC8A01E823A864D400AE3916 /* LaunchImage.png */,
+			);
+			name = LaunchImage;
+			sourceTree = "<group>";
+		};
+		FC8A01FC23AA000400AE3916 /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				FC8A01F623A9F02C00AE3916 /* SettingVC.h */,
+				FC8A01F723A9F02C00AE3916 /* SettingVC.m */,
+				FCA1D55723AA074C00C8DFAB /* AboutUSVC.h */,
+				FCA1D55823AA074C00C8DFAB /* AboutUSVC.m */,
+			);
+			path = "设置";
+			sourceTree = "<group>";
+		};
 		FC8D484A231E69CF00BF6635 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				FC23BBFE23B0547900223B58 /* 我的订单View */,
+				FC8A01DF23A67EFF00AE3916 /* 发票View */,
 				FC3CDBD023A0AD6500E519BE /* 收货地址 */,
 				FC8D484B231E69F900BF6635 /* MinePageHeader.h */,
 				FC8D484C231E69F900BF6635 /* MinePageHeader.m */,
@@ -566,8 +741,14 @@
 		FC8D4854231F81CF00BF6635 /* CustomClass */ = {
 			isa = PBXGroup;
 			children = (
+				FC8A01FA23A9FC2500AE3916 /* CddActionSheetView.h */,
+				FC8A01F923A9FC2500AE3916 /* CddActionSheetView.m */,
 				FC8D48722320A9DC00BF6635 /* CountDown.h */,
 				FC8D48732320A9DC00BF6635 /* CountDown.m */,
+				FC44398823A1E36200E0D096 /* CddHud.h */,
+				FC44398923A1E36200E0D096 /* CddHud.m */,
+				FC44398B23A2105800E0D096 /* Alert.h */,
+				FC44398C23A2105800E0D096 /* Alert.m */,
 			);
 			path = CustomClass;
 			sourceTree = "<group>";
@@ -602,12 +783,14 @@
 				FC8D48902326311700BF6635 /* HomeSceneCVCell.m */,
 				FC8D489223263F6200BF6635 /* HomeDesignerListCVCell.h */,
 				FC8D489323263F6200BF6635 /* HomeDesignerListCVCell.m */,
-				FCA8F889233490B7003EC14B /* HomePageHeaderView.h */,
-				FCA8F88A233490B7003EC14B /* HomePageHeaderView.m */,
+				FC8A01F323A9C6BE00AE3916 /* HomePageBannerView.h */,
+				FC8A01F423A9C6BE00AE3916 /* HomePageBannerView.m */,
 				FCA083A923389E70001FBE35 /* GoodsCVCell.h */,
 				FCA083AA23389E70001FBE35 /* GoodsCVCell.m */,
 				FC1C56CA23868AC400287F10 /* SceneIconCVCell.h */,
 				FC1C56CB23868AC400287F10 /* SceneIconCVCell.m */,
+				FC23BC1B23B329F500223B58 /* SearchResultSecHeader.h */,
+				FC23BC1C23B329F500223B58 /* SearchResultSecHeader.m */,
 			);
 			path = "首页";
 			sourceTree = "<group>";
@@ -631,6 +814,10 @@
 				FC3CDBBA23911A9300E519BE /* SpecialImageView.m */,
 				FC3CDBBF2398A93200E519BE /* SelectLabView.h */,
 				FC3CDBC02398A93200E519BE /* SelectLabView.m */,
+				FC23BBF823AE01E200223B58 /* OrderStatusView.h */,
+				FC23BBF923AE01E200223B58 /* OrderStatusView.m */,
+				FC23BBFB23AE12F200223B58 /* ReceiverInfoView.h */,
+				FC23BBFC23AE12F200223B58 /* ReceiverInfoView.m */,
 			);
 			path = "复用View";
 			sourceTree = "<group>";
@@ -690,6 +877,26 @@
 			path = "其他";
 			sourceTree = "<group>";
 		};
+		FC99D9A623AB770D0055DA83 /* Weixin */ = {
+			isa = PBXGroup;
+			children = (
+				FC99D9A823AB77360055DA83 /* WXApiManager.h */,
+				FC99D9A923AB77360055DA83 /* WXApiManager.m */,
+			);
+			path = Weixin;
+			sourceTree = "<group>";
+		};
+		FC99D9AD23AC60100055DA83 /* 我的订单 */ = {
+			isa = PBXGroup;
+			children = (
+				FC99D9B123AC65520055DA83 /* MyOrdersVC.h */,
+				FC99D9B223AC65520055DA83 /* MyOrdersVC.m */,
+				FCAE2C4423AC6D4B00CF8D91 /* OrderChildsVC.h */,
+				FCAE2C4523AC6D4B00CF8D91 /* OrderChildsVC.m */,
+			);
+			path = "我的订单";
+			sourceTree = "<group>";
+		};
 		FCA083952337C813001FBE35 /* 素材 */ = {
 			isa = PBXGroup;
 			children = (
@@ -740,6 +947,10 @@
 			children = (
 				FCA083BA233B50A8001FBE35 /* ShopCarVC.h */,
 				FCA083BB233B50A8001FBE35 /* ShopCarVC.m */,
+				FC8A01CE23A32C8300AE3916 /* ConfirmOrderVC.h */,
+				FC8A01CF23A32C8300AE3916 /* ConfirmOrderVC.m */,
+				FC23BBF523AE000700223B58 /* PaySuccessVC.h */,
+				FC23BBF623AE000700223B58 /* PaySuccessVC.m */,
 			);
 			path = "购物车";
 			sourceTree = "<group>";
@@ -751,6 +962,8 @@
 				FCA083C2233BB64E001FBE35 /* ShopCarCVCell.m */,
 				FCA083C7233BCBD1001FBE35 /* ShopCarSectionHeader.h */,
 				FCA083C8233BCBD1001FBE35 /* ShopCarSectionHeader.m */,
+				FC8A01D123A3392B00AE3916 /* OrderGoodsTBCell.h */,
+				FC8A01D223A3392B00AE3916 /* OrderGoodsTBCell.m */,
 			);
 			path = "购物车";
 			sourceTree = "<group>";
@@ -813,6 +1026,8 @@
 		FCA19900231CF19D00F08C43 /* System&Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FC8A01E723A8644F00AE3916 /* LaunchImage */,
+				FC44398423A1070000E0D096 /* area.json */,
 				FCA198CD2317BD8700F08C43 /* AppDelegate.h */,
 				FCA198CE2317BD8700F08C43 /* AppDelegate.m */,
 				FCA19916231E0FC800F08C43 /* AppDelegate+Init.h */,
@@ -826,6 +1041,7 @@
 				FCA198DC2317BD8900F08C43 /* main.m */,
 				FC8053D92333D02E0021B2E8 /* SH-Bridging-Header.h */,
 				FCA1992C231E48F500F08C43 /* SHHeader.pch */,
+				FC8A01F223A8D45000AE3916 /* NotificationNameHeader.h */,
 			);
 			name = "System&Resource";
 			sourceTree = "<group>";
@@ -846,6 +1062,7 @@
 		FCA19906231D0DB800F08C43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FC8A01DB23A67CFA00AE3916 /* 我的 */,
 				FC8D488C23261F6F00BF6635 /* HomePageModel.h */,
 				FC8D488D23261F6F00BF6635 /* HomePageModel.m */,
 				FC8D48BA23278D9400BF6635 /* SceneModel.h */,
@@ -862,12 +1079,12 @@
 				FCA0839E2337CC88001FBE35 /* MaterialModel.m */,
 				FCA083A323387206001FBE35 /* ShopModel.h */,
 				FCA083A423387206001FBE35 /* ShopModel.m */,
-				FCA083C4233BBCB1001FBE35 /* ShopCarModel.h */,
-				FCA083C5233BBCB1001FBE35 /* ShopCarModel.m */,
 				FCCC6087238E50B0006874A1 /* LabelModel.h */,
 				FCCC6088238E50B0006874A1 /* LabelModel.m */,
-				FC3CDBD423A0B6B400E519BE /* AddressModel.h */,
-				FC3CDBD523A0B6B400E519BE /* AddressModel.m */,
+				FC23BC0B23B0A93700223B58 /* EvaluateModel.h */,
+				FC23BC0C23B0A93700223B58 /* EvaluateModel.m */,
+				FC23BC1823B3037700223B58 /* SearchModel.h */,
+				FC23BC1923B3037700223B58 /* SearchModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -891,6 +1108,7 @@
 		FCA19908231D0E5D00F08C43 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FC23BC0E23B1AA3C00223B58 /* TempFolder */,
 				FCAC4351239020C100C32DBA /* 设计师 */,
 				FCA083952337C813001FBE35 /* 素材 */,
 				FC8053B6233205C90021B2E8 /* 场景 */,
@@ -928,6 +1146,8 @@
 				FCA19910231DFC0800F08C43 /* HomePageVC.m */,
 				FC8053A72330797E0021B2E8 /* SearchAllKindsVC.h */,
 				FC8053A82330797E0021B2E8 /* SearchAllKindsVC.m */,
+				FC23BC1523B2F7CE00223B58 /* SearchAllKindsResultsVC.h */,
+				FC23BC1623B2F7CE00223B58 /* SearchAllKindsResultsVC.m */,
 				FC8053AD233138DD0021B2E8 /* AppointKindSearchVC.h */,
 				FC8053AE233138DD0021B2E8 /* AppointKindSearchVC.m */,
 				FC8053B32331F7FA0021B2E8 /* SearchResultVC.h */,
@@ -939,8 +1159,11 @@
 		FCA1990E231DFBDF00F08C43 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				FC99D9AD23AC60100055DA83 /* 我的订单 */,
+				FC8A01FC23AA000400AE3916 /* 设置 */,
 				FCA083B9233B508B001FBE35 /* 购物车 */,
 				FC3CDBCC239FCD3100E519BE /* 收货地址 */,
+				FC8A01D723A678D600AE3916 /* 发票 */,
 				FCA19912231E03A400F08C43 /* MineVC.h */,
 				FCA19913231E03A400F08C43 /* MineVC.m */,
 			);
@@ -950,6 +1173,7 @@
 		FCA1991F231E44E900F08C43 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				FC99D9A623AB770D0055DA83 /* Weixin */,
 				FC8053BD23327A050021B2E8 /* ThirdParty */,
 				FC8D48AB23276B3400BF6635 /* Other */,
 				FC8D487D2320CEAA00BF6635 /* ClassTool */,
@@ -996,6 +1220,8 @@
 				FC8D48C42327A18300BF6635 /* UIView+Border.m */,
 				FC3CDBB6239116CE00E519BE /* UIImage+Extension.h */,
 				FC3CDBB7239116CE00E519BE /* UIImage+Extension.m */,
+				FC23BC1223B1DD4E00223B58 /* NSURL+DealWithString.h */,
+				FC23BC1323B1DD4E00223B58 /* NSURL+DealWithString.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1091,7 +1317,7 @@
 		FCA198C22317BD8700F08C43 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = surhoo;
 				TargetAttributes = {
 					FCA198C92317BD8700F08C43 = {
@@ -1134,7 +1360,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCA198DA2317BD8900F08C43 /* LaunchScreen.storyboard in Resources */,
+				FC8A01E923A864D400AE3916 /* LaunchImage.png in Resources */,
+				FC8A01EC23A8663A00AE3916 /* LaunchImage_1.png in Resources */,
 				FCA198D72317BD8900F08C43 /* Assets.xcassets in Resources */,
+				FC8A01ED23A8663A00AE3916 /* LaunchImage_2.png in Resources */,
+				FC44398523A1070200E0D096 /* area.json in Resources */,
 				FCA198D52317BD8700F08C43 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1191,6 +1421,9 @@
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/YBImageBrowser/YBImageBrowser/YBImageBrowser.bundle",
 				"${PODS_ROOT}/YBImageBrowser/Video/YBImageBrowserVideo.bundle",
+				"${PODS_ROOT}/mob_sharesdk/ShareSDK/Support/Optional/ShareSDKUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/mob_sharesdk/ShareSDK.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/mob_sharesdk/ShareSDK_JS_WeChat.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
@@ -1200,6 +1433,9 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/YBImageBrowser.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/YBImageBrowserVideo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDKUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK_JS_WeChat.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1222,43 +1458,57 @@
 				FC8053B9233206040021B2E8 /* SceneDetailsVC.m in Sources */,
 				FC8D48742320A9DC00BF6635 /* CountDown.m in Sources */,
 				FCA083C9233BCBD1001FBE35 /* ShopCarSectionHeader.m in Sources */,
+				FC23BBFD23AE12F200223B58 /* ReceiverInfoView.m in Sources */,
 				FCB225F0233528B20074CB94 /* JXPageControlBoldLine.swift in Sources */,
+				FC23BC1723B2F7CE00223B58 /* SearchAllKindsResultsVC.m in Sources */,
 				FC3CDBBB23911A9300E519BE /* SpecialImageView.m in Sources */,
 				FC8D48C52327A18300BF6635 /* UIView+Border.m in Sources */,
 				FCAC43572390236200C32DBA /* DesignerMainHeaderView.m in Sources */,
+				FC44398A23A1E36200E0D096 /* CddHud.m in Sources */,
 				FC8053CB233286B60021B2E8 /* GoodsDetailsHeaderView.m in Sources */,
 				FCB225F4233528B20074CB94 /* JXPageControlFill.swift in Sources */,
 				FC8D48832322201000BF6635 /* QuickTool.m in Sources */,
 				FC3CDBBE2394F26700E519BE /* SceneDetailListView.m in Sources */,
 				FC3CDBCB239E738B00E519BE /* SpecSelectCVCell.m in Sources */,
+				FC8A01D323A3392B00AE3916 /* OrderGoodsTBCell.m in Sources */,
 				FCB225F9233528B20074CB94 /* JXPageControlBase.swift in Sources */,
 				FC3CDBD923A0C62200E519BE /* EditAddressVC.m in Sources */,
 				FCCC608F238E7A9C006874A1 /* MaterialListView.m in Sources */,
+				FC8A01DE23A67D3600AE3916 /* InvoiceModel.m in Sources */,
+				FC8A01FB23A9FC2500AE3916 /* CddActionSheetView.m in Sources */,
 				FC8D48C8232890C900BF6635 /* AllClassifyVC.m in Sources */,
 				FC8053A92330797E0021B2E8 /* SearchAllKindsVC.m in Sources */,
+				FC99D9AC23AB77360055DA83 /* WXApiManager.m in Sources */,
 				FC8D48792320B2B000BF6635 /* NetTool.m in Sources */,
 				FCAC43542390210600C32DBA /* DesignerMainPageVC.m in Sources */,
 				FCAC43602390D2E100C32DBA /* DesignerFinishedProductListView.m in Sources */,
+				FC23BC1423B1DD4E00223B58 /* NSURL+DealWithString.m in Sources */,
 				FCAC434D238FB17A00C32DBA /* LabsView.m in Sources */,
 				FCA19918231E0FC800F08C43 /* AppDelegate+Init.m in Sources */,
+				FC8A01D023A32C8300AE3916 /* ConfirmOrderVC.m in Sources */,
 				FCA1992A231E461200F08C43 /* UIColor+Hex.m in Sources */,
 				FCA083B22339EF37001FBE35 /* ImageLabView.m in Sources */,
 				FCA083A523387206001FBE35 /* ShopModel.m in Sources */,
 				FC8053D1233353960021B2E8 /* GoodsDetailsSectionHeader.m in Sources */,
+				FC23BBF423ADD3DA00223B58 /* ConfirmOrderModel.m in Sources */,
 				FCB225F3233528B20074CB94 /* JXPageControlLine.swift in Sources */,
+				FC8A01F523A9C6BE00AE3916 /* HomePageBannerView.m in Sources */,
 				FC8053A6232F56940021B2E8 /* SecondClassifyCVCell.m in Sources */,
 				FC8D48BF23278DC200BF6635 /* DesignerModel.m in Sources */,
 				FC8D48B9232787FB00BF6635 /* GoodsListVC.m in Sources */,
 				FC8053AF233138DD0021B2E8 /* AppointKindSearchVC.m in Sources */,
 				FCAC435D2390B7DB00C32DBA /* FinishedProductCVCell.m in Sources */,
 				FCCC608C238E5A84006874A1 /* MaterialDetailsVC.m in Sources */,
+				FC23BC1A23B3037700223B58 /* SearchModel.m in Sources */,
 				FC8053C8233283610021B2E8 /* LoaderPlaceholder.m in Sources */,
 				FCCC6089238E50B0006874A1 /* LabelModel.m in Sources */,
+				FC23BBF723AE000700223B58 /* PaySuccessVC.m in Sources */,
 				FCA198D22317BD8700F08C43 /* ViewController.m in Sources */,
 				FC8D48B523276C7800BF6635 /* ColorfulFlowLayout.m in Sources */,
 				FCA083B5233B107F001FBE35 /* MoreFooterView.m in Sources */,
 				FC8053D823336B190021B2E8 /* ShopTBCell.m in Sources */,
 				FC8D485D231FA87000BF6635 /* WebViewVC.m in Sources */,
+				FC23BC1D23B329F500223B58 /* SearchResultSecHeader.m in Sources */,
 				FC8D4850231F521100BF6635 /* HelperTool.m in Sources */,
 				FC8D48712320A4BD00BF6635 /* UITextField+Limit.m in Sources */,
 				FC8053BC233227500021B2E8 /* GoodsDetailsVC.m in Sources */,
@@ -1281,26 +1531,37 @@
 				FC8D48A7232658FA00BF6635 /* CutPriceView.m in Sources */,
 				FC3CDBC5239E40E800E519BE /* LineLayout.m in Sources */,
 				FCA083A8233889E5001FBE35 /* ShopCVCell.m in Sources */,
+				FC23BC0723B05DAC00223B58 /* OrderModel.m in Sources */,
 				FC8053CE2332892D0021B2E8 /* BannerImageCell.m in Sources */,
 				FCA19936231E5E7100F08C43 /* BaseTableViewController.m in Sources */,
 				FC8053AC2330854B0021B2E8 /* SearchView.m in Sources */,
+				FC44398D23A2105800E0D096 /* Alert.m in Sources */,
 				FC8053B22331D8270021B2E8 /* BaseCustomNavBarVC.m in Sources */,
 				FCA1991E231E3BB000F08C43 /* TabbarPlusButton.m in Sources */,
+				FC8A01F823A9F02C00AE3916 /* SettingVC.m in Sources */,
 				FCB225F7233528B20074CB94 /* JXPageControlJump.swift in Sources */,
 				FC3CDBC8239E41F000E519BE /* SelectSpecView.m in Sources */,
 				FC8053B52331F7FA0021B2E8 /* SearchResultVC.m in Sources */,
 				FCA19911231DFC0800F08C43 /* HomePageVC.m in Sources */,
+				FC23BBFA23AE01E200223B58 /* OrderStatusView.m in Sources */,
 				FCA19939231E5F2E00F08C43 /* UITableViewController+Extension.m in Sources */,
 				FCB225F6233528B20074CB94 /* JXPageControlEllipse.swift in Sources */,
 				FCA083BC233B50A8001FBE35 /* ShopCarVC.m in Sources */,
 				FC8D48A42326495800BF6635 /* HomeDesignerSectionCell.m in Sources */,
 				FCA198DD2317BD8900F08C43 /* main.m in Sources */,
 				FCA083C6233BBCB1001FBE35 /* ShopCarModel.m in Sources */,
+				FCAE2C4623AC6D4B00CF8D91 /* OrderChildsVC.m in Sources */,
+				FC23BC1123B1AA9200223B58 /* TempVC.m in Sources */,
 				FC3CDBCF239FCD7A00E519BE /* ReceiverAddressVC.m in Sources */,
+				FC23BC0423B0596100223B58 /* OrderListTBCell.m in Sources */,
 				FCA083AF2338AFCA001FBE35 /* DesignerCVCell.m in Sources */,
+				FC8A01DA23A6791000AE3916 /* MyInvoiceVC.m in Sources */,
 				FC8D48862325EE5D00BF6635 /* HomeSectionHeader.m in Sources */,
 				FCA1991B231E14AF00F08C43 /* BaseNavigationController.m in Sources */,
 				FCB225F2233528B20074CB94 /* JXPageControlType.swift in Sources */,
+				FC8A01E523A6868000AE3916 /* EditInvoiceVC.m in Sources */,
+				FCA1D55923AA074C00C8DFAB /* AboutUSVC.m in Sources */,
+				FC8A01E223A67F3700AE3916 /* MyInvoiceTBCell.m in Sources */,
 				FCC8D1732369867400DD2D6D /* CustomNavBar.m in Sources */,
 				FCA198CF2317BD8700F08C43 /* AppDelegate.m in Sources */,
 				FCA19914231E03A400F08C43 /* MineVC.m in Sources */,
@@ -1308,12 +1569,14 @@
 				FC3CDBC12398A93200E519BE /* SelectLabView.m in Sources */,
 				FC3CDBAF2390E98200E519BE /* DynamicStateTBCell.m in Sources */,
 				FC90EFB7234ECB2400CFA802 /* LaunchAdManager.m in Sources */,
+				FC99D9B323AC65520055DA83 /* MyOrdersVC.m in Sources */,
+				FC23BC0123B054D300223B58 /* OrderListSectionHeader.m in Sources */,
 				FC3CDBB8239116CE00E519BE /* UIImage+Extension.m in Sources */,
 				FCA19905231CFC3B00F08C43 /* MainTabbarVC.m in Sources */,
+				FC23BC0D23B0A93700223B58 /* EvaluateModel.m in Sources */,
 				FC8053A3232F36AE0021B2E8 /* FirstClassifyTBCell.m in Sources */,
 				FCA0839F2337CC88001FBE35 /* MaterialModel.m in Sources */,
 				FCA083AB23389E70001FBE35 /* GoodsCVCell.m in Sources */,
-				FCA8F88B233490B7003EC14B /* HomePageHeaderView.m in Sources */,
 				FC8D484D231E69F900BF6635 /* MinePageHeader.m in Sources */,
 				FC8D48AF23276BCC00BF6635 /* ColorfulReusableView.m in Sources */,
 				FC1C56C3238534ED00287F10 /* SceneDetailHeaderView.m in Sources */,
@@ -1321,6 +1584,7 @@
 				FC8D48912326311700BF6635 /* HomeSceneCVCell.m in Sources */,
 				FC8D48BC23278D9400BF6635 /* SceneModel.m in Sources */,
 				FCB225F5233528B20074CB94 /* JXPageControlExchange.swift in Sources */,
+				FC23BC0A23B06A7900223B58 /* OrderListSectionFooter.m in Sources */,
 				FC8053D423335B630021B2E8 /* EvaluationTBCell.m in Sources */,
 				FC8D4861231FAA3800BF6635 /* LoginVC.m in Sources */,
 				FCA083C3233BB64E001FBE35 /* ShopCarCVCell.m in Sources */,
@@ -1500,12 +1764,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D5780CD6A242BD715E14EFD /* Pods-SH.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(EMBEDDED_CONTENT_CONTAINS_SWIFT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = D2P37LH92Q;
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/i7colors/Desktop/SH/SH/SHHeader.pch;
 				INFOPLIST_FILE = SH/Info.plist;
@@ -1524,6 +1789,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/YYText\"",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/i7colors/Desktop/SH/SH/SH-Bridging-Header.h";
@@ -1538,12 +1804,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 45556A5D0A9FDEC0FCDE1944 /* Pods-SH.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(EMBEDDED_CONTENT_CONTAINS_SWIFT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = D2P37LH92Q;
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/i7colors/Desktop/SH/SH/SHHeader.pch;
 				INFOPLIST_FILE = SH/Info.plist;
@@ -1562,6 +1829,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/YYText\"",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/i7colors/Desktop/SH/SH/SH-Bridging-Header.h";

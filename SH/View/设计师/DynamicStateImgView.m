@@ -75,8 +75,8 @@
         spImageView.left = imageX;
         spImageView.top = imageY;
         //九宫格展示
-        [spImageView.imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, (int)width * 2) placeholderImage:PlaceHolderImg];
-                
+//        model.logo = [model.logo stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        [spImageView.imageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, (int)width) placeholderImage:PlaceHolderImg];
         spImageView.userInteractionEnabled = YES;
         spImageView.imageView.contentMode = UIViewContentModeScaleAspectFill;
         spImageView.tag = i;

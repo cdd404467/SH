@@ -77,7 +77,7 @@
     self.categoryView.titleColor = HEXColor(@"#9B9B9B", 1);
     self.categoryView.titleColorGradientEnabled = YES;
     self.categoryView.titleLabelZoomEnabled = YES;
-    self.categoryView.contentScrollViewClickTransitionAnimationEnabled = NO;
+//    self.categoryView.contentScrollViewClickTransitionAnimationEnabled = NO;
     [self.categoryView addBorder:HEXColor(@"#f6f6f6", 1) width:1 direction:BorderDirectionBottom];
 //    JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
 //    lineView.indicatorColor = HEXColor(@"#FF5100", 1);
@@ -100,7 +100,7 @@
             dispatch_group_enter(group);
         NSString *urlString = [NSString stringWithFormat:URLGet_DesignerMain_Info,@NO,_designerId];
         [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-//            NSLog(@"----   %@",json);
+//            NSLog(@"main ----   %@",json);
             self.infotDataSource = [DesignerModel mj_objectWithKeyValues:json];
             if (group)
                 dispatch_group_leave(group);
@@ -114,7 +114,7 @@
         dispatch_group_enter(group);
     NSString *urlString = [NSString stringWithFormat:URLGet_DesignerMain_MaterialList,@NO,_designerId,PageCount,self.pageNumber];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-//        NSLog(@"----   %@",json);
+//        NSLog(@"sucai ----   %@",json);
         NSArray *tempArr = json[@"list"];
         self.sucaiDataSource = [MaterialModel mj_objectArrayWithKeyValuesArray:tempArr];
         for (MaterialModel *model in self.sucaiDataSource) {
@@ -133,9 +133,13 @@
         dispatch_group_enter(group);
     NSString *urlString = [NSString stringWithFormat:URLGet_DesignerMain_FinishedProductList,@NO,_designerId];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-//        NSLog(@"----   %@",json);
+//        NSLog(@"cp----   %@",json);
         NSArray *tempArr = json[@"list"];
         self.productDataSource = [FinishedWorkModel mj_objectArrayWithKeyValuesArray:tempArr];
+        for (FinishedWorkModel *model in self.productDataSource) {
+            model.works = [model.works stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        }
+        
         if (group)
             dispatch_group_leave(group);
     } Failure:^(NSError * _Nonnull error) {
@@ -149,11 +153,14 @@
         dispatch_group_enter(group);
     NSString *urlString = [NSString stringWithFormat:URLGet_DesignerMain_DynamicState,@NO,_designerId,PageCount,self.pageNumber];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-        NSLog(@"----   %@",json);
+//        NSLog(@"dt----   %@",json);
         NSArray *tempArr = json[@"list"];
         self.dynamicDataSource = [DynamicStateModel mj_objectArrayWithKeyValuesArray:tempArr];
         for (DynamicStateModel *model in self.dynamicDataSource) {
             model.trendsList = [DynamicImgModel mj_objectArrayWithKeyValuesArray:model.trendsList];
+            for (DynamicImgModel *md in model.trendsList) {
+                md.logo = [md.logo stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            }
         }
         if (group)
             dispatch_group_leave(group);
@@ -215,6 +222,7 @@
     } else {
         DesignerDynamicStateListView *listView = [[DesignerDynamicStateListView alloc] init];
         listView.dataSource = self.dynamicDataSource;
+//        listView.dataSource = @[@"1",@"2",@"3",@"1",@"2",@"3",@"1",@"2",@"3"@"1",@"2",@"3"@"1",@"2",@"3"].mutableCopy;
         listView.nav = self.navigationController;
         return listView;
     }

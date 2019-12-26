@@ -9,6 +9,7 @@
 #import "SearchAllKindsVC.h"
 #import "SearchView.h"
 #import "AppointKindSearchVC.h"
+#import "SearchAllKindsResultsVC.h"
 
 @interface SearchAllKindsVC ()
 @property (nonatomic, strong) SearchView *searchView;
@@ -24,22 +25,32 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [_searchView.searchTF becomeFirstResponder];
+}
+
+- (void)jumpToResult {
+    [self.view endEditing:YES];
+    SearchAllKindsResultsVC *vc = [[SearchAllKindsResultsVC alloc] init];
+    vc.keyWords = self.searchView.searchTF.text;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setupUI {
     SearchView *searchView = [[SearchView alloc] init];
     searchView.top = NAV_HEIGHT;
+    searchView.searchTF.enablesReturnKeyAutomatically = YES;
     searchView.searchTF.placeholder = @"搜索";
-    [searchView.searchTF becomeFirstResponder];
     DDWeakSelf;
     searchView.cancelBlock = ^{
         [weakself popBack];
     };
-//    searchView.searchBlock = ^{
-//        [weakself requestData];
-//    };
+    searchView.searchBlock = ^{
+        [weakself jumpToResult];
+    };
+    _searchView = searchView;
     [self.view addSubview:searchView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.searchView.searchTF becomeFirstResponder];
+    });
     
     UILabel *tipLabel = [[UILabel alloc] init];
     tipLabel.textAlignment = NSTextAlignmentCenter;
@@ -53,14 +64,21 @@
         make.height.mas_equalTo(26);
     }];
     
-    NSArray *titleArr = @[@"商品",@"场景",@"店铺",@"设计师",@"素材"];
+//    NSArray *titleArr = @[@"商品",@"场景",@"店铺",@"设计师",@"素材"];
+    NSArray *titleArr = @[@"商品",@"场景",@"设计师",@"素材"];
     NSMutableArray *btnArr = [NSMutableArray arrayWithCapacity:0];
     CGFloat gap = 37.f;
-    for (NSInteger i = 0; i < 5; i++) {
+    CGFloat allBtnWidth = 0;
+    for (NSInteger i = 0; i < titleArr.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitle:titleArr[i] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:14];
-        button.tag = i + 101;
+        if (i < 2) {
+            button.tag = i + 101;
+        } else {
+            button.tag = i + 102;
+        }
+        
         [button setTitleColor:HEXColor(@"#4A4A4A", 1) forState:UIControlStateNormal];
         [button addTarget:self action:@selector(searchKindsClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
@@ -70,29 +88,19 @@
         }];
         [button setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [btnArr addObject:button];
-        
-        [(UIButton *)btnArr[i] mas_updateConstraints:^(MASConstraintMaker *make) {
-            if (i == 0) {
-                make.left.mas_equalTo(40);
-            } else {
-                UIButton *btn = btnArr[i - 1];
-                make.left.mas_equalTo(btn.mas_right).offset(gap);
-            }
-        }];
+        [button.superview layoutIfNeeded];
+        allBtnWidth += button.width;
     }
     
-    UIButton *centerBtn = (UIButton *)btnArr[2];
-    [centerBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.view).offset(-7);
-    }];
-
-    UIButton *firstBtn = (UIButton *)btnArr[0];
-    UIButton *secondBtn = (UIButton *)btnArr[1];
-    [firstBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(secondBtn.mas_left).offset(-gap);
-        make.centerY.height.mas_equalTo(secondBtn);
-    }];
-    [firstBtn setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    CGFloat leftGap = (SCREEN_WIDTH - allBtnWidth - gap * (titleArr.count - 1)) / 2;
+    CGFloat lastWith = leftGap;
+    for (NSInteger i = 0; i < titleArr.count; i++) {
+        UIButton *btn = (UIButton *)btnArr[i];
+        [btn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(lastWith);
+        }];
+        lastWith += btn.width + gap;
+    }
     
     //中间的分割线
     for (NSInteger i = 1; i < btnArr.count; i++) {

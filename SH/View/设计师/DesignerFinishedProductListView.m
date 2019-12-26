@@ -8,10 +8,10 @@
 
 #import "DesignerFinishedProductListView.h"
 #import "FinishedProductCVCell.h"
-
+#import <UIScrollView+EmptyDataSet.h>
 
 static NSString *finishCVID = @"FinishedProductCVCell";
-@interface DesignerFinishedProductListView()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface DesignerFinishedProductListView()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 
@@ -28,11 +28,14 @@ static NSString *finishCVID = @"FinishedProductCVCell";
         CGRect rect = CGRectMake(0, 0, frame.size.width, frame.size.height);
         _collectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
         _collectionView.backgroundColor = UIColor.whiteColor;
+        _collectionView.emptyDataSetSource = self;
+        _collectionView.emptyDataSetDelegate = self;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
+        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, Bottom_Height_Dif + 20, 0);
         [_collectionView registerClass:[FinishedProductCVCell class] forCellWithReuseIdentifier:finishCVID];
         [self addSubview:_collectionView];
     }
@@ -42,6 +45,26 @@ static NSString *finishCVID = @"FinishedProductCVCell";
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.collectionView.frame = self.bounds;
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_works"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"暂无成品";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
 }
 
 #pragma mark - collectionView delegate

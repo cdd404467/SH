@@ -95,8 +95,8 @@
 
 - (void)setModel:(DesignerModel *)model {
     _model = model;
-    [_bgImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.headimgurl, (int)SCREEN_WIDTH * 2)];
-    [_headImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.img, 70 * 2)];
+    [_bgImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.img, (int)SCREEN_WIDTH * 2)];
+    [_headImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.headimgurl, 70 * 2)];
     _nickNameLab.text = model.nickname;
     _levelLab.text = [NSString stringWithFormat:@"lv%ld",(long)model.level];
     _introduceLab.text = model.detail;

@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 //get请求
 + (void)getRequest:(NSString *)requestUrl Params:(NSDictionary * _Nullable)params Success:(void (^)(id json))success Failure:(void (^)(NSError *error))failure;
 //post请求
-+ (void)postRequest:(NSString *)requestUrl Params:(id)params  Success:(void (^)(id json))success Failure:(void (^)(NSError *error))failure;
-+ (void)test;
-
++ (void)postRequest:(NSString *)requestUrl Params:(id)params Success:(void (^)(id json))success Error:(void (^ __nullable)(id json))error Failure:(void (^)(NSError *error))failure;
+//put 请求
++ (void)putRequest:(NSString *)requestUrl Params:(id _Nullable)params Success:(void (^)(id json))success Error:(void (^ __nullable)(id json))error Failure:(void (^)(NSError *error))failure;
 @end
 
 

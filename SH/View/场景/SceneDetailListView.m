@@ -162,6 +162,9 @@ static NSString *headerID = @"ScreenClassView";
                 tempArr = [GoodsModel mj_objectArrayWithKeyValuesArray:tempArr];
             } else if (self.listType == 2) {
                 tempArr = [MaterialModel mj_objectArrayWithKeyValuesArray:tempArr];
+                for (MaterialModel *model in tempArr) {
+                    model.labelInfoList = [LabelModel mj_objectArrayWithKeyValuesArray:model.labelInfoList];
+                }
             }
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:tempArr];

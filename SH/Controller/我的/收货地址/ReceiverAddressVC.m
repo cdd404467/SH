@@ -11,9 +11,10 @@
 #import "NetTool.h"
 #import "AddressModel.h"
 #import "EditAddressVC.h"
+#import "Alert.h"
+#import "CddHud.h"
 
 @interface ReceiverAddressVC ()<UITableViewDelegate, UITableViewDataSource>
-
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIButton *addAddressBtn;
@@ -24,10 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBar.title = @"收货地址";
+    if (_navTitle) {
+        self.navBar.title = _navTitle;
+    } else {
+        self.navBar.title = @"收货地址";
+    }
     [self.view addSubview:self.tableView];
     [self requestData];
-    [self setupUI];
 }
 
 - (NSMutableArray *)dataSource {
@@ -43,6 +47,7 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT - 7) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.bounces = NO;
 //        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.separatorColor = RGBA(222, 222, 222, 1);
         _tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
@@ -54,7 +59,7 @@
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         _tableView.tableFooterView = [UIView new];
-//        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
 //        _tableView.scrollIndicatorInsets = _tableView.contentInset;
     }
     return _tableView;
@@ -66,8 +71,27 @@
 //        NSLog(@"----   %@",json);
         self.dataSource = [AddressModel mj_objectArrayWithKeyValuesArray:json];
         [self.tableView reloadData];
+        [self setupUI];
     } Failure:^(NSError * _Nonnull error) {
         
+    }];
+}
+
+//删除地址
+- (void)deleteAddressWithIndex:(NSInteger)index {
+    [CddHud show:self.view];
+    AddressModel *model = self.dataSource[index];
+    NSDictionary *dict = @{@"id":@(model.addressID),
+                           @"defaultStatus":@(model.defaultStatus),
+    };
+    self.tableView.userInteractionEnabled = NO;
+    [NetTool putRequest:URLPut_Delete_Address Params:dict Success:^(id  _Nonnull json) {
+        [CddHud hideHUD:self.view];
+        self.tableView.userInteractionEnabled = YES;
+        [self.dataSource removeObjectAtIndex:index];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } Error:nil Failure:^(NSError * _Nonnull error) {
+
     }];
 }
 
@@ -94,6 +118,10 @@
 - (void)addNewAddress {
     EditAddressVC *vc = [[EditAddressVC alloc] init];
     vc.editType = 0;
+    DDWeakSelf;
+    vc.saveSuccessBlock = ^{
+        [weakself requestData];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -102,9 +130,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
-
+//cell 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 93;
+}
+//点击cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddressModel *model = self.dataSource[indexPath.row];
+    if (self.selectAddressBlock) {
+        self.selectAddressBlock(model);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 // 设置 cell 是否允许左滑
@@ -117,7 +153,6 @@
     return @"删除";
 }
 
-
 // 定义编辑样式
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
@@ -126,8 +161,9 @@
 // 点击左滑出现的删除按钮触发
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.dataSource removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [Alert alertSystemTwo:@"是否确定删除该地址" cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
+            [self deleteAddressWithIndex:indexPath.row];
+        }];
     }
 }
 
@@ -141,6 +177,9 @@
         EditAddressVC *vc = [[EditAddressVC alloc] init];
         vc.addressID = [weakself.dataSource[indexPath.row] addressID];
         vc.editType = 1;
+        vc.saveSuccessBlock = ^{
+            [weakself requestData];
+        };
         [weakself.navigationController pushViewController:vc animated:YES];
     };
     return cell;

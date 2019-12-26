@@ -104,7 +104,7 @@
     _model = model;
     _nameLab.text = model.name;
     _phoneNumLab.text = model.phone;
-    _addressLab.text = model.address;
+    _addressLab.text = [NSString stringWithFormat:@"%@%@%@%@",model.provinceName,model.cityName,model.districtName,model.address];
     _isDefaultLab.hidden = model.defaultStatus == 1 ? NO : YES;
 }
 

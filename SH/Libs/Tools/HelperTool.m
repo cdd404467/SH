@@ -7,6 +7,8 @@
 //
 
 #import "HelperTool.h"
+#import <ifaddrs.h>
+#import <arpa/inet.h>
 
 @implementation HelperTool
 #pragma mark - 画圆角和边框
@@ -96,4 +98,46 @@
     return image;
 }
 
+//获取ip地址
++ (NSString *)getIPaddress {
+    NSString *address = @"error";
+    struct ifaddrs * ifaddress = NULL;
+    struct ifaddrs * temp_address = NULL;
+    int success = 0;
+    success = getifaddrs(&ifaddress);
+    if(success == 0) {
+        temp_address = ifaddress;
+        while(temp_address != NULL) {
+            if(temp_address->ifa_addr->sa_family == AF_INET) {
+              if([[NSString stringWithUTF8String:temp_address->ifa_name] isEqualToString:@"en0"]) {
+         address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_address->ifa_addr)->sin_addr)];
+                }
+            }
+            temp_address = temp_address->ifa_next;
+        }
+    }
+    return address;
+}
+
+//获取当前显示的控制器
++ (UIViewController *)getCurrentVC
+{
+    UIViewController *resultVC;
+    resultVC = [self _topViewController:[[UIApplication sharedApplication].keyWindow rootViewController]];
+    while (resultVC.presentedViewController) {
+        resultVC = [self _topViewController:resultVC.presentedViewController];
+    }
+    return resultVC;
+}
+
++ (UIViewController *)_topViewController:(UIViewController *)vc {
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        return [self _topViewController:[(UINavigationController *)vc topViewController]];
+    } else if ([vc isKindOfClass:[UITabBarController class]]) {
+        return [self _topViewController:[(UITabBarController *)vc selectedViewController]];
+    } else {
+        return vc;
+    }
+    return nil;
+}
 @end
