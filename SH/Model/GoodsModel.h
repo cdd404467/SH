@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GoodsSkuSpecValsModel : NSObject
 //规格名字
 @property (nonatomic, copy) NSString *goodsSkuSpecValName;
-
+//是否选中
 @property (nonatomic, assign) BOOL isSelected;
 //cell 宽度
 @property (nonatomic, assign) CGFloat cellWidth;

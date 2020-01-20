@@ -96,10 +96,9 @@ static NSString *section_Header = @"SearchResultSecHeader";
     NSString *keyWord = _searchView.searchTF.text;
 //    NSString *keyWord = @"";
     NSString *urlString = [NSString stringWithFormat:URLGet_Index_SearchAllKinds,keyWord];
-    NSLog(@"--- %@",urlString);
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     [NetTool getRequest:urlString Params:nil Success:^(id _Nonnull json) {
-        NSLog(@"----   %@",json);
+//        NSLog(@"----   %@",json);
         self.dataSource = [SearchModel mj_objectWithKeyValues:json];
         self.dataSource.DESIGNER = [DesignerModel mj_objectArrayWithKeyValuesArray:self.dataSource.DESIGNER];
         self.dataSource.GOODS = [GoodsModel mj_objectArrayWithKeyValuesArray:self.dataSource.GOODS];

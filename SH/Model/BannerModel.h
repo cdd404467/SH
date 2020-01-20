@@ -19,6 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *type;
 //跳转的相应id
 @property (nonatomic, copy) NSString *typeId;
+//艺术家店铺banner的id
+@property (nonatomic, copy) NSString *shopId;
+
+
+
+
 
 
 //轮播图片

@@ -8,7 +8,7 @@
 
 #import "ConfirmOrderVC.h"
 #import "OrderGoodsTBCell.h"
-#import "ConfirmOrderModel.h"
+#import "OrderModel.h"
 #import "AddressModel.h"
 #import "InvoiceModel.h"
 #import "NetTool.h"
@@ -16,7 +16,9 @@
 #import "MyInvoiceVC.h"
 #import "UIView+Border.h"
 #import "CddHud.h"
-#import "WXApiManager.h"
+#import "PayTheOrderVC.h"
+#import "PayModel.h"
+#import "OrderDetailVC.h"
 
 
 @interface ConfirmOrderVC ()<UITableViewDelegate, UITableViewDataSource>
@@ -29,7 +31,8 @@
 @property (nonatomic, copy) NSString *totalMoney;
 @property (nonatomic, copy) NSString *yunfeiMoney;
 @property (nonatomic, strong) InvoiceModel *invoiceModel;
-@property (nonatomic, copy) NSArray<ConfirmOrderModel *> *dataSource;
+@property (nonatomic, copy) NSArray<OrderModel *> *dataSource;
+
 @end
 
 @implementation ConfirmOrderVC
@@ -40,7 +43,6 @@
     [self.view addSubview:self.tableView];
     [self getPayInfo];
     [self setupUI];
-//    [self requestAddress];
 }
 
 //懒加载tableView
@@ -94,20 +96,6 @@
 }
 
 #pragma mark 请求数据
-//- (void)requestAddress {
-//    [NetTool getRequest:URLGet_Address_List Params:nil Success:^(id  _Nonnull json) {
-////        NSLog(@"----   %@",json);
-//        self.addressDataSource = [AddressModel mj_objectArrayWithKeyValuesArray:json];
-//        if (self.addressDataSource.count > 0) {
-//            AddressModel *model = self.addressDataSource[0];
-//            self.headerView.model = model;
-//            [self getFreightWithID:@(model.addressID).stringValue];
-//        }
-//    } Failure:^(NSError * _Nonnull error) {
-//
-//    }];
-//}
-
 //计算运费
 - (void)getFreightWithID:(NSString *)addressID {
     NSMutableArray *goodsList = [NSMutableArray arrayWithCapacity:0];
@@ -148,9 +136,9 @@
             self.headerView.model = model;
             [self getFreightWithID:@(model.addressID).stringValue];
         }
-        self.dataSource = [ConfirmOrderModel mj_objectArrayWithKeyValuesArray:json[@"goodsList"]];
-        for (ConfirmOrderModel *carModel in self.dataSource) {
-            carModel.goodsList = [ConfirmOrderGoodsModel mj_objectArrayWithKeyValuesArray:carModel.goodsList];
+        self.dataSource = [OrderModel mj_objectArrayWithKeyValuesArray:json[@"goodsList"]];
+        for (OrderModel *carModel in self.dataSource) {
+            carModel.goodsList = [OrderGoodsModel mj_objectArrayWithKeyValuesArray:carModel.goodsList];
         }
         
         [self.tableView reloadData];
@@ -160,12 +148,8 @@
     }];
 }
 
-//下单并且支付
+//下单
 - (void)payMoney {
-    if(![WXApi isWXAppInstalled]) {//判断用户是否已安装微信App
-        [CddHud showTextOnly:@"你还未安装微信,不能完成支付" view:self.view];
-        return;
-    }
     [self.view endEditing:YES];
     if (_headerView.addressLab.text.length < 7) {
         [CddHud showTextOnly:@"请选择收货地址" view:self.view];
@@ -173,9 +157,9 @@
     }
     
     NSMutableArray *orderList = [NSMutableArray arrayWithCapacity:0];
-    for (ConfirmOrderModel *car in self.dataSource) {
-        for (ConfirmOrderGoodsModel *goods in car.goodsList) {
-            NSDictionary *valueDict = @{@"id":goods.goodsId,
+    for (OrderModel *car in self.dataSource) {
+        for (OrderGoodsModel *goods in car.goodsList) {
+            NSDictionary *valueDict = @{@"id":goods.gId,
                                         @"skuId":goods.skuId,
                                         @"goodsNum":@(goods.goodsNum).stringValue};
             [orderList addObject:valueDict];
@@ -189,40 +173,43 @@
                            @"orderFreight":self.yunfeiMoney,
                            @"isInvoice":_invoiceModel ? @1 : @0,
                            @"invoiceId":_invoiceModel ? _invoiceModel.invoiceID : @0,
-                           @"isBargain":@(_isBargain)
+                           @"isBargain":@(_isBargain),
+                           @"orderSource":@3
 //                           @"clientIp":[HelperTool getIPaddress]
     };
   
     [CddHud showWithText:@"请稍等..." view:self.view];
+    self.payBtn.enabled = NO;
     [NetTool postRequest:URLPost_Pay_Money Params:dict Success:^(id  _Nonnull json) {
+//        NSLog(@"json----- %@",json);
         [CddHud hideHUD:self.view];
-//        NSLog(@"json--- %@",json);
-        PayReq *req = [[PayReq alloc] init];
-        req.partnerId = [json[@"pay"] objectForKey:@"partnerid"];
-        req.prepayId = [json[@"pay"] objectForKey:@"prepayid"];
-        req.nonceStr = [json[@"pay"] objectForKey:@"noncestr"];
-        req.timeStamp = [[json[@"pay"] objectForKey:@"timestamp"] intValue];
-        req.package = [json[@"pay"] objectForKey:@"package"];
-        req.sign = [json[@"pay"] objectForKey:@"signNew"];
         
-        [WXApi sendReq:req completion:^(BOOL success) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess) name:WeixinPayResultSuccess object:nil];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payFail) name:WeixinPayResultFailed object:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:NotificationName_RemoveCarHasSelectedGoods object:nil userInfo:nil];
+        self.payBtn.enabled = YES;
+        __block PayModel *model = [PayModel mj_objectWithKeyValues:json];
+        PayTheOrderVC *vc = [[PayTheOrderVC alloc] init];
+        DDWeakSelf;
+        vc.orderChangeBlock = ^{
+            NSMutableArray *newArr = [weakself.navigationController.viewControllers mutableCopy];
+            for (UIViewController *vc in weakself.navigationController.viewControllers) {
+                if (vc == weakself) {
+                    NSInteger index = [newArr indexOfObject:vc];
+                    OrderDetailVC *newVC = [[OrderDetailVC alloc] init];
+                    newVC.orderID = model.orderId;
+                    [newArr replaceObjectAtIndex:index withObject:newVC];
+                }
             }
-        }];
+            weakself.navigationController.viewControllers = [newArr copy];
+        };
+        vc.payInfo = model;
+        vc.startDate = [NSDate date];
+        vc.totalMoney = self.totalMoney;
+        [self.navigationController pushViewController:vc animated:YES];
     } Error:^(id  _Nullable json) {
+        self.payBtn.enabled = YES;
     } Failure:^(NSError * _Nonnull error) {
-        [CddHud hideHUD:self.view];
+        self.payBtn.enabled = YES;
     }];
-}
-
-- (void)paySuccess {
-    NSLog(@"成功");
-}
-
-- (void)payFail {
-    NSLog(@"失败");
 }
 
 - (void)setupUI {
@@ -258,7 +245,7 @@
     }];
     
     _payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_payBtn setTitle:@"支付" forState:UIControlStateNormal];
+    [_payBtn setTitle:@"立即下单" forState:UIControlStateNormal];
     [_payBtn setTintColor:UIColor.whiteColor];
     _payBtn.adjustsImageWhenHighlighted = NO;
     _payBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -293,7 +280,7 @@
 //自定义的section header
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ConfirmOrderSectionHeader *header = [ConfirmOrderSectionHeader headerWithTableView:tableView];
-    ConfirmOrderModel *model = self.dataSource[section];
+    OrderModel *model = self.dataSource[section];
     header.title = model.shopName;
     return header;
 }
@@ -310,7 +297,8 @@
 //数据源
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderGoodsTBCell *cell = [OrderGoodsTBCell cellWithTableView:tableView];
-    ConfirmOrderModel *model = self.dataSource[indexPath.section];
+    OrderModel *model = self.dataSource[indexPath.section];
+    cell.type = 1;
     cell.model = model.goodsList[indexPath.row];
     return cell;
 }
@@ -471,7 +459,7 @@
 }
 
 - (void)setupUI {
-    NSArray *titleArr = @[@"商品金额",@"运费",@"发票",@"备注",@"支付方式"];
+    NSArray *titleArr = @[@"商品金额",@"运费",@"发票",@"备注"];
     for (NSInteger i = 0; i < titleArr.count; i ++) {
         UIView *view = [[UIView alloc] init];
         view.frame = CGRectMake(0, 8, SCREEN_WIDTH, 50);
@@ -553,20 +541,20 @@
                 make.centerY.mas_equalTo(view);
             }];
         }
-        else if (i == 4) {
-            view.top = 24 + 50 * 4;
-            UILabel *lab = [[UILabel alloc] init];
-            lab.text = @"微信支付";
-            lab.textAlignment = NSTextAlignmentRight;
-            lab.textColor = HEXColor(@"#4A4A4A", 1);
-            lab.font = [UIFont systemFontOfSize:14];
-            [view addSubview:lab];
-            [lab mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.mas_equalTo(-15);
-                make.height.mas_equalTo(30);
-                make.centerY.mas_equalTo(view);
-            }];
-        }
+//        else if (i == 4) {
+//            view.top = 24 + 50 * 4;
+//            UILabel *lab = [[UILabel alloc] init];
+//            lab.text = @"微信支付";
+//            lab.textAlignment = NSTextAlignmentRight;
+//            lab.textColor = HEXColor(@"#4A4A4A", 1);
+//            lab.font = [UIFont systemFontOfSize:14];
+//            [view addSubview:lab];
+//            [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.right.mas_equalTo(-15);
+//                make.height.mas_equalTo(30);
+//                make.centerY.mas_equalTo(view);
+//            }];
+//        }
     }
 }
 
@@ -579,5 +567,6 @@
 - (void)setMoney:(NSString *)money {
     _totalGoodsMoneyLab.text = [NSString stringWithFormat:@"¥%@",money];
 }
+
 
 @end

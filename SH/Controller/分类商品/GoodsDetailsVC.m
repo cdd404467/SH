@@ -21,6 +21,8 @@
 #import "ShopCarVC.h"
 #import "ConfirmOrderVC.h"
 #import "EvaluateModel.h"
+#import <PPBadgeView.h>
+#import <WXApi.h>
 
 @interface GoodsDetailsVC ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -41,6 +43,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navBar.title = @"商品详情";
+    if([WXApi isWXAppInstalled]) {  //判断用户是否已安装微信App
+        [self.navBar.rightBtn setImage:[UIImage imageNamed:@"goods_share"] forState:UIControlStateNormal];
+        self.navBar.rightBtn.hidden = NO;
+        [self.navBar.rightBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    }
     [self.view addSubview:self.tableView];
     _bottomView = [[UIView alloc] init];
     _bottomView.backgroundColor = UIColor.whiteColor;
@@ -140,6 +147,9 @@
         _headerView = [[GoodsDetailsHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH + 115 + 70)];
         DDWeakSelf;
         _headerView.selectBlock = ^{
+            if (![weakself judgeLogin]) {
+                return;
+            }
             weakself.specView.btnCountType = 1;
             [weakself.specView show];
         };
@@ -235,7 +245,7 @@
 - (void)requestData {
     NSString *urlString = [NSString stringWithFormat:URLGet_Goods_Details,_goodsID];
     [NetTool getRequest:urlString Params:nil Success:^(id _Nonnull json) {
-//        NSLog(@"----   %@",json);
+        NSLog(@"----   %@",json);
         self.dataSource = [GoodsDetailModel mj_objectWithKeyValues:json];
         self.dataSource.specList = [SpecListModel mj_objectArrayWithKeyValuesArray:self.dataSource.specList];
         self.dataSource.skuList = [SkuListModel mj_objectArrayWithKeyValuesArray:self.dataSource.skuList];
@@ -243,29 +253,58 @@
         for (SpecListModel *model in self.dataSource.specList) {
             model.goodsSkuSpecVals = [GoodsSkuSpecValsModel mj_objectArrayWithKeyValuesArray:model.goodsSkuSpecVals];
         }
-        
-        //默认选择第一个
-        for (NSInteger i = 0; i < self.dataSource.specList.count; i++) {
-            SpecListModel *spModel = self.dataSource.specList[i];
-            GoodsSkuSpecValsModel *skuModel = spModel.goodsSkuSpecVals.firstObject;
-            [self.selectArray addObject:skuModel.goodsSkuSpecValName];
-            skuModel.isSelected = YES;
-        }
+        //评价数量
         [self.secDataSource replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"评价(%@)",self.dataSource.evaluateCount]];
-        //设置选中的商品
+        
+        //详情页面设置选中的商品
         SkuListModel *model = self.dataSource.skuList[0];
         self.specDict = [NSMutableDictionary dictionaryWithCapacity:0];
         [self.specDict setValue:model.goodsSkuName forKey:@"specTxt"];
         [self.specDict setValue:model.goodsSkuImg forKey:@"specImg"];
         self.headerView.specValue = self.specDict;
         self.headerView.model = self.dataSource;
+        
+        //弹出的商品选择view,默认选择第一个
+        for (NSInteger i = 0; i < self.dataSource.specList.count; i++) {
+            SpecListModel *spModel = self.dataSource.specList[i];
+            GoodsSkuSpecValsModel *skuModel = spModel.goodsSkuSpecVals.firstObject;
+            [self.selectArray addObject:skuModel.goodsSkuSpecValName];
+            skuModel.isSelected = YES;
+        }
+        
+        //html标签图片
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
         [self.tableView cellForRowAtIndexPath:indexPath];
         [self.tableView reloadData];
         [self setupUI];
+        [self requestShopCarNum];
     } Failure:^(NSError * _Nonnull error) {
         
     }];
+}
+
+//请求购物车数量
+- (void)requestShopCarNum {
+    [NetTool getRequest:URLGet_ShopCar_Num Params:nil Success:^(id  _Nonnull json) {
+//        NSLog(@"num----   %@",json);
+        [self.shopCarBtn pp_moveBadgeWithX:- (self.shopCarBtn.width / 3) Y:8];
+        [self.shopCarBtn pp_addBadgeWithNumber:[json integerValue]];
+    } Failure:^(NSError * _Nonnull error) {
+                    
+    }];
+}
+
+//分享
+- (void)share {
+    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
+    if (_dataSource.bannerArray.count > 0) {
+        [imageArray addObject:_dataSource.bannerArray[0]];
+    }
+    NSString *shareStr = [NSString stringWithFormat:@"https://static.shanghusm.com/staticPath/shanghu/productDetails?productDetailsId=%d",_goodsID];
+    
+//    NSString *shareStr = [NSString stringWithFormat:@"http://192.168.11.183:8088/staticPath/shanghu/productDetails?productDetailsId=%d",_goodsID];
+    NSString *title = _dataSource.goodsName;
+    [HelperTool shareSomething:imageArray urlStr:shareStr title:title text:nil];
 }
 
 - (BOOL)judgeLogin {
@@ -331,6 +370,7 @@
     [NetTool postRequest:URLPost_Add_ShopCar Params:dict Success:^(id  _Nonnull json) {
         [CddHud showSwitchText:hud text:@"添加成功~"];
 //        NSLog(@"json ---- %@",json);
+        [self requestShopCarNum];
         if ([json integerValue] == 1) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(Delay_Time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.specView complete];

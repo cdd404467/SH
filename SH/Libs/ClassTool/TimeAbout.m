@@ -18,7 +18,7 @@
     return timeSp;
 }
 
-//获取当前时间戳有两种方法(以秒为单位)
+//获取当前时间戳(以秒为单位)
 + (NSString *)getNowTimeTimestamp_M {
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -96,7 +96,6 @@
 + (NSDate *)stringToDate:(NSString *)string {
     // 日期格式化类
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    
     // 设置日期格式 为了转换成功
     format.dateFormat = @"yyyy-MM-dd";
     // NSString * -> NSDate *
@@ -106,6 +105,16 @@
     return date;
 }
 
++ (NSDate *)stringToDateSec:(NSString *)string {
+    // 日期格式化类
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    // 设置日期格式 为了转换成功
+    format.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    // NSString * -> NSDate *
+    [format setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:8]];//解决8小时时间差问题
+    NSDate *date = [format dateFromString:string];
+    return date;
+}
 
 //判断今天、昨天
 + (NSString *)checkTheDate:(long long)timeStamp {

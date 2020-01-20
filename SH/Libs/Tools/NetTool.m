@@ -71,9 +71,11 @@
     manager.requestSerializer.timeoutInterval = 30.0f;
     //json序列化
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager.requestSerializer setValue:User_Token forHTTPHeaderField:@"Authorization"];
     //解决解析<null>崩溃
-    ((AFJSONResponseSerializer *)manager.responseSerializer).removesKeysWithNullValues = YES;
+    
+//    ((AFJSONResponseSerializer *)manager.responseSerializer).removesKeysWithNullValues = YES;
     [self getRequestWithUrl:requestUrl Params:params Success:success Failure:failure manager:manager];
 }
 
@@ -81,39 +83,39 @@
 //    NSLog(@"111 ------   %@",User_Token);
     //发送Get请求
     [manager GET:requestUrl parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NetModel *m = [NetModel mj_objectWithKeyValues:responseObject];
         if (success) {
+            responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             //json如果不是字典,万一是字典如果不包含code这个key的话，就返回json
-            if (![responseObject isKindOfClass:[NSDictionary class]] || ![[responseObject allKeys] containsObject:@"code"]) {
+            if (![responseObject isKindOfClass:[NSDictionary class]] || ![responseObject objectForKey:@"code"]) {
                 success(responseObject);
             } else {
                 NSLog(@"msg----    %@",responseObject[@"msg"]);
                 [self showErrorMsg:responseObject[@"msg"]];
+//                if (error) {
+//                    error(responseObject);
+//                }
             }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
-            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
-            if (response.statusCode == 401) {
-//                [self getApiTokenWithManager:manager Success:success Failure:failure];
-            }
-            [self showFailureMsg:error.userInfo];
-            NSLog(@"error----    %@",error);
+//            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+//            if (response.statusCode == 401) {
+////                [self getApiTokenWithManager:manager Success:success Failure:failure];
+//            }
+//            [self showFailureMsg:error.userInfo];
+//            NSLog(@"error----    %@",error);
         }
     }];
 }
 
 
-
-
-
 //post 请求
 + (void)postRequest:(NSString *)requestUrl Params:(id)params Success:(void (^)(id json))success Error:(void (^)(id json))error Failure:(void (^)(NSError *error))failure {
-    if ([params isKindOfClass:[NSDictionary class]]) {
-        params = [params mutableCopy];
-        [params setValue:@3 forKey:@"orderSource"];
-    }
+//    if ([params isKindOfClass:[NSDictionary class]]) {
+//        params = [params mutableCopy];
+//        [params setValue:@3 forKey:@"orderSource"];
+//    }
     NSURL *baseURL = [NSURL URLWithString:Server_Api];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     manager.requestSerializer.timeoutInterval = 30.0f;
@@ -155,10 +157,10 @@
 
 //put 请求
 + (void)putRequest:(NSString *)requestUrl Params:(id)params Success:(void (^)(id json))success Error:(void (^)(id json))error Failure:(void (^)(NSError *error))failure {
-    if ([params isKindOfClass:[NSDictionary class]]) {
-        params = [params mutableCopy];
-        [params setValue:@3 forKey:@"orderSource"];
-    }
+//    if ([params isKindOfClass:[NSDictionary class]]) {
+//        params = [params mutableCopy];
+//        [params setValue:@3 forKey:@"orderSource"];
+//    }
     NSURL *baseURL = [NSURL URLWithString:Server_Api];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     manager.requestSerializer.timeoutInterval = 30.0f;

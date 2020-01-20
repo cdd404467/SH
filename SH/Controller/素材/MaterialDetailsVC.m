@@ -56,7 +56,6 @@
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.bounces = NO;
     }
-    
     return _scrollView;
 }
 
@@ -64,7 +63,7 @@
 - (void)requestData {
     NSString *urlString = [NSString stringWithFormat:URLGet_Material_Details,_materialId];
     [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
-        NSLog(@"----   %@",json);
+//        NSLog(@"----   %@",json);
         self.dataSource = [MaterialModel mj_objectWithKeyValues:json];
         
         self.dataSource.labelInfoList = [LabelModel mj_objectArrayWithKeyValuesArray:self.dataSource.labelInfoList];

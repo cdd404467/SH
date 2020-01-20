@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BannerImageCell : UICollectionViewCell
 @property (nullable, nonatomic, strong) NSURL *imageURL;
+@property (nonatomic, assign) CGFloat cornerRadius;
 @end
 
 NS_ASSUME_NONNULL_END

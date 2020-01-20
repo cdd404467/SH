@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 //nav 返回按钮的
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) CustomNavBar *navBar;
-@property (nonatomic, strong) UIColor *backBtnTintColor;
-@property (nonatomic, strong) UIColor *backBtnBgColor;
+//@property (nonatomic, strong) UIColor *backBtnTintColor;
+//@property (nonatomic, strong) UIColor *backBtnBgColor;
 - (void)jumpToLoginWithComplete:(void (^ __nullable)(void))handler;
 @end
 

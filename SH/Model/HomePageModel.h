@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray *DESIGNER;
 //热门商品
 @property (nonatomic, copy) NSArray *GOODS;
+//艺术家店铺
+@property (nonatomic, copy) NSArray *artistShopList;
 //一级场景
 @property (nonatomic, copy) NSArray *FIRSTSCENE;
 //

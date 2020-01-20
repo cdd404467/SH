@@ -11,10 +11,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Alert : NSObject
-+ (void)alertSystemOne:(NSString *)title okBtn:(NSString *)okTitle OKCallBack:(void(^)(void))OK;
-+ (void)alertSystemOne:(NSString *)title okBtn:(NSString *)okTitle  msg:(NSString *)msg  OKCallBack:(void(^)(void))OK;
-+ (void)alertSystemTwo:(NSString *)title cancelBtn:(NSString *)cancelTitle okBtn:(NSString *)okTitle OKCallBack:(void(^)(void))OK;
-+ (void)alertSystemTwo:(NSString *)title cancelBtn:(NSString *)cancelTitle okBtn:(NSString *)okTitle cancelCallBack:(void(^)(void))cancel OKCallBack:(void(^)(void))OK;
+//一个按钮
++ (void)alertSystemOne:(NSString * _Nullable)title msg:(NSString * _Nullable)msg okBtn:(NSString *)okTitle OKCallBack:(void(^ __nullable)(void))OK;
+
++ (void)alertSystemOne:(NSString * _Nullable)title msg:(NSString * _Nullable)msg okBtn:(NSString *)okTitle;
+//两个按钮
++ (void)alertSystemTwo:(NSString * _Nullable)title msg:(NSString * _Nullable)msg cancelBtn:(NSString *)cancelTitle okBtn:(NSString *)okTitle cancelCallBack:(void(^ __nullable)(void))cancel OKCallBack:(void(^)(void))OK;
+
++ (void)alertSystemTwo:(NSString * _Nullable)title msg:(NSString * _Nullable)msg cancelBtn:(NSString *)cancelTitle okBtn:(NSString *)okTitle OKCallBack:(void(^)(void))OK;
 @end
 
 NS_ASSUME_NONNULL_END

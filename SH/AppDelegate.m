@@ -9,9 +9,10 @@
 #import "AppDelegate.h"
 #import "AppDelegate+Init.h"
 #import "WXApiManager.h"
+#import "VCJump.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic, strong)UITabBarController *tabbarController;
 @end
 
 @implementation AppDelegate
@@ -43,9 +44,9 @@
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
-
+//回到前台
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationName_ApplicationDidBecomeActive object:nil userInfo:nil];
 }
 
 
@@ -55,16 +56,23 @@
 
 //打开app处理URL
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    NSString *urlString = [url absoluteString];
-    
-    
-    
+    NSString *urlString = url.absoluteString;
+    if (url && [urlString containsString:@"surhoo"]) {
+        BaseNavigationController *nav = self.tabbarController.viewControllers[self.tabbarController.selectedIndex];
+        [VCJump openShareURLWithHost:url.host query:url.query nav:nav];
+        
+        return YES;
+    }
 
-    if (urlString.length > 2 && [[urlString substringToIndex:2] isEqualToString:@"wx"]) {
+    if (url && urlString.length > 2 && [[urlString substringToIndex:2] isEqualToString:@"wx"]) {
         return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
     }
     return YES;
 }
 
+- (UITabBarController *)tabbarController {
+    _tabbarController = (UITabBarController *)_window.rootViewController;
+    return _tabbarController;
+}
 
 @end

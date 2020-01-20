@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2833AAE6CDC1DB99BCB320E315968AEB"
+               BlueprintIdentifier = "2404925C1CB55B0ECE35B1E76487D26D"
                BuildableName = "libSGPagingView.a"
                BlueprintName = "SGPagingView"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -9,10 +9,24 @@
 #import "OrderModel.h"
 
 @implementation OrderModel
-
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{
+             @"orderID" : @"id"
+             };
+}
 @end
 
 @implementation OrderGoodsModel
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{
+             @"gId" : @"id",
+             };
+}
+
+@end
+
+@implementation OrderDetailModel
+
 
 
 @end

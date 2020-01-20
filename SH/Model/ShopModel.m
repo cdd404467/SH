@@ -16,3 +16,15 @@
     return _labelArray;
 }
 @end
+
+
+@implementation ShopHomePageModel
+
+
+@end
+
+
+@implementation ClassifyListModel
+
+
+@end

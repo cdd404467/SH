@@ -16,12 +16,6 @@
     return _isSelected;
 }
 
-- (NSMutableArray *)carGoodsList {
-    if (!_carGoodsList) {
-        _carGoodsList = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _carGoodsList;
-}
 @end
 
 

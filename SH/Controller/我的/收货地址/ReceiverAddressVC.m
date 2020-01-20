@@ -13,8 +13,9 @@
 #import "EditAddressVC.h"
 #import "Alert.h"
 #import "CddHud.h"
+#import <UIScrollView+EmptyDataSet.h>
 
-@interface ReceiverAddressVC ()<UITableViewDelegate, UITableViewDataSource>
+@interface ReceiverAddressVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIButton *addAddressBtn;
@@ -48,7 +49,8 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.bounces = NO;
-//        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
         _tableView.separatorColor = RGBA(222, 222, 222, 1);
         _tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         _tableView.backgroundColor = HEXColor(@"#F6F6F6", 1);
@@ -125,6 +127,26 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_address"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"你还没有添加收货地址~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+//    return -100;
+//}
+
 #pragma mark - tableView delegate
 //每组的cell个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -161,7 +183,7 @@
 // 点击左滑出现的删除按钮触发
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [Alert alertSystemTwo:@"是否确定删除该地址" cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
+        [Alert alertSystemTwo:@"是否确定删除该地址" msg:nil cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
             [self deleteAddressWithIndex:indexPath.row];
         }];
     }

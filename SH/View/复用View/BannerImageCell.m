@@ -15,7 +15,6 @@
 @implementation BannerImageCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        
         _imageView = [[UIImageView alloc] init];
         _imageView.backgroundColor = [UIColor grayColor];
         [self.contentView addSubview:_imageView];
@@ -29,6 +28,12 @@
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
     }];
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+    _cornerRadius = cornerRadius;
+    _imageView.layer.cornerRadius = cornerRadius;
+    _imageView.clipsToBounds = YES;
 }
 
 - (void)setImageURL:(NSURL *)imageURL {

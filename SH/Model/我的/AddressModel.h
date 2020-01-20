@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *cityId;
 //区id
 @property (nonatomic, copy) NSString *districtId;
+
 @end
 
 NS_ASSUME_NONNULL_END

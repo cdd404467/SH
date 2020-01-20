@@ -9,6 +9,9 @@
 #import "HelperTool.h"
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import "CddHud.h"
 
 @implementation HelperTool
 #pragma mark - 画圆角和边框
@@ -43,7 +46,6 @@
 }
 
 + (void)drawRound:(UIView * _Nonnull)view {
-    
     [self drawRound:view radiu:view.width / 2];
 }
 
@@ -139,5 +141,49 @@
         return vc;
     }
     return nil;
+}
+
+//处理金额显示精度问题
++ (NSString *)dealStrFormoney:(NSString *)string {
+    //直接传入精度丢失有问题的Double类型
+    double conversionValue = [string doubleValue];
+    NSString *doubleString = [NSString stringWithFormat:@"%lf", conversionValue];
+    NSDecimalNumber *decNumber = [NSDecimalNumber decimalNumberWithString:doubleString];
+    return [decNumber stringValue];
+}
+
++ (void)shareSomething:(NSMutableArray<NSString *> *)imageArray urlStr:(NSString *)urlStr title:(NSString *)title text:(NSString *)text {
+    [self shareSomething:imageArray urlStr:urlStr title:title text:text customItem:nil];
+}
+
++ (void)shareSomething:(NSMutableArray<NSString *> *)imageArray urlStr:(NSString *)urlStr title:(NSString *)title text:(NSString *)text customItem:(NSArray *)items {
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetShareFlags:@[@"统计1"]];
+    [shareParams SSDKSetupShareParamsByText:text
+                                     images:imageArray
+                                        url:[NSURL URLWithString:urlStr]
+                                      title:title
+                                       type:SSDKContentTypeAuto];
+    [ShareSDK showShareActionSheet:nil customItems:items shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        switch (state) {
+            case SSDKResponseStateSuccess:
+            {
+//                [CddHud showTextOnly:@"分享成功" view:[HelperTool getCurrentVC].view];
+                break;
+            }
+            case SSDKResponseStateFail:
+            {
+                [CddHud showTextOnly:@"分享失败" view:[HelperTool getCurrentVC].view];
+                break;
+            }
+            case SSDKResponseStateCancel:{
+                //                [CddHUD showTextOnlyDelay:@"分享已取消" view:[HelperTool getCurrentVC].view];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }];
 }
 @end

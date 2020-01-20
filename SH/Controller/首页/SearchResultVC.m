@@ -22,6 +22,7 @@
 #import "GoodsDetailsVC.h"
 #import "MaterialDetailsVC.h"
 #import "DesignerMainPageVC.h"
+#import "ShopHomePageVC.h"
 #import "SceneDetailsVC.h"
 #import <UIScrollView+EmptyDataSet.h>
 #import "ScreenClassView.h"
@@ -49,6 +50,11 @@ static NSString *designerCVID = @"designerCVCell";
     self.goodsSortType = 1;
     [self setupUI];
     [self.view addSubview:self.collectionView];
+    [self setPageType];
+    [self requestData];
+}
+
+- (void)setPageType {
     if (_type == 1) {
         self.navBar.title = @"商品列表";
         [self addSelectView];
@@ -57,7 +63,10 @@ static NSString *designerCVID = @"designerCVCell";
     } else if (_type == 2) {
         self.navBar.title = @"场景列表";
     } else if (_type == 3) {
+        [self requestClassify];
         self.navBar.title = @"店铺列表";
+        [self.navBar.rightBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateNormal];
+        [self.navBar.rightBtn addTarget:self action:@selector(selectLabs) forControlEvents:UIControlEventTouchUpInside];
     } else if (_type == 4) {
         [self requestClassify];
         self.navBar.title = @"设计师列表";
@@ -66,7 +75,6 @@ static NSString *designerCVID = @"designerCVCell";
     } else if (_type == 5) {
         self.navBar.title = @"素材列表";
     }
-    [self requestData];
 }
 
 - (void)selectLabs {
@@ -163,7 +171,14 @@ static NSString *designerCVID = @"designerCVCell";
 
 //设计师的素材分类
 - (void)requestClassify {
-    [NetTool getRequest:URLGet_Material_Labs Params:nil Success:^(id  _Nonnull json) {
+    NSString *urlString = [NSString string];
+    if (_type == 3) {
+        urlString = URLGet_Shop_Labs;
+    } else if (_type == 4) {
+        urlString = URLGet_Material_Labs;
+    }
+    
+    [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
 //        NSLog(@"----   %@",json);
         NSArray *tempArr = json;
         self.classifyDataSource = [LabelSelectModel mj_objectArrayWithKeyValuesArray:tempArr];
@@ -286,7 +301,10 @@ static NSString *designerCVID = @"designerCVCell";
         vc.sceneId = model.sceneId.intValue;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (_type == 3) {
-        
+        ShopHomePageVC *vc = [[ShopHomePageVC alloc] init];
+        ShopModel *model = self.dataSource[indexPath.row];
+        vc.shopID = model.shopId;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (_type == 4) {
         
     } else if (_type == 5) {

@@ -37,6 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 获取当前显示的控制器
 + (UIViewController *)getCurrentVC;
+
+// 处理小数精度问题
++ (NSString *)dealStrFormoney:(NSString *)string;
+
+//分享
++ (void)shareSomething:(NSMutableArray<NSString *> *)imageArray urlStr:(NSString *)urlStr title:(NSString * _Nullable)title text:(NSString * _Nullable)text;
++ (void)shareSomething:(NSMutableArray<NSString *> *)imageArray urlStr:(NSString *)urlStr title:(NSString * _Nullable)title text:(NSString * _Nullable)text customItem:(NSArray * _Nullable)items;
 @end
 
 NS_ASSUME_NONNULL_END

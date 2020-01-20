@@ -49,6 +49,7 @@ PODS:
     - mob_sharesdk/ShareSDK
     - MOBFoundation
   - MOBFoundation (3.2.8)
+  - PPBadgeView (3.1.0)
   - SDWebImage (5.1.0):
     - SDWebImage/Core (= 5.1.0)
   - SDWebImage/Core (5.1.0)
@@ -82,6 +83,7 @@ DEPENDENCIES:
   - mob_sharesdk
   - mob_sharesdk/ShareSDKPlatforms/WeChatFull
   - mob_sharesdk/ShareSDKUI
+  - PPBadgeView (~> 3.1.0)
   - SDWebImage (~> 5.1.0)
   - SGPagingView (~> 1.6.7)
   - Somo (~> 0.8.0)
@@ -105,6 +107,7 @@ SPEC REPOS:
     - MJExtension
     - mob_sharesdk
     - MOBFoundation
+    - PPBadgeView
     - SDWebImage
     - SGPagingView
     - Somo
@@ -127,6 +130,7 @@ SPEC CHECKSUMS:
   MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
   mob_sharesdk: ecee6e8ba42f76a252a40d2da7a1f7301b9831d6
   MOBFoundation: 2dc0a63371eccccabef13b1df3fe57564003bc85
+  PPBadgeView: b50a223638970fd0781e8753250385864b6dd2fe
   SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
   SGPagingView: 21152cbb9e25a7259ea2415b028c22f55f362ea2
   Somo: 1e2335634d16babfb361c77b9cde743c5f45154b
@@ -135,6 +139,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 24b20c5ca056396db99ac75fb43b1e693a4bfc8c
+PODFILE CHECKSUM: 16245dcf06cb19755af9f2574d8d7cae3551dd45
 
 COCOAPODS: 1.5.3

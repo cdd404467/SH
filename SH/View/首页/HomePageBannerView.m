@@ -23,7 +23,7 @@ static NSString *bannerID = @"ImageCell";
 
 - (instancetype) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.frame = CGRectMake(0, -KFit_W(220), SCREEN_WIDTH, 0);
+        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0);
         self.backgroundColor = UIColor.whiteColor;
         [self setupUI];
     }

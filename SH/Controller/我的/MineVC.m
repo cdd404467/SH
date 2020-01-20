@@ -15,10 +15,7 @@
 #import "SettingVC.h"
 #import "MyOrdersVC.h"
 #import "TempVC.h"
-
-
-
-#import "PaySuccessVC.h"
+#import "MyCollectionVC.h"
 
 @interface MineVC ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -72,8 +69,8 @@
 
 - (NSMutableArray *)titleArray {
     if (!_titleArray) {
-        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"购物车",@"收货地址",@"我的发票"]];
-//        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"购物车",@"收货地址",@"我的发票",@"我的收藏"]];
+//        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"购物车",@"收货地址",@"我的发票"]];
+        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"购物车",@"收货地址",@"我的发票",@"我的收藏"]];
 //        NSMutableArray *sec_2 = [NSMutableArray arrayWithArray:@[@"成为设计师",@"成为商家"]];
 //        NSMutableArray *sec_3 = [NSMutableArray arrayWithArray:@[@"联系客服"]];
         _titleArray = [NSMutableArray arrayWithCapacity:0];
@@ -86,8 +83,8 @@
 
 - (NSMutableArray *)imageArray {
     if (!_imageArray) {
-        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"cell_icon_shopcar",@"cell_icon_address",@"cell_icon_invoice"]];
-//        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"cell_icon_shopcar",@"cell_icon_address",@"cell_icon_invoice",@"cell_icon_collect"]];
+//        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"cell_icon_shopcar",@"cell_icon_address",@"cell_icon_invoice"]];
+        NSMutableArray *sec_1 = [NSMutableArray arrayWithArray:@[@"cell_icon_shopcar",@"cell_icon_address",@"cell_icon_invoice",@"cell_icon_collect"]];
 //        NSMutableArray *sec_2 = [NSMutableArray arrayWithArray:@[@"cell_icon_becomeDesigner",@"cell_icon_becomeSeller"]];
 //        NSMutableArray *sec_3 = [NSMutableArray arrayWithArray:@[@"cell_icon_contactKF"]];
         _imageArray = [NSMutableArray arrayWithCapacity:0];
@@ -196,7 +193,12 @@
             case 2:
             {
                 MyInvoiceVC *vc = [[MyInvoiceVC alloc] init];
-//                PaySuccessVC *vc = [[PaySuccessVC alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 3:
+            {
+                MyCollectionVC *vc = [[MyCollectionVC alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;

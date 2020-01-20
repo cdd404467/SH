@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OrderStatusView : UIImageView
+@property (nonatomic, assign) int status;
 @property (nonatomic, copy) NSString *imageName;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *tips;

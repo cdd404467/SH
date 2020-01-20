@@ -13,6 +13,7 @@
 #import "HomeSceneCVCell.h"
 #import "HomeDesignerListCVCell.h"
 #import "SceneIconCVCell.h"
+#import "ShopArtistListCVCell.h"
 #import "GoodsCVCell.h"
 #import "ColorfulFlowLayout.h"
 #import "AllClassifyVC.h"
@@ -22,29 +23,40 @@
 #import "MoreFooterView.h"
 #import "DesignerMainPageVC.h"
 #import "HomePageBannerView.h"
+#import "WithoutNetView.h"
+#import "Alert.h"
+#import "ArtistShopHomePageVC.h"
 
 
 static NSString *iconCVID = @"SceneIconCVCell";
 static NSString *sceneCVID = @"sceneCell";
-static NSString *designerCVID = @"HomeDesignerListCVCell";
+//static NSString *designerCVID = @"HomeDesignerListCVCell";
 static NSString *goodsCVID = @"HotGoodsCVCell";
+static NSString *artistCVID = @"ShopArtistListCVCell";
 static NSString *section_Header = @"section_Header";
 static NSString *section_Header_banner = @"HomePageBannerView";
 static NSString *section_Footer = @"MoreFooterView";
+
+
 @interface HomePageVC ()<UICollectionViewDelegate, UICollectionViewDataSource, ColorfulDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 //数据源
 @property (nonatomic, strong) HomePageModel *dataSource;
+@property (nonatomic, strong) WithoutNetView *withoutView;
+@property (nonatomic, assign) BOOL isFirstLoad;
 @end
 
 @implementation HomePageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _isFirstLoad = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestData) name:NotificationName_HomePageDataReload object:nil];
     [self setNavBar];
     [self.view addSubview:self.collectionView];
     [self requestData];
 }
+
 
 - (void)setNavBar {
     self.navBar.backgroundColor = HEXColor(@"#333434", 1);
@@ -60,8 +72,7 @@ static NSString *section_Footer = @"MoreFooterView";
     searchBtn.backgroundColor = UIColor.blackColor;
     [searchBtn setImage:[UIImage imageNamed:@"search_icon"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(jumpToSearch) forControlEvents:UIControlEventTouchUpInside];
-//    [searchBtn setTitle:@"搜索商品、场景、店铺、设计师、素材" forState:UIControlStateNormal];
-    [searchBtn setTitle:@"搜索商品、场景、设计师、素材" forState:UIControlStateNormal];
+    [searchBtn setTitle:@"搜索商品、场景、店铺、设计师、素材" forState:UIControlStateNormal];
     [searchBtn setTitleColor:HEXColor(@"#9B9B9B", 1) forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [titleView addSubview:searchBtn];
@@ -74,9 +85,17 @@ static NSString *section_Footer = @"MoreFooterView";
     [classBtn setImage:[UIImage imageNamed:@"classify_btn"] forState:UIControlStateNormal];
     [classBtn addTarget:self action:@selector(jumpToAllClassify) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:classBtn];
-    
-//    self.navigationItem.titleView = titleView;
     self.navBar.navBarView = titleView;
+}
+
+- (WithoutNetView *)withoutView {
+    if (!_withoutView) {
+        _withoutView = [[WithoutNetView alloc] init];
+        _withoutView.hidden = YES;
+        _withoutView.top = SCREEN_HEIGHT / 2 - 100;
+        [_withoutView.refreshBtn addTarget:self action:@selector(requestData) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _withoutView;
 }
 
 - (UICollectionView *)collectionView {
@@ -87,13 +106,14 @@ static NSString *section_Footer = @"MoreFooterView";
         _collectionView.backgroundColor = HEXColor(@"#F6F6F6", 1);
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.bounces = NO;
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT + 40, 0);
         [_collectionView registerClass:[SceneIconCVCell class] forCellWithReuseIdentifier:iconCVID];
         [_collectionView registerClass:[HomeSceneCVCell class] forCellWithReuseIdentifier:sceneCVID];
-        [_collectionView registerClass:[HomeDesignerListCVCell class] forCellWithReuseIdentifier:designerCVID];
+        [_collectionView registerClass:[ShopArtistListCVCell class] forCellWithReuseIdentifier:artistCVID];
         [_collectionView registerClass:[GoodsCVCell class] forCellWithReuseIdentifier:goodsCVID];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"test"];
         [_collectionView registerClass:[HomeSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header];
@@ -112,12 +132,53 @@ static NSString *section_Footer = @"MoreFooterView";
         self.dataSource.BANNER = [BannerModel mj_objectArrayWithKeyValuesArray:self.dataSource.BANNER];
         self.dataSource.FIRSTSCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.FIRSTSCENE];
         self.dataSource.SCENE = [SceneModel mj_objectArrayWithKeyValuesArray:self.dataSource.SCENE];
+        self.dataSource.artistShopList = [BannerModel mj_objectArrayWithKeyValuesArray:self.dataSource.artistShopList];
 //        self.dataSource.DESIGNER = [DesignerModel mj_objectArrayWithKeyValuesArray:self.dataSource.DESIGNER];
         self.dataSource.GOODS = [GoodsModel mj_objectArrayWithKeyValuesArray:self.dataSource.GOODS];
-//        self.headerView.bannerArray = self.dataSource.BANNER;
         [self.collectionView reloadData];
+        [self.withoutView removeFromSuperview];
+        self.withoutView = nil;
+        self.collectionView.hidden = NO;
+        if (self.isFirstLoad)
+            [self checkUpdate];
     } Failure:^(NSError * _Nonnull error) {
-                    
+        [self.view addSubview:self.withoutView];
+        self.withoutView.hidden = NO;
+        self.collectionView.hidden = YES;
+    }];
+}
+
+- (void)checkUpdate {
+    //获取当前app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *current_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *urlString = [NSString stringWithFormat:URLGet_Check_Update,current_Version,3];
+    [NetTool getRequest:urlString Params:nil Success:^(id  _Nonnull json) {
+//        NSLog(@"======== %@",json);
+        NSInteger isUpdate = [json[@"editionState"] integerValue];
+        //非强制
+        if (isUpdate != 0) {
+            NSString *title = [NSString stringWithFormat:@"发现新版本(v%@)",json[@"editionNum"]];
+            NSString *msg = json[@"editionExplain"];
+            NSString *url = json[@"downloadUrl"];
+            if (isUpdate == 1) {
+                [Alert alertSystemTwo:title msg:[NSString stringWithFormat:@"%@%@\n%@",msg,msg,msg] cancelBtn:@"取消" okBtn:@"更新" OKCallBack:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+                    });
+                }];
+            }
+            //强制
+            else if (isUpdate == 2) {
+                [Alert alertSystemOne:title msg:msg okBtn:@"更新" OKCallBack:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+                    });
+                }];
+            }
+        }
+        self.isFirstLoad = NO;
+    } Failure:^(NSError * _Nonnull error) {
     }];
 }
 
@@ -138,7 +199,7 @@ static NSString *section_Footer = @"MoreFooterView";
 #pragma mark - collectionView delegate
 /** 总共多少组*/
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
+    return 4;
 }
 
 /** 每组几个cell*/
@@ -157,10 +218,10 @@ static NSString *section_Footer = @"MoreFooterView";
     else if (section == 1) {
         return self.dataSource.SCENE.count;
     }
-//    else if (section == 2) {
-//        return 1;
-//    }
     else if (section == 2) {
+        return 1;
+    }
+    else if (section == 3) {
         return self.dataSource.GOODS.count;
     }
     else {
@@ -176,10 +237,10 @@ static NSString *section_Footer = @"MoreFooterView";
     } else if (indexPath.section == 1) {
         return CGSizeMake(SCREEN_WIDTH , KFit_W(200) + 50);
     }
-//    else if (indexPath.section == 2) {
-//        return CGSizeMake(SCREEN_WIDTH , 170);
-//    }
     else if (indexPath.section == 2) {
+        return CGSizeMake(SCREEN_WIDTH , KFit_W(150) + 10);
+    }
+    else if (indexPath.section == 3) {
         CGFloat imageWidth = (SCREEN_WIDTH - 16 * 2 - 10) / 2;
         return CGSizeMake(imageWidth , imageWidth + 96);
     }
@@ -193,13 +254,10 @@ static NSString *section_Footer = @"MoreFooterView";
     if (section == 0) {
         return 20;
     }
-    else if (section == 2) {
+    else if (section == 3) {
         return 10;
     }
     return 0;
-//    else {
-//        return 0;
-//    }
 }
 
 //cell列间距
@@ -207,26 +265,20 @@ static NSString *section_Footer = @"MoreFooterView";
     if (section == 0) {
         return 25;
     }
-    else if (section == 2) {
+    else if (section == 3) {
         return 10;
     }
     return 0;
-//    else {
-//        return 0;
-//    }
 }
 
 //section四周的边距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == 0) {
         return UIEdgeInsetsMake(20, 20, 0, 20);
-    } else if (section == 2) {
+    } else if (section == 3) {
         return UIEdgeInsetsMake(0, 16, 10, 16);
     }
     return UIEdgeInsetsMake(0, 0, 10, 0);
-//    else {
-//        return UIEdgeInsetsMake(0, 0, 10, 0);
-//    }
 }
 
 //设置header尺寸
@@ -264,7 +316,7 @@ static NSString *section_Footer = @"MoreFooterView";
             view = header;
         } else {
 //            NSArray *titleArr = @[@"热门场景",@"设计师榜",@"砍价活动",@"热门商品"];
-              NSArray *titleArr = @[@"热门场景",@"热门商品"];
+              NSArray *titleArr = @[@"热门场景",@"艺术时尚工作室",@"热门商品"];
               HomeSectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section_Header forIndexPath:indexPath];
               header.title = titleArr[indexPath.section - 1];
               header.showMoreBtn = NO;
@@ -298,7 +350,7 @@ static NSString *section_Footer = @"MoreFooterView";
         SceneModel *model = self.dataSource.SCENE[indexPath.row];
         vc.sceneId = [model.sceneId intValue];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 3) {
         GoodsDetailsVC *vc= [[GoodsDetailsVC alloc] init];
         GoodsModel *model = self.dataSource.GOODS[indexPath.row];
         vc.goodsID = model.goodsId;
@@ -318,18 +370,18 @@ static NSString *section_Footer = @"MoreFooterView";
         cell.model = self.dataSource.SCENE[indexPath.row];
         return cell;
     }
-//    else if (indexPath.section == 2) {
-//        HomeDesignerListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:designerCVID forIndexPath:indexPath];
-//        DDWeakSelf;
-//        cell.clickBlock = ^(NSString * _Nonnull designerId) {
-//            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
-//            vc.designerId = designerId;
-//            [weakself.navigationController pushViewController:vc animated:YES];
-//        };
-//        cell.designerArr = self.dataSource.DESIGNER;
-//        return cell;
-//    }
     else if (indexPath.section == 2) {
+        ShopArtistListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:artistCVID forIndexPath:indexPath];
+        DDWeakSelf;
+        cell.clickBlock = ^(NSString * _Nonnull shopID) {
+            ArtistShopHomePageVC *vc = [[ArtistShopHomePageVC alloc] init];
+            vc.shopID = shopID;
+            [weakself.navigationController pushViewController:vc animated:YES];
+        };
+        cell.artistShopArr = self.dataSource.artistShopList;
+        return cell;
+    }
+    else if (indexPath.section == 3) {
         GoodsCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:goodsCVID forIndexPath:indexPath];
         cell.model = self.dataSource.GOODS[indexPath.row];
         return cell;
@@ -346,7 +398,7 @@ static NSString *section_Footer = @"MoreFooterView";
 {
     return [@[UIColor.whiteColor,
               _collectionView.backgroundColor,
-//              _collectionView.backgroundColor,
+              _collectionView.backgroundColor,
 //              _collectionView.backgroundColor,
               UIColor.whiteColor
               ] objectAtIndex:section];
@@ -355,5 +407,10 @@ static NSString *section_Footer = @"MoreFooterView";
 //修改statesBar 颜色
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;  //白色，默认的值是黑色的
+}
+
+- (void)dealloc {
+    //移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

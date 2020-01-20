@@ -50,19 +50,19 @@
     
 }
 
-- (void)setBackBtnTintColor:(UIColor *)backBtnTintColor {
-    _backBtnTintColor = backBtnTintColor;
-    
-    NSString *imageName = [NSString string];
-    if (_backMode == 0) {
-        imageName = @"popBack";
-    } else if (_backMode == 1) {
-        imageName = @"close_back";
-    }
-    UIImage *image = [UIImage imageNamed:imageName];
-    [_backBtn setImage:[image imageWithTintColor_My:backBtnTintColor] forState:UIControlStateNormal];
-    _backBtn.tintColor = backBtnTintColor;
-}
+//- (void)setBackBtnTintColor:(UIColor *)backBtnTintColor {
+//    _backBtnTintColor = backBtnTintColor;
+//    
+//    NSString *imageName = [NSString string];
+//    if (_backMode == 0) {
+//        imageName = @"popBack";
+//    } else if (_backMode == 1) {
+//        imageName = @"close_back";
+//    }
+//    UIImage *image = [UIImage imageNamed:imageName];
+//    [_backBtn setImage:[image imageWithTintColor_My:backBtnTintColor] forState:UIControlStateNormal];
+//    _backBtn.tintColor = backBtnTintColor;
+//}
 
 - (void)setBackMode:(NSInteger)backMode {
     _backMode = backMode;
@@ -77,10 +77,10 @@
     self.backBtn.left = self.backBtn.left + 2;
 }
 
-- (void)setBackBtnBgColor:(UIColor *)backBtnBgColor {
-    _backBtnBgColor = backBtnBgColor;
-    _backBtn.backgroundColor = backBtnBgColor;
-}
+//- (void)setBackBtnBgColor:(UIColor *)backBtnBgColor {
+//    _backBtnBgColor = backBtnBgColor;
+//    _backBtn.backgroundColor = backBtnBgColor;
+//}
 
 - (void)jumpToLoginWithComplete:(void (^ __nullable)(void))handler {
     LoginVC *vc = [[LoginVC alloc] init];

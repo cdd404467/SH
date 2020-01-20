@@ -8,7 +8,7 @@
 
 #import "OrderGoodsTBCell.h"
 #import <YYText.h>
-#import "ConfirmOrderModel.h"
+#import "OrderModel.h"
 
 @interface OrderGoodsTBCell()
 @property (nonatomic, strong) UIImageView *goodsImageView;
@@ -89,9 +89,11 @@
     }];
 }
 
-- (void)setModel:(ConfirmOrderGoodsModel *)model {
+- (void)setModel:(OrderGoodsModel *)model {
     _model = model;
-    [_goodsImageView sd_setImageWithURL:ImgUrl_SD_OSS(model.logo, 96 * 2) placeholderImage:PlaceHolderImg];
+    NSString *img = [NSString string];
+    img = self.type == 0 ? model.goodsImg : model.logo;
+    [_goodsImageView sd_setImageWithURL:ImgUrl_SD_OSS(img, 96 * 2) placeholderImage:PlaceHolderImg];
     _goodsNameLab.text = model.goodsName;
     _specLab.text = model.skuName;
     _countLab.text = [NSString stringWithFormat:@"x %@",@(model.goodsNum).stringValue];

@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*)stringFromDate:(NSDate*)date;
 //
 + (NSDate *)stringToDate:(NSString *)string;
++ (NSDate *)stringToDateSec:(NSString *)string;
 //年月日，时分
 + (NSString *)timestampToStringAsOfMin:(long long)time;
 

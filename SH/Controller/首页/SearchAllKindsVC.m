@@ -38,7 +38,7 @@
     SearchView *searchView = [[SearchView alloc] init];
     searchView.top = NAV_HEIGHT;
     searchView.searchTF.enablesReturnKeyAutomatically = YES;
-    searchView.searchTF.placeholder = @"搜索";
+    searchView.searchTF.placeholder = @"搜索商品、场景、店铺、设计师、素材";
     DDWeakSelf;
     searchView.cancelBlock = ^{
         [weakself popBack];
@@ -64,8 +64,8 @@
         make.height.mas_equalTo(26);
     }];
     
-//    NSArray *titleArr = @[@"商品",@"场景",@"店铺",@"设计师",@"素材"];
-    NSArray *titleArr = @[@"商品",@"场景",@"设计师",@"素材"];
+    NSArray *titleArr = @[@"商品",@"场景",@"店铺",@"设计师",@"素材"];
+//    NSArray *titleArr = @[@"商品",@"场景",@"设计师",@"素材"];
     NSMutableArray *btnArr = [NSMutableArray arrayWithCapacity:0];
     CGFloat gap = 37.f;
     CGFloat allBtnWidth = 0;
@@ -73,12 +73,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitle:titleArr[i] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:14];
-        if (i < 2) {
-            button.tag = i + 101;
-        } else {
-            button.tag = i + 102;
-        }
-        
+        button.tag = i + 101;
         [button setTitleColor:HEXColor(@"#4A4A4A", 1) forState:UIControlStateNormal];
         [button addTarget:self action:@selector(searchKindsClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];

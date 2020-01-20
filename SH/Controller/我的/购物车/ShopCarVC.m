@@ -15,11 +15,12 @@
 #import "ShopCarModel.h"
 #import "CddHud.h"
 #import "ConfirmOrderVC.h"
+#import <UIScrollView+EmptyDataSet.h>
 
 
 static NSString *shopCarCVID = @"ShopCarCVCell";
 static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
-@interface ShopCarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ShopCarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<ShopCarModel *> *dataSource;
 @property (nonatomic, strong) UIButton *selectAllBtn;
@@ -41,8 +42,8 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     [self.view addSubview:self.collectionView];
     [self requestList];
     [self setupUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCarData) name:NotificationName_RemoveCarHasSelectedGoods object:nil];
 }
-
 
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {
@@ -62,19 +63,34 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
         CGRect rect = CGRectMake(0, NAV_HEIGHT + 40, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT - 40);
         _collectionView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
         _collectionView.backgroundColor = MainBgColor;
+        _collectionView.bounces = NO;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.emptyDataSetSource = self;
+        _collectionView.emptyDataSetDelegate = self;
         if (@available(iOS 11.0, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT, 0);
         [_collectionView registerClass:[ShopCarCVCell class] forCellWithReuseIdentifier:shopCarCVID];
         [_collectionView registerClass:[ShopCarSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:sectionHeaderCVID];
-        
     }
     return _collectionView;
 }
 
+- (void)changeCarData {
+    [NetTool getRequest:URLGet_Shop_Car_List Params:nil Success:^(id  _Nonnull json) {
+        self.dataSource = [ShopCarModel mj_objectArrayWithKeyValuesArray:json];
+        for (ShopCarModel *model in self.dataSource) {
+            model.carGoodsList = [ShopGoodsModel mj_objectArrayWithKeyValuesArray:model.carGoodsList];
+        }
+    self.selectAllBtn.selected = YES;
+    [self selectAllGoods];
+//        NSLog(@"----   %@",json);
+    } Failure:^(NSError * _Nonnull error) {
+                    
+    }];
+}
 
 #pragma mark 请求数据
 //购物车列表
@@ -85,7 +101,7 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
             model.carGoodsList = [ShopGoodsModel mj_objectArrayWithKeyValuesArray:model.carGoodsList];
         }
         [self.collectionView reloadData];
-        NSLog(@"----   %@",json);
+//        NSLog(@"----   %@",json);
     } Failure:^(NSError * _Nonnull error) {
                     
     }];
@@ -121,22 +137,21 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     
     [NetTool putRequest:URLPut_Delete_ShopCar Params:dict Success:^(id  _Nonnull json) {
         [self.activityIndicator stopAnimating];
-        for (NSInteger i = 0; i < self.dataSource.count; i ++) {
-                ShopCarModel *shopModel = self.dataSource[i];
-                if (shopModel.isSelected) {
-                    [self.dataSource removeObjectAtIndex:i];
-                    continue;
-                }
-                for (NSInteger j = 0; j < shopModel.carGoodsList.count; j ++) {
-                    ShopGoodsModel *goodsModel = shopModel.carGoodsList[j];
-                    if (goodsModel.isSelected) {
-                        [shopModel.carGoodsList removeObjectAtIndex:j];
-                    }
+        //这里一边遍历一边删除逆序操作
+        for (ShopCarModel *shopModel in self.dataSource.reverseObjectEnumerator) {
+            if (shopModel.isSelected) {
+                [self.dataSource removeObject:shopModel];
+                continue;
+            }
+            for (ShopGoodsModel *goodsModel in shopModel.carGoodsList.reverseObjectEnumerator) {
+                if (goodsModel.isSelected) {
+                    [shopModel.carGoodsList removeObject:goodsModel];
                 }
             }
-            [self countMoney];
-            [self judgeIsOrder];
-            [self.collectionView reloadData];
+        }
+        [self countMoney];
+        [self judgeIsOrder];
+        [self.collectionView reloadData];
     } Error:nil Failure:^(NSError * _Nonnull error) {
         [self.activityIndicator stopAnimating];
     }];
@@ -161,16 +176,6 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
         [CddHud showTextOnly:@"不能同时提交多家店铺的商品哦" view:self.view];
         return;
     }
-    //添加选择商品的数据源
-//    ShopCarModel *model = [[ShopCarModel alloc] init];
-//    for (ShopCarModel *shopModel in self.dataSource) {
-//        for (ShopGoodsModel *goodsModel in shopModel.carGoodsList) {
-//            if (goodsModel.isSelected) {
-//                [model.carGoodsList addObject:goodsModel];
-//                model.shopName = shopModel.shopName;
-//            }
-//        }
-//    }
     
     NSMutableArray *orderList = [NSMutableArray arrayWithCapacity:0];
     for (ShopCarModel *shopModel in self.dataSource) {
@@ -192,6 +197,26 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_shopCar"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"购物车空空如也～";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+//    return -100;
+//}
 
 #pragma mark - collectionView delegate
 /** 总共多少组*/
@@ -343,6 +368,9 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     //结算按钮是否可点击
     _settleAccountBtn.enabled = flag;
     _deleteBtn.enabled = flag;
+    if (self.dataSource.count == 0) {
+        _selectAllBtn.selected = NO;
+    }
 }
 
 //计算购物车选中商品总价
@@ -371,7 +399,6 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
             }
         }
     }
-//    NSString *str = [arr componentsJoinedByString:@","];
     return [arr copy];
 }
 
@@ -469,6 +496,7 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     //删除按钮
     _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _deleteBtn.hidden = YES;
+    _deleteBtn.enabled = NO;
     [_deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
     [_deleteBtn setTintColor:UIColor.whiteColor];
     [_deleteBtn setBackgroundImage:[UIImage imageWithColor:HEXColor(@"#F01420", 1)] forState:UIControlStateNormal];
@@ -512,5 +540,10 @@ static NSString *sectionHeaderCVID = @"ShopCarSectionHeader";
     self.activityIndicator.color = UIColor.blackColor;
     //设置背景颜色
     self.activityIndicator.backgroundColor = UIColor.clearColor;
+}
+
+- (void)dealloc {
+    //移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

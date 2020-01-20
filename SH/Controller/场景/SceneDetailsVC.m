@@ -118,9 +118,6 @@ static NSString *headerID = @"ScreenClassView";
     self.categoryView.contentScrollView = self.pagerView.listContainerView.collectionView;
 }
 
-- (JXPagerView *)preferredPagingView {
-    return [[JXPagerView alloc] initWithDelegate:self];
-}
 
 #pragma mark 请求数据
 //图片和下级场景

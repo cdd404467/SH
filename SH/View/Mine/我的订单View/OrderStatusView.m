@@ -27,11 +27,12 @@
 
 - (void)setupUI {
     _iconImage = [[UIImageView alloc] init];
+    _iconImage.image = [UIImage imageNamed:@"order_status_wait"];
     [self addSubview:_iconImage];
     [_iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(17);
         make.centerY.mas_equalTo(self.mas_centerY).offset(0);
-        make.left.mas_equalTo(20);
+        make.left.mas_equalTo(SCREEN_WIDTH / 2 - 50);
     }];
     
     _titleLab = [[UILabel alloc] init];
@@ -78,6 +79,63 @@
     [_iconImage mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.mas_centerY).offset(-10 - KFit_W(5));
     }];
+}
+
+- (void)setStatus:(int)status {
+    _status = status;
+    [self dealWithState:status];
+}
+
+- (NSString *)dealWithState:(int)status {
+    NSString *title = [NSString string];
+    switch (status) {
+        case 1: //待付款
+        {
+            self.title = @"待付款";
+        }
+            break;
+        case 2: //待发货
+        {
+            self.title = @"待发货";
+        }
+            break;
+        case 3: //已取消
+        {
+            self.title = @"已取消";
+        }
+            break;
+        case 4: //待收货
+        {
+            self.title = @"待收货";
+        }
+            break;
+        case 5: //待使用
+        {
+            self.title = @"待使用";
+        }
+            break;
+        case 6: //待评价
+        {
+            self.title = @"待评价";
+        }
+            break;
+        case 7: //已完成
+        {
+            self.title = @"已完成";
+        }
+            break;
+        case 8: //已关闭
+        {
+            self.title = @"已关闭";
+        }
+            break;
+        default:
+        {
+            self.title = @"- -!";
+        }
+            break;
+    }
+    return title;
 }
 
 @end

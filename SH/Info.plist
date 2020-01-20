@@ -37,7 +37,7 @@
 			<string>com.surhoo.SH</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>arouter</string>
+				<string>surhoo</string>
 			</array>
 		</dict>
 	</array>

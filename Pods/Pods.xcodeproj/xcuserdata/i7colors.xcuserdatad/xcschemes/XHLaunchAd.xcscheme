@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7B4C4EBF5D0276B7C36E766063CB44FB"
+               BlueprintIdentifier = "D2C7013C684F151125B452620C13C792"
                BuildableName = "libXHLaunchAd.a"
                BlueprintName = "XHLaunchAd"
                ReferencedContainer = "container:Pods.xcodeproj">

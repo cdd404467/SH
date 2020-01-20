@@ -13,8 +13,9 @@
 #import "EditInvoiceVC.h"
 #import "Alert.h"
 #import "CddHud.h"
+#import <UIScrollView+EmptyDataSet.h>
 
-@interface MyInvoiceVC ()<UITableViewDelegate, UITableViewDataSource>
+@interface MyInvoiceVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIButton *addInvoiceBtn;
@@ -40,6 +41,8 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT - 7) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
         _tableView.bounces = NO;
 //        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.separatorColor = RGBA(222, 222, 222, 1);
@@ -87,6 +90,22 @@
     }];
 }
 
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"empty_invoice"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *title = @"暂无发票信息";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:HEXColor(@"#999999", 1)
+                                 };
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
 #pragma mark - tableView delegate
 //每组的cell个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -123,7 +142,7 @@
 // 点击左滑出现的删除按钮触发
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [Alert alertSystemTwo:@"是否确定删除该发票" cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
+        [Alert alertSystemTwo:@"是否确定删除该发票?" msg:nil cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
             [self deleteInvoiceWithIndex:indexPath.row];
         }];
     }

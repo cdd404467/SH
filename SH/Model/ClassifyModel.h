@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ClassifyModel : NSObject
 //分类id
-@property (nonatomic, assign) int classifyID;
+@property (nonatomic, copy) NSString *classifyID;
 //分类名称
 @property (nonatomic, copy) NSString *name;
 //分类图片

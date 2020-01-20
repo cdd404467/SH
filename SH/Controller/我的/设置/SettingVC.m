@@ -62,7 +62,7 @@
 
 //清理缓存
 - (void)clearCache {
-    [Alert alertSystemTwo:@"是否确定清除缓存?" cancelBtn:@"取消" okBtn:@"确定" OKCallBack:^{
+    [Alert alertSystemTwo:@"是否确定清除缓存?" msg:nil cancelBtn:@"取消" okBtn:@"确定" cancelCallBack:nil OKCallBack:^{
         __block MBProgressHUD *hud = [CddHud showWithText:@"清理中..." view:self.view];
         [[[SDWebImageManager sharedManager] imageCache] clearWithCacheType:SDImageCacheTypeDisk completion:^{
             [CddHud showSwitchText:hud text:@"清理完成!"];

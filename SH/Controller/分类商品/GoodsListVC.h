@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsListVC : BaseViewController
-@property (nonatomic, assign) int classifyId;
+@property (nonatomic, copy) NSString *classifyId;
 @end
 
 NS_ASSUME_NONNULL_END

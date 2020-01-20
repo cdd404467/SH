@@ -18,6 +18,7 @@ target 'SH' do
 	pod 'MBProgressHUD', '~> 1.1.0'
 	pod 'SGPagingView', '~> 1.6.7'
 	pod 'DZNEmptyDataSet', '~> 1.8.1'
+	pod 'PPBadgeView', '~> 3.1.0'
 #shareSDK
 	pod 'mob_sharesdk'
 	pod 'mob_sharesdk/ShareSDKUI'

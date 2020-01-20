@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06E740224DBC2D09209CA48FF6E2DAE5"
+               BlueprintIdentifier = "F342D5B9CC20830A77F908D16DCDED72"
                BuildableName = "libSomo.a"
                BlueprintName = "Somo"
                ReferencedContainer = "container:Pods.xcodeproj">

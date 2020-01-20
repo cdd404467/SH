@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class ConfirmOrderGoodsModel;
+@class OrderGoodsModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OrderGoodsTBCell : UITableViewCell
-@property (nonatomic, strong) ConfirmOrderGoodsModel *model;
+@property (nonatomic, strong) OrderGoodsModel *model;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
+@property (nonatomic, assign) NSInteger type;
 @end
 
 NS_ASSUME_NONNULL_END
