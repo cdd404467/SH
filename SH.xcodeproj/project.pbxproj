@@ -190,6 +190,10 @@
 		FCB225F7233528B20074CB94 /* JXPageControlJump.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225EC233528B20074CB94 /* JXPageControlJump.swift */; };
 		FCB225F8233528B20074CB94 /* JXPageControlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225ED233528B20074CB94 /* JXPageControlTool.swift */; };
 		FCB225F9233528B20074CB94 /* JXPageControlBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB225EE233528B20074CB94 /* JXPageControlBase.swift */; };
+		FCB844E1240272B000CDDF40 /* EvaluateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB844E0240272B000CDDF40 /* EvaluateVC.m */; };
+		FCB844E52402751100CDDF40 /* EvaluateTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB844E42402751100CDDF40 /* EvaluateTBCell.m */; };
+		FCB844EE2402CE2800CDDF40 /* StarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB844ED2402CE2800CDDF40 /* StarView.m */; };
+		FCB844F12402D07D00CDDF40 /* EvaluateStarsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB844F02402D07D00CDDF40 /* EvaluateStarsModel.m */; };
 		FCC8D1732369867400DD2D6D /* CustomNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D1722369867400DD2D6D /* CustomNavBar.m */; };
 		FCCC6086238D44D5006874A1 /* HtmlStringTBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FCCC6085238D44D5006874A1 /* HtmlStringTBCell.m */; };
 		FCCC6089238E50B0006874A1 /* LabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCCC6088238E50B0006874A1 /* LabelModel.m */; };
@@ -572,6 +576,14 @@
 		FCB225EC233528B20074CB94 /* JXPageControlJump.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlJump.swift; sourceTree = "<group>"; };
 		FCB225ED233528B20074CB94 /* JXPageControlTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlTool.swift; sourceTree = "<group>"; };
 		FCB225EE233528B20074CB94 /* JXPageControlBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPageControlBase.swift; sourceTree = "<group>"; };
+		FCB844DF240272B000CDDF40 /* EvaluateVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaluateVC.h; sourceTree = "<group>"; };
+		FCB844E0240272B000CDDF40 /* EvaluateVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaluateVC.m; sourceTree = "<group>"; };
+		FCB844E32402751100CDDF40 /* EvaluateTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaluateTBCell.h; sourceTree = "<group>"; };
+		FCB844E42402751100CDDF40 /* EvaluateTBCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaluateTBCell.m; sourceTree = "<group>"; };
+		FCB844EC2402CE2800CDDF40 /* StarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarView.h; sourceTree = "<group>"; };
+		FCB844ED2402CE2800CDDF40 /* StarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarView.m; sourceTree = "<group>"; };
+		FCB844EF2402D07D00CDDF40 /* EvaluateStarsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaluateStarsModel.h; sourceTree = "<group>"; };
+		FCB844F02402D07D00CDDF40 /* EvaluateStarsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaluateStarsModel.m; sourceTree = "<group>"; };
 		FCC8D1712369867400DD2D6D /* CustomNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNavBar.h; sourceTree = "<group>"; };
 		FCC8D1722369867400DD2D6D /* CustomNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNavBar.m; sourceTree = "<group>"; };
 		FCCC6084238D44D5006874A1 /* HtmlStringTBCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HtmlStringTBCell.h; sourceTree = "<group>"; };
@@ -650,6 +662,7 @@
 		FC23BBFE23B0547900223B58 /* 我的订单View */ = {
 			isa = PBXGroup;
 			children = (
+				FCB844E22402749300CDDF40 /* 评价view */,
 				FC23BBFF23B054D300223B58 /* OrderListSectionHeader.h */,
 				FC23BC0023B054D300223B58 /* OrderListSectionHeader.m */,
 				FC23BC0823B06A7900223B58 /* OrderListSectionFooter.h */,
@@ -810,6 +823,8 @@
 				FC23BC0623B05DAC00223B58 /* OrderModel.m */,
 				FCB0BD0C23BF0A3300BCC45B /* ExpressModel.h */,
 				FCB0BD0D23BF0A3300BCC45B /* ExpressModel.m */,
+				FCB844EF2402D07D00CDDF40 /* EvaluateStarsModel.h */,
+				FCB844F02402D07D00CDDF40 /* EvaluateStarsModel.m */,
 			);
 			path = "我的";
 			sourceTree = "<group>";
@@ -1009,6 +1024,7 @@
 		FC99D9AD23AC60100055DA83 /* 我的订单 */ = {
 			isa = PBXGroup;
 			children = (
+				FCB844DE2402725D00CDDF40 /* 评价 */,
 				FC99D9B123AC65520055DA83 /* MyOrdersVC.h */,
 				FC99D9B223AC65520055DA83 /* MyOrdersVC.m */,
 				FCAE2C4423AC6D4B00CF8D91 /* OrderChildsVC.h */,
@@ -1463,6 +1479,26 @@
 			path = JXPageControl;
 			sourceTree = "<group>";
 		};
+		FCB844DE2402725D00CDDF40 /* 评价 */ = {
+			isa = PBXGroup;
+			children = (
+				FCB844DF240272B000CDDF40 /* EvaluateVC.h */,
+				FCB844E0240272B000CDDF40 /* EvaluateVC.m */,
+			);
+			path = "评价";
+			sourceTree = "<group>";
+		};
+		FCB844E22402749300CDDF40 /* 评价view */ = {
+			isa = PBXGroup;
+			children = (
+				FCB844E32402751100CDDF40 /* EvaluateTBCell.h */,
+				FCB844E42402751100CDDF40 /* EvaluateTBCell.m */,
+				FCB844EC2402CE2800CDDF40 /* StarView.h */,
+				FCB844ED2402CE2800CDDF40 /* StarView.m */,
+			);
+			path = "评价view";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1661,8 +1697,10 @@
 			files = (
 				FC8D488E23261F6F00BF6635 /* HomePageModel.m in Sources */,
 				FCCC6086238D44D5006874A1 /* HtmlStringTBCell.m in Sources */,
+				FCB844EE2402CE2800CDDF40 /* StarView.m in Sources */,
 				FCB225EF233528B20074CB94 /* JXPageControlChameleon.swift in Sources */,
 				FCB225F8233528B20074CB94 /* JXPageControlTool.swift in Sources */,
+				FCB844E52402751100CDDF40 /* EvaluateTBCell.m in Sources */,
 				FC8D489423263F6200BF6635 /* HomeDesignerListCVCell.m in Sources */,
 				FC80539F232F32F90021B2E8 /* ClassifyModel.m in Sources */,
 				FC8053B9233206040021B2E8 /* SceneDetailsVC.m in Sources */,
@@ -1740,6 +1778,7 @@
 				FC8053D823336B190021B2E8 /* ShopTBCell.m in Sources */,
 				FC8D485D231FA87000BF6635 /* WebViewVC.m in Sources */,
 				FC23BC1D23B329F500223B58 /* SearchResultSecHeader.m in Sources */,
+				FCB844E1240272B000CDDF40 /* EvaluateVC.m in Sources */,
 				FC8D4850231F521100BF6635 /* HelperTool.m in Sources */,
 				FC8D48712320A4BD00BF6635 /* UITextField+Limit.m in Sources */,
 				FCB0BD1A23C328C400BCC45B /* KSGuaidViewController.m in Sources */,
@@ -1804,6 +1843,7 @@
 				FCA19914231E03A400F08C43 /* MineVC.m in Sources */,
 				FCB0BD3F23D0316500BCC45B /* NestGoodsListViewVC.m in Sources */,
 				FCA71BCF23B9B11B00737DC4 /* AddressDisplayTBCell.m in Sources */,
+				FCB844F12402D07D00CDDF40 /* EvaluateStarsModel.m in Sources */,
 				FCA71BBE23B5ACE400737DC4 /* BEMCheckBox.m in Sources */,
 				FC1C56CC23868AC400287F10 /* SceneIconCVCell.m in Sources */,
 				FCB0BD4B23D0472C00BCC45B /* ArtistWorksTBCell.m in Sources */,
@@ -2013,10 +2053,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D2P37LH92Q;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/i7colors/Desktop/SH/SH/SHHeader.pch;
+				GCC_PREFIX_HEADER = /Users/apple/Desktop/other/SH/SH/SHHeader.pch;
 				INFOPLIST_FILE = SH/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2034,9 +2074,9 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/YYText\"",
 				);
 				MARKETING_VERSION = 0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
+				PRODUCT_BUNDLE_IDENTIFIER = cdd.test1;
 				PRODUCT_NAME = SH;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/i7colors/Desktop/SH/SH/SH-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/apple/Desktop/other/SH/SH/SH-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2053,10 +2093,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D2P37LH92Q;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/i7colors/Desktop/SH/SH/SHHeader.pch;
+				GCC_PREFIX_HEADER = /Users/apple/Desktop/other/SH/SH/SHHeader.pch;
 				INFOPLIST_FILE = SH/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2074,9 +2114,9 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/YYText\"",
 				);
 				MARKETING_VERSION = 0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.surhoo.SH;
+				PRODUCT_BUNDLE_IDENTIFIER = cdd.test1;
 				PRODUCT_NAME = SH;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/i7colors/Desktop/SH/SH/SH-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/apple/Desktop/other/SH/SH/SH-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

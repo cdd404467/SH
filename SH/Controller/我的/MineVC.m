@@ -16,12 +16,13 @@
 #import "MyOrdersVC.h"
 #import "TempVC.h"
 #import "MyCollectionVC.h"
+#import "EvaluateVC.h"
 
 @interface MineVC ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) MinePageHeader *tableHeader;
-@property (nonatomic, strong)NSMutableArray *titleArray;
-@property (nonatomic, strong)NSMutableArray *imageArray;
+@property (nonatomic, strong) NSMutableArray *titleArray;
+@property (nonatomic, strong) NSMutableArray *imageArray;
 @end
 
 @implementation MineVC
@@ -130,7 +131,9 @@
 
 //跳转到设置
 - (void)jumpToSetting {
-    SettingVC *vc = [[SettingVC alloc] init];
+//    SettingVC *vc = [[SettingVC alloc] init];
+    EvaluateVC *vc = [[EvaluateVC alloc] init];
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

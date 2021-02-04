@@ -336,10 +336,14 @@ static NSString *designerCVID = @"designerCVCell";
         cell.model = self.dataSource[indexPath.row];
         DDWeakSelf;
         cell.clickBlock = ^{
-            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
-            DesignerModel *model = self.dataSource[indexPath.row];
-            vc.designerId = model.designerId;
-            [weakself.navigationController pushViewController:vc animated:YES];
+            if (Get_User_Token) {
+                DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
+                DesignerModel *model = self.dataSource[indexPath.row];
+                vc.designerId = model.designerId;
+                [weakself.navigationController pushViewController:vc animated:YES];
+            } else {
+                [weakself jumpToLoginWithComplete:nil];
+            }
         };
         return cell;
     }

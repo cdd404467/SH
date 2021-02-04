@@ -152,13 +152,13 @@
     [CddHud showTextOnly:@"评价功能暂未开放哦～" view:self.view];
 }
 
-//订单号付款
+//获取订单号去付款
 - (void)payWithOrderNum:(NSInteger)section {
     OrderModel *model = self.dataSource[section];
     NSDictionary *dict = @{@"orderNo":model.orderNo};
     [CddHud show:[HelperTool getCurrentVC].view];
     self.view.userInteractionEnabled = NO;
-//    NSLog(@"------ %@",dict);
+//    NSLog(@"pay ------ %@",dict);
     [NetTool postRequest:URLPost_OrderNo_Pay Params:dict Success:^(id  _Nonnull json) {
         [CddHud hideHUD:[HelperTool getCurrentVC].view];
         self.view.userInteractionEnabled = YES;

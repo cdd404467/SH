@@ -51,7 +51,7 @@
 - (void)requestData {
     NSString *urlString = [NSString stringWithFormat:URLGet_ArtistWorks_Details,_worksID];
     [NetTool getRequest:urlString Params:nil Success:^(id _Nonnull json) {
-        NSLog(@"------ %@",json);
+//        NSLog(@"------ %@",json);
         self.dataSource = [ArtistWorksDetailModel mj_objectWithKeyValues:json];
         [self setupUI];
     } Failure:^(NSError * _Nonnull error) {

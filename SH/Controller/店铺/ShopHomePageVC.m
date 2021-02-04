@@ -132,7 +132,7 @@
 #pragma mark - JXCategoryViewDelegate
 
 - (void)categoryView:(JXCategoryBaseView *)categoryView didSelectedItemAtIndex:(NSInteger)index {
-    self.navigationController.interactivePopGestureRecognizer.enabled = (index == 0);
+//    self.navigationController.interactivePopGestureRecognizer.enabled = (index == 0);
 }
 
 #pragma mark - JXPagerMainTableViewGestureDelegate

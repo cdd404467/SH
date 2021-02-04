@@ -183,7 +183,7 @@
             } else {
                 [self showErrorMsg:responseObject[@"msg"]];
                 if (error) {
-                    error(responseObject);
+                    error(responseObject);·
                 }
             }
         }

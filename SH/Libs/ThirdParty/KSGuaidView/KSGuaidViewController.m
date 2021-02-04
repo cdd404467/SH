@@ -157,7 +157,6 @@ UICollectionViewDelegateFlowLayout>
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-
     if (KSGuaidManager.shouldDismissWhenDragging == YES) {
         int current = scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame);
         if (current == KSGuaidManager.images.count) {

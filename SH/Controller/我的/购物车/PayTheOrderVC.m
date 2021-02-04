@@ -236,11 +236,11 @@
 }
 
 - (void)paySuccess {
-    NSLog(@"成功");
+    NSLog(@"成功---");
 }
 
 - (void)payFail {
-    NSLog(@"失败");
+    NSLog(@"失败---");
 }
 
 - (void)dealloc {

@@ -354,7 +354,7 @@
     }];
 }
 
-//订单号付款
+//获取订单号去付款
 - (void)payWithOrder {
     NSDictionary *dict = @{@"orderNo":self.dataSource.orderNo};
     [CddHud show:[HelperTool getCurrentVC].view];

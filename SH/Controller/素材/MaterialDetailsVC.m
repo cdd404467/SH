@@ -244,9 +244,13 @@
         [_lookOverBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
         [_lookOverBtn setTitle:@"查看设计师" forState:UIControlStateNormal];
         [_lookOverBtn addEventHandler:^{
-            DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
-            vc.designerId = weakself.dataSource.designerId;
-            [weakself.navigationController pushViewController:vc animated:YES];
+            if (Get_User_Token) {
+                DesignerMainPageVC *vc = [[DesignerMainPageVC alloc] init];
+                vc.designerId = weakself.dataSource.designerId;
+                [weakself.navigationController pushViewController:vc animated:YES];
+            } else {
+                [weakself jumpToLoginWithComplete:nil];
+            }
         }];
         [bottomView addSubview:_lookOverBtn];
         [_lookOverBtn mas_makeConstraints:^(MASConstraintMaker *make) {

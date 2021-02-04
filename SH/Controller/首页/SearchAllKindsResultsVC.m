@@ -24,6 +24,7 @@
 #import "GoodsDetailsVC.h"
 #import "SceneDetailsVC.h"
 #import "MaterialDetailsVC.h"
+#import "ShopHomePageVC.h"
 
 static NSString *sceneCVID = @"sceneCell";
 static NSString *materialCVID = @"MaterialCVCell";
@@ -273,7 +274,10 @@ static NSString *section_Header = @"SearchResultSecHeader";
         vc.sceneId = model.sceneId.intValue;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 2) {
-        
+        ShopHomePageVC *vc = [[ShopHomePageVC alloc] init];
+        ShopModel *model = self.dataSource.SHOP[indexPath.row];
+        vc.shopID = model.shopId;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 3) {
         
     } else if (indexPath.section == 4) {

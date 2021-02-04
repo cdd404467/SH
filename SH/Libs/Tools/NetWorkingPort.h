@@ -17,7 +17,7 @@
 
 
 #ifdef _PRODUCTION_NETWORK
-#define Server_Api @"https://xcx.shanghusm.com/api/"
+#define Server_Api @"https://client.shanghusm.com/api/"
 #else
 #ifdef _XCX_TEST_NETWORK
 #define Server_Api @"https://xcxtest.shanghusm.com/api/"
@@ -27,7 +27,7 @@
 #endif
 
 
-
+//https://client.shanghusm.com
 
 #define PageCount 40
 
